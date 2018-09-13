@@ -1,0 +1,18 @@
+h1{
+	text-align: center;
+	color:fuchsia;
+    //background-color: darkblue;
+}
+h2{
+	text-align: center;
+	color:purple;
+}
+p{
+	text-indent: 60px;
+}
+.cuerpo{
+    padding-right: 80px;
+    padding-left: 80px;
+    padding-bottom: 50px;
+    background-color:blue;
+}
