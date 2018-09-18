@@ -1,0 +1,14 @@
+h1{
+	text-align: center;
+	color: darkblue;
+}
+h2{
+	text-align: center;
+}
+p{
+	color: maroon;
+}
+em{
+	color: fuchsia;
+	text-decoration: underline overline dotted purple;
+}
