@@ -1,0 +1,28 @@
+HTML y CSS
+	html
+		Un cuerpo se divide en cabecera y cuerpo
+		Dentro se establecen <etiquetas> que pueden cerrarse <\etiquetas> o no cerrarse según cada caso
+		Las etiquetas deben estar equilibradas al estilo de pila de paréntesis
+		Headder
+			información sobre la página
+			etiquetas especiales
+				title
+					texto en la lengueta
+				meta
+					código de caracteres de la página
+		Body
+			Contenido de la página
+			ejemplo de etiquetas
+				<hn>
+					cabecera lvln n:{1..6}
+				<p>
+					párrafo contiene una unidad de texto
+				<em>
+					émfasis
+					suele mostrarse en cursiva.
+				<strong>
+					mas émfasis, suele ser negrita.
+				<code>
+					letra monoespaciada, usual en código.
+				<!--   -->
+					Comentarios
