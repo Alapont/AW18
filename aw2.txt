@@ -10,6 +10,8 @@ HTML y CSS
 					texto en la lengueta
 				meta
 					código de caracteres de la página
+				link
+					permite asociar css al documento con el atributo href
 		Body
 			Contenido de la página
 			ejemplo de etiquetas
@@ -26,3 +28,15 @@ HTML y CSS
 					letra monoespaciada, usual en código.
 				<!--   -->
 					Comentarios
+				link
+					permite asociar css al documento
+			Caracteres especiales
+				se decinen por secuencias de escape entre &;
+				&yen;
+				&Euro;
+				&#60;
+			Saltos de línea y espacios
+				los interpreta como un único espacio
+	css
+		Estilo y apariencia de la página web
+		Pueden diferenciarse según el ámbito para pantalla, impresión y móvil.
