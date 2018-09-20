@@ -1,14 +1,40 @@
 h1{
 	text-align: center;
-	color: darkblue;
+	color: GreenYellow;
 }
 h2{
 	text-align: center;
 }
 p{
 	color: maroon;
+	padding-left: 30px;
+	padding-right: 35px;
 }
 em{
 	color: fuchsia;
 	text-decoration: underline overline dotted purple;
+}
+li{
+	list-style-type: cjk-ideographic;
+	padding: 35px;
+	background: GreenYellow;
+	margin:10px;
+	color: DarkSlateGrey;
+}
+.PatadaEnOjo{
+	color:red;
+	background: pink;
+}
+.NiceBorder{
+	border: 3px, solid;
+	border-style: double dotted;
+	border-color: red;
+	border-radius: 9px 1px 23px 0px;
+}
+*{
+
+	border: 5px, solid;
+	border-style: dashed;
+	border-color: fuchsia;
+	padding: 1px
 }
