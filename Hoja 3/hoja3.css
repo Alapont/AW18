@@ -1,0 +1,37 @@
+
+*{
+    border:solid;
+    border-color:yellow;
+    border-width: 2px;
+}
+
+div.header{
+    background-image: url(cesped.png);
+    position: fixed;
+    width: 100%;
+    color:white;
+    font-size: 50px;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    /*tipografia*/ 
+}
+
+div.nav{
+    color: black;
+    float: top;
+    position: fixed;
+    top: 65px;
+   
+
+    
+
+}
+span{
+    color:black;
+    background: linear-gradient(green, yellow, green);
+    font-size: 20px;
+    margin: 5px;
+    padding: 5px;
+}
