@@ -1,5 +1,9 @@
 
 *{
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    background: black;
+    color: white;
+
     border:solid;
     border-color:yellow;
     border-width: 2px;
@@ -23,12 +27,28 @@ div.nav{
     float: top;
     position: fixed;
     top: 65px;
-   
+}
 
-    
+div.izquierda{
 
 }
-span{
+.first{
+    margin-top: 100px;
+}
+
+h2{
+    color:green;
+}
+p{
+    color:white;
+}
+/*
+    Preguntale a victor como hacer este span
+*/
+span.list{
+    color:yellow;
+}
+span.nav{
     color:black;
     background: linear-gradient(green, yellow, green);
     font-size: 20px;
