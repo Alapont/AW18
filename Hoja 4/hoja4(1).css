@@ -1,0 +1,82 @@
+*{
+    font-family:"Times new roman", cursive, sans-serif;
+    background: darkkhaki;
+    color: black;
+  }
+  *{
+    border: solid 2px;
+    border-color: white;
+  }
+  
+  div.header{
+    background-image: url(cesped.png);
+    position: fixed;
+    width: 100%;
+    color:white;
+    font-size: 50px;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    right: 0px; 
+  }
+  
+  div.nav{
+    color: black;
+    float: top;
+    position: fixed;
+    top: 85px;
+  }
+  div.panel{
+    float:right;
+    width:30%;
+    padding: 1px;
+  }
+  .first{
+    margin-top: 140px;
+  }
+  
+  .cookies {
+    bottom:0px;
+    text-align: left;
+    background: green;
+    margin-left: 0px;
+    margin-right: 0px;
+    width:100%;
+  }
+  h2{
+    color:green;
+  }
+  p{
+    background-color: transparent;
+    margin-left: 60px;
+    text-align: left;
+  }
+  a{
+    text-align: left;
+    background-color: transparent;
+    margin-left: 30px;
+  }
+  span.list{
+    color:yellow;
+  }
+  span.headder{
+    color:black;
+    background: linear-gradient(green, yellow, green);
+    font-size: 20px;
+    margin: 5px;
+    padding: 5px;
+  }
+  span.headder:hover{
+    background: linear-gradient(yellow, green, yellow);
+  }
+  span.headder:active{
+    border: dotted;
+  }
+  table{
+    width: 75%;
+    clear:both;
+  }
+  td, th{
+    border: 2px solid yellow;
+    text-align: center;
+  }
