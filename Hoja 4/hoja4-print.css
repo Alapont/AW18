@@ -1,0 +1,84 @@
+body{
+    font-family:"Comic Sans MS", cursive, sans-serif;
+    background: white;
+    color: black;
+}
+
+div.header{/*
+    position: fixed;
+    width: 100%;*/
+    font-size: 50px;
+    text-align: center;/*
+    top: 0px;
+    left: 0px;
+    right: 0px; */
+}
+
+div.nav{/*
+    color: black;
+    float: top;
+    position: fixed;
+    top: 85px;*/
+    display: none;
+}
+
+div.panel{
+    float:bottom;
+    width:90%;
+    padding: 1px;
+}
+div > p{
+    text-decoration: underline;
+}
+div > img{
+    display: inline;
+}
+.first{
+    margin-top: 10px;
+}
+.last{
+    margin-bottom: 80px;
+}
+.cookies {
+    position: fixed;
+    bottom:0px;
+    text-align: left;
+    background: green;
+    margin-left: 0px;
+    margin-right: 0px;
+    width:100%;
+    display: none;
+}
+p{
+    background-color: transparent;
+    margin-left: 60px;
+    text-align: left;
+}
+a{
+    text-align: left;
+    background-color: transparent;
+    margin-left: 30px;
+}
+span.list{
+    font-size: 22px;
+    text-decoration: underline;
+}
+span.headder{
+    color:black;
+    background: linear-gradient(green, yellow, green);
+    font-size: 20px;
+    margin: 5px;
+    padding: 5px;
+}
+span.headder:hover{
+    background: linear-gradient(yellow, green, yellow); 
+}
+tr,th,td{
+    border:1px solid black;
+    border-spacing: 2px;
+    text-align: center;
+    vertical-align: center;
+}
+table{
+    width:90%;
+}
