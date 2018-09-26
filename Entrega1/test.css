@@ -1,0 +1,72 @@
+
+a {
+    color: blue;
+    font-family: sans-serif;
+    border: inherit;
+    padding-left: inherit;
+    padding-right: inherit;
+}
+p.cuadro {
+    border: 2px dashed blue;
+    padding: 20px;
+}
+.banner {
+    width: 66%;
+    margin-right: auto;
+    margin-left: auto;
+    position: fixed;
+    left:20%;
+    top:40%;
+    background: red;
+    text-align: center;
+    padding: 50px;
+    color:white;
+}
+.cookies {
+	position: fixed;
+	bottom:0%;
+	text-align: center;
+	background: blue;
+	color: white;
+	width: 100%;
+
+}
+p {
+    padding: 5px;
+    background-color: #F0F0FF;
+}
+
+p.flotante_izq {
+    float: left;
+    width: 40%;
+    background-color: #FFA000;
+}
+
+p.flotante_dch {
+    float: right;
+    width: 40%;
+    background-color: #FFA000;
+}
+p > a {
+    color: red;
+}
+
+.enlace {
+    color: purple;
+}
+
+#fdi {
+    color: green;
+}
+strong{
+	color: red;
+}
+.a{
+	color: blue;
+}
+.b{
+	color: green;
+}
+.c{
+	color: black;
+}

@@ -1,6 +1,6 @@
 h1{
 	text-align: center;
-	color: GreenYellow;
+	color: darkblue;
 }
 h2{
 	text-align: center;
@@ -31,10 +31,24 @@ li{
 	border-color: red;
 	border-radius: 9px 1px 23px 0px;
 }
-*{
-
+/**{
 	border: 5px, solid;
 	border-style: dashed;
 	border-color: fuchsia;
 	padding: 1px
+}*/
+a {
+    color: blue;
+}
+
+p > a {
+    color: red;
+}
+
+.enlace {
+    color: purple;
+}
+
+#fdi {
+    color: green;
 }
