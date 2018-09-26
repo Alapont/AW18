@@ -1,12 +1,7 @@
-
 *{
     font-family:"Comic Sans MS", cursive, sans-serif;
     background: black;
     color: white;
-
-    border:solid;
-    border-color:yellow;
-    border-width: 2px;
 }
 
 div.header{
@@ -26,29 +21,49 @@ div.nav{
     color: black;
     float: top;
     position: fixed;
-    top: 65px;
+    top: 85px;
 }
-
-div.izquierda{
-
+div.panel{
+    margin-top: 40px;
+    float:right;
+    width:30%;
+    padding: 1px;
 }
 .first{
-    margin-top: 100px;
+    margin-top: 140px;
 }
-
+.last{
+    margin-bottom: 80px;
+}
+.cookies {
+    position: fixed;
+    bottom:0px;
+    text-align: left;
+    background: green;
+    color: white;
+    margin-left: 0px;
+    margin-right: 0px;
+    width:100%;
+}
 h2{
     color:green;
 }
 p{
+    background-color: transparent;
     color:white;
+    margin-left: 60px;
+    text-align: left;
 }
-/*
-    Preguntale a victor como hacer este span
-*/
+a{
+    text-align: left;
+    color:white;
+    background-color: transparent;
+    margin-left: 30px;
+}
 span.list{
     color:yellow;
 }
-span.nav{
+span.headder{
     color:black;
     background: linear-gradient(green, yellow, green);
     font-size: 20px;
