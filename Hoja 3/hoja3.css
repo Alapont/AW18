@@ -24,7 +24,6 @@ div.nav{
     top: 85px;
 }
 div.panel{
-    margin-top: 40px;
     float:right;
     width:30%;
     padding: 1px;
@@ -40,7 +39,6 @@ div.panel{
     bottom:0px;
     text-align: left;
     background: green;
-    color: white;
     margin-left: 0px;
     margin-right: 0px;
     width:100%;
@@ -50,13 +48,11 @@ h2{
 }
 p{
     background-color: transparent;
-    color:white;
     margin-left: 60px;
     text-align: left;
 }
 a{
     text-align: left;
-    color:white;
     background-color: transparent;
     margin-left: 30px;
 }
