@@ -14,5 +14,9 @@ p{
     padding-right: 80px;
     padding-left: 80px;
     padding-bottom: 50px;
-    background-color:blue;
+    //background-color:blue;
 }
+li{
+    font-style: italic;
+}
+td{border: 1px solid black}
