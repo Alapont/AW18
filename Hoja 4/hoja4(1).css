@@ -1,33 +1,31 @@
 *{
     font-family:"Times new roman", cursive, sans-serif;
-    background: darkkhaki;
-    color: black;
+    background: black;
+    color: white;
+    padding:0;
   }
-  *{
+  /**{
     border: solid 2px;
     border-color: white;
-  }
+  }*/
   
-  div.header{
-    background-image: url(cesped.png);
-    position: fixed;
-    width: 100%;
-    color:white;
-    font-size: 50px;
-    text-align: center;
-    top: 0px;
-    left: 0px;
-    right: 0px; 
+  h1{
+    display: block;
+    margin-left: 450px;
+    background: url(header2.jpg) no-repeat top left;
+    height: 250px;
+    width: 600px;
+    text-indent: -5000px;
+    
   }
   
   div.nav{
-    color: black;
-    float: top;
-    position: fixed;
-    top: 85px;
+    display: block;
+    margin-left: 30%;
+    margin-right: 30%;
   }
   div.panel{
-    float:right;
+    float:left;
     width:30%;
     padding: 1px;
   }
@@ -60,23 +58,27 @@
     color:yellow;
   }
   span.headder{
+    display: block;
+    background: white;
     color:black;
-    background: linear-gradient(green, yellow, green);
-    font-size: 20px;
-    margin: 5px;
-    padding: 5px;
+    font-size: 25px;
+    padding-left: 50px;
+    float: left;
+    font-style: url(PWStixs.ttf);
+
   }
   span.headder:hover{
-    background: linear-gradient(yellow, green, yellow);
+    color:darkred;
   }
   span.headder:active{
     border: dotted;
   }
   table{
     width: 75%;
+    margin-left: 250px;
     clear:both;
   }
   td, th{
-    border: 2px solid yellow;
+    border: 2px dotted yellow;
     text-align: center;
   }
