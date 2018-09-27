@@ -1,0 +1,1 @@
+En el cabecero he utilizado de la página http://www.csszengarden.com/136/ la instrucción text-indent para que solo se viese el fondo y no el texto.
