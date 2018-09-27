@@ -1,14 +1,15 @@
-*{
+body{
   font-family:"Comic Sans MS", cursive, sans-serif;
   background: black;
   color: white;
+  margin:0px;
 }
 /**{
   border: solid 2px;
   border-color: white;
 }*/
 
-div.header{
+h1{
   background-image: url(cesped.png);
   position: fixed;
   width: 100%;
@@ -18,18 +19,20 @@ div.header{
   top: 0px;
   left: 0px;
   right: 0px; 
+  clear:both;
+  margin-top: 0px;
 }
-
 div.nav{
-  color: black;
+  color: transparent;
   float: top;
-  position: fixed;
-  top: 85px;
+  position:sticky;
+  top: 75px;
+  margin: 10px;
 }
 div.panel{
   float:right;
   width:30%;
-  padding: 1px;
+  padding: 10px;
 }
 .first{
   margin-top: 140px;
@@ -41,20 +44,31 @@ div.panel{
   background: green;
   margin-left: 0px;
   margin-right: 0px;
+  margin-bottom: 0px;
   width:100%;
 }
 h2{
   color:green;
+  margin-left: 3%;
+}
+h3{
+  color: yellow;
+  text-align: left;
 }
 p{
   background-color: transparent;
-  margin-left: 60px;
-  text-align: left;
+  margin-left: 4%;
+  text-align:justify;
+  font-weight: 
+}
+ul{
+  margin-left: 3%;
 }
 a{
   text-align: left;
   background-color: transparent;
   margin-left: 30px;
+  color: white;
 }
 span.list{
   color:yellow;
@@ -66,9 +80,15 @@ span.headder{
   margin: 5px;
   padding: 5px;
 }
+span.headder:hover{
+  background: linear-gradient(yellow, green,yellow);
+  border:dotted 2px white ;
+  color: white;
+}
 table{
   width: 75%;
   clear:both;
+  margin: 10px;
 }
 td, th{
   border: 2px solid yellow;
