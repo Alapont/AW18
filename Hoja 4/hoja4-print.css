@@ -2,9 +2,12 @@ body{
     font-family:"Comic Sans MS", cursive, sans-serif;
     background: white;
     color: black;
+    text-align: justify;
 }
-
-div.header{/*
+*{
+	border:dotted 1px fuchsia;
+}
+h1{/*
     position: fixed;
     width: 100%;*/
     font-size: 50px;
@@ -12,6 +15,10 @@ div.header{/*
     top: 0px;
     left: 0px;
     right: 0px; */
+}
+h2,h3{
+	margin-left: 40px;
+	margin-right: 20px;
 }
 
 div.nav{/*
@@ -26,12 +33,21 @@ div.panel{
     float:bottom;
     width:90%;
     padding: 1px;
+    display: inline;
+}
+.block{
+	display: inline-block;
+	margin: 10px;
 }
 div > p{
     text-decoration: underline;
+    padding: 0px;
 }
 div > img{
     display: inline;
+    padding: 5px;
+    margin-right: auto;
+    margin-left: auto;
 }
 .first{
     margin-top: 10px;
@@ -52,7 +68,7 @@ div > img{
 p{
     background-color: transparent;
     margin-left: 60px;
-    text-align: left;
+    margin-right: 30px;
 }
 a{
     text-align: left;
@@ -63,6 +79,10 @@ span.list{
     font-size: 22px;
     text-decoration: underline;
 }
+li{
+	margin-left:60px;
+	margin-right: 30px;
+}
 span.headder{
     color:black;
     background: linear-gradient(green, yellow, green);
@@ -70,9 +90,10 @@ span.headder{
     margin: 5px;
     padding: 5px;
 }
+/*
 span.headder:hover{
     background: linear-gradient(yellow, green, yellow); 
-}
+}*/
 tr,th,td{
     border:1px solid black;
     border-spacing: 2px;
@@ -81,4 +102,7 @@ tr,th,td{
 }
 table{
     width:90%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
 }
