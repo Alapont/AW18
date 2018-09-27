@@ -4,9 +4,51 @@ body{
     color: black;
     text-align: justify;
 }
+/*
 *{
 	border:dotted 1px fuchsia;
-}
+}*/
+.space-invader{
+
+  box-shadow:
+    0 0 0 1em red,
+    0 1em 0 1em red,
+    -2.5em 1.5em 0 .5em red,
+    2.5em 1.5em 0 .5em red,
+    -3em -3em 0 0 red,
+    3em -3em 0 0 red,
+    -2em -2em 0 0 red,
+    2em -2em 0 0 red,
+    -3em -1em 0 0 red,
+    -2em -1em 0 0 red,
+    2em -1em 0 0 red,
+    3em -1em 0 0 red,
+    -4em 0 0 0 red,
+    -3em 0 0 0 red,
+    3em 0 0 0 red,
+    4em 0 0 0 red,
+    -5em 1em 0 0 red,
+    -4em 1em 0 0 red,
+    4em 1em 0 0 red,
+    5em 1em 0 0 red,
+    -5em 2em 0 0 red,
+    5em 2em 0 0 red,
+    -5em 3em 0 0 red,
+    -3em 3em 0 0 red,
+    3em 3em 0 0 red,
+    5em 3em 0 0 red,
+    -2em 4em 0 0 red,
+    -1em 4em 0 0 red,
+    1em 4em 0 0 red,
+    2em 4em 0 0 red;
+
+    background: red;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+
+    margin: 50px 0 70px 65px;
+  }
 h1{/*
     position: fixed;
     width: 100%;*/
@@ -16,9 +58,12 @@ h1{/*
     left: 0px;
     right: 0px; */
 }
-h2,h3{
+h2{
 	margin-left: 40px;
 	margin-right: 20px;
+}
+h3{
+	margin:5px;
 }
 
 div.nav{/*
@@ -41,6 +86,7 @@ div.panel{
 .block{
 	display: inline-block;
 	margin: 10px;
+	width:20%;
 }
 div > p{
     text-decoration: underline;
