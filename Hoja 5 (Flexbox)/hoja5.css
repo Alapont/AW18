@@ -1,17 +1,22 @@
 *{
     margin:0;
     padding: 0;
-    /*border: dashed 1px fuchsia;*/
+    /*Borde de detección
+    border: dashed 1px fuchsia;*/
 }
 div.app{
     display:flex;
     margin: 5%;
+    /*Contactos a la derecha
+    flex-direction: row-reverse;*/
 }
 div.contactos{
     display: flex;
     background: lightgrey;
     flex-grow: 1;
-    flex-direction: column;
+    flex-direction: column-reverse;
+    /* Contactos al revés
+    flex-direction: column;*/
 }
 div.contact{
     display: flex;
