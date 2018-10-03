@@ -1,7 +1,7 @@
 *{
     margin:0;
     padding: 0;
-    border: dashed 1px fuchsia;
+    /*border: dashed 1px fuchsia;*/
 }
 div.app{
     display:flex;
@@ -15,6 +15,7 @@ div.contactos{
 }
 div.contact{
     display: flex;
+    border: solid 1px darkgrey;
 
 }
 img.fCont{
@@ -32,5 +33,6 @@ div.textoCont{
     margin-left: 10%;
 }
 div.texto{
+    background-image: url('bla.png');
     flex-grow: 3;
 }
