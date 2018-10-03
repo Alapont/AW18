@@ -14,9 +14,9 @@ div.contactos{
     display: flex;
     background: lightgrey;
     flex-grow: 1;
-    flex-direction: column-reverse;
+    flex-direction: column;
     /* Contactos al revés
-    flex-direction: column;*/
+    flex-direction: column-reverse;*/
 }
 div.contact{
     display: flex;
