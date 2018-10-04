@@ -2,8 +2,24 @@
 	margin:0;
 	padding: 0;
 	background-color: inherit;
+	font-family: 'PT Sans', sans-serif;
+
+
 	border: dashed 1px fuchsia;
 }
+
+body{
+	background: url("fondoPagina.jpg");
+}
+a{
+	color:inherit;
+    text-decoration: none;
+}
+.a:hover{
+	cursor:crosshair;
+}
+
+
 .banner{
 	position:fixed;
 	height: 150px;
@@ -12,6 +28,8 @@
 	background-color: lightgrey;
 	justify-content: space-between;
 }
+
+
 .title{
 	background-color: purple;
 }
@@ -47,9 +65,48 @@ div.foto>img{
 .desconectar{
 	text-align: center;
 	font-family: bold;
+	color: inherit;
 }
 .content{
-	background-color: yellow;
 	margin-top: 150px;
 	margin-bottom: 0px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+.content>div, .content>ul{
+    list-style-type: none;
+	margin: auto;
+	margin-top: 20px;
+	width: 70%;
+	min-height: 40px;
+	padding: 10px;
+	background: darkgrey;
+
+
+}
+.añadir{
+	display:flex;
+	justify-content: space-between;
+
+}
+.caja{
+	background:white;
+	width:79%;
+}
+.boton{
+	background: grey;
+	color:white;
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom:5px;
+}
+.eliminarCompletadas{
+	border:	solid 1px white;
+	padding: 15px;
+	color: white;
+}
+.tarea{
+	margin: 6px;
 }

@@ -6,20 +6,36 @@
 	    <link rel="stylesheet" href="practica1p.css" media="print">
 	    <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet">
 	    <link rel="shortcut icon" href="iconoPestana.png">
+
+	    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
     </head>
     <body>
     	<div class="banner">
-    		<div class="title"><img src="logoTareas.png"></div>
+    		<div class="title"><img src="logoTareas.png" alt="Logotipo tareas"></div>
     		<div class="user">
-    			<div class="foto"><img src="usuario.jpg" ></div>
+    			<div class="foto"><img src="usuario.jpg" alt="Imagen del usuario" ></div>
     			<div class="datos">
     				<div>
     					<p class=mail>usuario@gmail.com</p>
-    					<p class="desconectar">Desconectar</p>
+    					<a class="desconectar" href="#desconectar">Desconectar</a>
     				</div>
     			</div>
     		</div>
     	</div>
-    	<div class="content">Soy un Content</div>
+    	<div class="content">
+    		<ul class="tareas">
+				<li class="tarea">
+					Tarea
+				</li>
+				<li class="tarea">
+					Tarea
+				</li>    			
+    		</ul>
+    		<div class="añadir">
+    			<div class="caja">[soy una caja]</div>
+    			<div class="boton"><a href="#Añadir">Añadir</a></div>
+    		</div>
+    		<div class="eliminarCompletadas"><a href="#eliminar">Eliminar completadas</a></div>
+    	</div>
 	</body>
 </html>
