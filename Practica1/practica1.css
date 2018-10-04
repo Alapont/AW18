@@ -1,6 +1,55 @@
 *{
 	margin:0;
 	padding: 0;
-
+	background-color: inherit;
 	border: dashed 1px fuchsia;
+}
+.banner{
+	position:fixed;
+	height: 150px;
+	width:100%;
+	display: flex;
+	background-color: lightgrey;
+	justify-content: space-between;
+}
+.title{
+	background-color: purple;
+}
+.title>img{
+	height: 150px;
+}
+.user{
+	display: flex;
+}
+.foto{
+	flex-grow: 0;
+	width:140px;
+	height:140px;
+}
+div.foto>img{
+	padding-top: 5%;
+	padding-bottom: 5%;
+	padding-left: 5%;
+	padding-right: 5%;
+	height: 90%;
+}
+.datos{
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 11px;
+}
+.mail{
+	font-family: monospace;
+	text-align: center;
+}
+.desconectar{
+	text-align: center;
+	font-family: bold;
+}
+.content{
+	background-color: yellow;
+	margin-top: 150px;
+	margin-bottom: 0px;
 }
