@@ -33,8 +33,15 @@ a{
 .title{
 	background-color: purple;
 }
+.hide-text{
+	text-indent: 100%;
+ 	white-space: nowrap;
+	overflow: hidden;
+ 	width: 0;
+ 	height: 0;
+}
 .title>img{
-	height: 150px;
+	height: 140px;
 }
 .user{
 	display: flex;

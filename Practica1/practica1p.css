@@ -1,0 +1,32 @@
+/**{
+    border:dashed 1px hotpink ;
+}*/
+
+body{
+    margin: 60px;
+}
+
+.title>img{display:none;}
+
+.foto{display:none;}
+
+.datos{display:none;}
+
+.caja{display:none;}
+
+.añadir{display:none;}
+
+.eliminarCompletadas{display: none;}
+
+.hide-text{
+    text-align: left;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.content{
+    text-align: left;
+}
+.tarea{
+
+}
