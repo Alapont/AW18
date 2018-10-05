@@ -114,6 +114,26 @@ div.foto>img{
 	padding: 15px;
 	color: white;
 }
-.tarea{
+.tareas{
 	margin: 6px;
+}
+.tarea{
+	display: flex;
+	justify-content: space-between;
+}
+.tareaInfo{
+
+}
+.tag{
+	border: solid 1px lime;
+	border-radius: 15%;
+	background: lightgreen;
+	margin-left: 4px;
+	text-decoration: none;
+}
+.fin{
+
+}
+.terminada{
+	text-decoration: line-through;
 }
