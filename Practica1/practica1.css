@@ -3,9 +3,6 @@
 	padding: 0;
 	background-color: inherit;
 	font-family: 'PT Sans', sans-serif;
-
-
-	border: dashed 1px fuchsia;
 }
 
 body{
@@ -22,6 +19,7 @@ a{
 
 .banner{
 	position:fixed;
+	top:0;
 	height: 150px;
 	width:100%;
 	display: flex;
@@ -89,31 +87,37 @@ div.foto>img{
 	width: 70%;
 	min-height: 40px;
 	padding: 10px;
-
-
+}
+.content>div{
+	border:solid 1px fuchsia;
+	width:60%;
 }
 .añadir{
 	display:flex;
 	justify-content: space-between;
+	border: solid 1px pink;
+	background: #Fabada;
 
 }
 .caja{
 	background:white;
 	width:79%;
+	border: 1px solid purple;
 }
 .boton{
 	background: grey;
-	color:white;
 	padding: 5px;
 	margin-top: 5px;
 	margin-bottom:5px;
+	border-radius: 5px;
 }
 .eliminarCompletadas{
 	border:	solid 1px white;
 	padding: 15px;
-	color: white;
+	color: black;
 	top: 50%;
 	bottom: 50%;
+	background: #c0ffee;
 }
 .tareas{
 	margin-top: 6px;
@@ -124,6 +128,7 @@ div.foto>img{
 	margin-top: 10px;
 	height: 35px;
 	border: 1px solid fuchsia;
+	background: pink;
 }
 .tarea2{
 	padding: 7px;
@@ -137,23 +142,23 @@ div.foto>img{
 
 }
 .tag{
-	border: solid 1px lime;
+	border: solid 1px white;
 	border-radius: 15%;
 	background: lightgreen;
 	margin-left: 4px;
 	text-decoration: none;
+	padding: 1px;
 }
 .terminada>.tarea2>.tag, 
 .terminada>.fin{
 	display:none;
 }
+.fin:hover {
+	background: lightgreen;
+}
 .fin{
-	border: solid 1px white;
 	background: grey;
 	padding: 7px;
-}
-.fin:hover{
-
 }
 .terminada{
 	text-decoration: line-through;
