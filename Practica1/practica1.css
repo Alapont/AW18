@@ -89,7 +89,6 @@ div.foto>img{
 	width: 70%;
 	min-height: 40px;
 	padding: 10px;
-	background: darkgrey;
 
 
 }
@@ -113,13 +112,26 @@ div.foto>img{
 	border:	solid 1px white;
 	padding: 15px;
 	color: white;
+	top: 50%;
+	bottom: 50%;
 }
 .tareas{
-	margin: 6px;
+	margin-top: 6px;
 }
 .tarea{
 	display: flex;
 	justify-content: space-between;
+	margin-top: 10px;
+	height: 35px;
+	border: 1px solid fuchsia;
+}
+.tarea2{
+	padding: 7px;
+}
+.eliminarCompletadas>a{
+	padding-top: 7px;
+	padding-bottom: 7px;
+	background:inherit;
 }
 .tareaInfo{
 
@@ -131,9 +143,17 @@ div.foto>img{
 	margin-left: 4px;
 	text-decoration: none;
 }
+.terminada>.tarea2>.tag, 
+.terminada>.fin{
+	display:none;
+}
 .fin{
+	border: solid 1px white;
+	background: grey;
+	padding: 7px;
+}
+.fin:hover{
 
 }
 .terminada{
 	text-decoration: line-through;
-}
