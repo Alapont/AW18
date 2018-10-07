@@ -3,6 +3,7 @@
 	padding: 0;
 	background-color: inherit;
 	font-family: 'PT Sans', sans-serif;
+	font-weight: bold;
 }
 
 body{
@@ -138,9 +139,7 @@ div.foto>img{
 	padding-bottom: 7px;
 	background:inherit;
 }
-.tareaInfo{
 
-}
 .tag{
 	border: solid 1px white;
 	border-radius: 15%;
@@ -162,3 +161,4 @@ div.foto>img{
 }
 .terminada{
 	text-decoration: line-through;
+}

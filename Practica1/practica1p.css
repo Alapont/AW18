@@ -5,7 +5,9 @@
 body{
     margin: 60px;
 }
-
+.title{
+    font-weight: bold;
+}
 .title>img{display:none;}
 
 .foto{display:none;}
@@ -24,9 +26,34 @@ body{
     margin-left: 20px;
 }
 
+.fin{display:none;}
+
 .content{
     text-align: left;
 }
-.tarea{
+.terminada{
+    text-decoration: line-through;
+    margin: 10px;
+}
 
+.tarea{
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.terminada>.tarea2>.tag,
+.terminada>.fin{
+	display:none;
+}
+
+.tag:before{
+    content: "( ";
+}
+
+.tag:after{
+    content:" )";
+}
+
+.tag{
+    font-weight: lighter;
 }
