@@ -41,6 +41,7 @@ body{
     font-weight: bold;
 }
 
+
 .terminada>.tarea2>.tag,
 .terminada>.fin{
 	display:none;
@@ -56,4 +57,6 @@ body{
 
 .tag{
     font-weight: lighter;
+    margin-right: 10px;
+    margin-left:10px;
 }
