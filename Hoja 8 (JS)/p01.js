@@ -1,14 +1,45 @@
 'use strict';
+function esNumero(x){
+    return !isNaN(x);
+}
+//Funciones chupis
+function f(x){
+    return x+1;
+}
+function g(x){
+    return x*x;
+}
+function h(x){
+    return -1*x;
+}
+function und(x) {
+    return undefined
+}
+function chivata(x) {
+    console.log("Fallaste")
+}
+let personas = [
+    {nombre: "Ricardo", edad: 63},
+    {nombre: "Paco", edad: 55},
+    {nombre: "Enrique", edad: 32},
+    {nombre: "Adrián", edad: 34}
+];
+function clasif(per) {
+    return(per.edad >40);
+}
+
+
+
 //ejercicio 1
 function producto (x, y){
-    if(typeof(x)==Number && typeof(y)==Number){
-        return x*y;
-    }else if((typeof(x)==Number && typeof(y)==Array)){
+    if((esNumero(x) &&Array.isArray(y))){
         return componentes(x,y);
-    }else if((typeof(x)==Array && typeof(y)==Number)){
+    }else if((Array.isArray(x) && esNumero(y))){
         return componentes(y,x);
-    }else if(typeof(x)==Array && typeof(y)==Array && x.length == y.length){
+    }else if(Array.isArray(x) && Array.isArray(y) && x.length == y.length){
         return escalar(x, y);
+    }else if(esNumero(x) && esNumero(y)){
+        return x*y;
     }else{
         throw new Error ("No es nada de lo que se supone que deberia ser");
     }
@@ -34,22 +65,22 @@ function componentes(x, y){
 }
 
 //ejercicio 2
-function sequence1 (x, y){
-    var acum=x;
+function sequence1 (val, funs){
+    var acum=val;
 
-    for(let i of y){
+    for(let i of funs){
         acum = i(acum);
     }
 
     return acum;
 }
 
-function sequence2 (x, y){
-    var acum=x;
+function sequence2 (val, funs){
+    var acum=val;
 
-    for(let i of y){
-        acum = i(acum);
-        if(acum== "undefined"){
+    for(let fun of funs){
+        acum = fun(acum);
+        if(acum== undefined){
             return undefined;
         }
     }
@@ -57,14 +88,14 @@ function sequence2 (x, y){
     return acum;
 }
 
-function sequence3 (x, y, z=false){
-    var acum=x;
-    if(z){
-        y.reverse();
+function sequence3 (val, funs, right=false){
+    var acum=val;
+    if(right){
+        funs.reverse();
     }
-    for(let i of y){
-        acum = i(acum);
-        if(acum== "undefined"){
+    for(let fun of funs){
+        acum = fun(acum);
+        if(acum==undefined){
             return undefined;
         }
     }
@@ -77,7 +108,7 @@ function pluck(objects, fieldName){
     var fields=[];
 
     for (let i of objects){
-        fields.pop(i.fieldName);
+        fields.push(i[fieldName]);
     }
 
     return fields;
@@ -88,10 +119,10 @@ function partition(array, p){
     var falsos = [];
 
     for (let i of array){
-        if(p){
+        if(p(i)){
             ciertos.push(i);
         }else{
-            falsos.push();
+            falsos.push(i);
         }
     }
 
