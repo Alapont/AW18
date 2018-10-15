@@ -25,7 +25,7 @@ let personas = [
     {nombre: "Adrián", edad: 34}
 ];
 function clasif(per) {
-    return(per.edad >40);
+    return(per.edad >60);
 }
 
 
@@ -131,4 +131,13 @@ function partition(array, p){
 
 function groupBy(array, f){
     
+}
+
+function pluck2(elems,fieldName){
+    return elems.map(elem => elem[fieldName])
+}
+
+function partition2(array,p) {
+    //Separador de array según la función p
+    return [array.filter(n=>(n.edad>=60)),array.filter(n=>(n.edad<60))];
 }
