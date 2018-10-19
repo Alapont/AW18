@@ -203,11 +203,13 @@ function partition(array,p){
 */
 
 //HA MANDADO TERMINAR LO QUE NOS FALTASE Y HA AÑADIDO DOS EJERCICIOS MÁS
-
+/*Escribir una función where(array, modelo) que reciba un array de objetos y un objeto modelo. La función ha de devolver aquellos objetos del array que contengan todos los atributos contenidos en modelo con los mismos valores.*/
 function groupBy(array, f){
-    
 }
 
+//ejercicio 4
+
+/*Reescribir las funciones del ejercicio anterior pero utilizando exclusivamente funciones de orden superior.*/
 function pluck2(elems,fieldName){
     return elems.map(elem => elem[fieldName])
 }
@@ -216,3 +218,31 @@ function partition2(array,p) {
     //Separador de array según la función p
     return [array.filter(n=>(n.edad>=60)),array.filter(n=>(n.edad<60))];
 }
+
+//ejercicio 5
+
+/*Escribir una función concatenar que permita concatenar un número no predefinido de cadenas de caracteres utilizando un carácter  separador. El primer parámetro de la función es el carácter separador. Este parámetro va seguido de las cadenas que se concatenarán.*/
+
+function concatenar(){
+
+}
+
+//ejercicio 6
+
+/*Escribe una función mapFilter(array, f) que se comporte como map, pero descartando los elementos obj de la entrada tales que f(obj) devuelve undefined. */
+
+function mapFilter(array, f){
+    var resultado = [];
+    for(let i of array){
+        if(f(array[i]) != undefined){
+            resultado.push(array[i]);
+        }
+    }
+    return resultado;
+}
+
+console.log(mapFilter(["23", "44", "das", "555", "21"],
+(str) => {
+let num = Number(str);
+if (!isNaN(num)) return num;
+}));
