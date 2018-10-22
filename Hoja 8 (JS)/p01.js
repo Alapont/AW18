@@ -4,7 +4,7 @@ function esNumero(x){
     //también es puede utilizar typeof x=="number"
     return !isNaN(x);
 }
-//Funciones chupis
+//Funciones muy chupis
 function f(x){
     return x+1;
 }
