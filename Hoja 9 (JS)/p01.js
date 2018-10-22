@@ -43,3 +43,66 @@ let medico = Object.create(persona);
 medico.especialidad = "";
 console.log(Object.getPrototypeOf(medico) === persona);// → true
 console.log(Object.getPrototypeOf(persona) === Object.prototype);// → true
+
+/*
+Esto funciona poco
+
+// SE CREA UN OBJETO-PROTOTIPO QUE CONTIENE LOS MÉTODOS
+let prototipoComplejo = {
+	modulo: function() {
+		return Math.sqrt(this.r * this.r + this.i * this.i);
+	},
+	argumento: function() {
+		return Math.atan2(this.i, this. r);
+	}
+};
+// SE PROGRAMA UNA FUNCIÓN QUE CREA UN OBJETO A PARTIR DEL PROTOTIPO
+// Y LE CREA SUS PROPIOS ATRIBUTOS
+function construirComplejo(real, imag) {
+	var resultado = Object.create(prototipoComplejo);
+	resultado.r = real;
+	resultado.i = imag;
+	return resultado;
+};
+
+prototipoComplejo.toString = function() {
+	return "(" + this.r + "," + this.i + ")";
+}
+
+let c3 = construirComplejo(1, 3);
+alert(c3); // muestra una ventana con el texto (1,3)
+*/
+
+
+
+let prototipoPersona = {
+	valueOf: function() {
+	return this.edad;
+	}
+};
+function construirPersona(nom, ap, e) {
+	var resultado = Object.create(prototipoPersona);
+	resultado.nombre = nom;
+	resultado.apellido = ap;
+	resultado.edad = e;
+	return resultado;
+}
+var p1 = construirPersona("Juan", "Gómez", 15);
+var p2 = construirPersona("Ana", "Torres", 18);
+console.log(p1+p2); // → 33
+
+
+
+class Complejo {
+	constructor(real, imag) {
+		this.r = real;
+		this.i = imag;
+	}
+	modulo() {
+		return Math.sqrt(this.r * this.r + this.i * this.i);
+	}
+	argumento() {
+		return Math.atan2(this.i, this.r);
+	}
+}
+
