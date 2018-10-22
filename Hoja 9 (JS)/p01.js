@@ -33,4 +33,13 @@ console.log(c2.modulo()); // → 1.4142135623730951
 /*
 	JS no tiene objetos per se, sino lista de atributos que pueden ser funciones y van todos juntos. Lo que puedes hacer es una "lista de atributos" que tenga de referencia otra "lista de atributos", así si algo no lo tiene en su lista de atributos, va a mirar en la de referencia, y si no en la de referencia y así hasta que alguien tenga de referencia a null.
 */
-let c1 = Object.create(c)
+let c3 = Object.create(c)
+
+let persona = {
+	nombre: "",
+	apellidos: ""
+}
+let medico = Object.create(persona);
+medico.especialidad = "";
+console.log(Object.getPrototypeOf(medico) === persona);// → true
+console.log(Object.getPrototypeOf(persona) === Object.prototype);// → true
