@@ -138,14 +138,24 @@ function sequence2 (val, funs){
 
     return acum;
 }
+//Tengo que montarme unos parametros u otros
 /*no está bien hacer funs.reverse. Lo que hace es modificar el array de fuera también. Tienes que devolver un resultado.Punto menos para Pont */
 function sequence3 (val, funs, right=false){
     var acum=val;
+	var i;
+	var fin;
+	var iter;
     if(right){
-        funs.reverse();
-    }
-    for(let fun of funs){
-        acum = fun(acum);
+		fin=(i,l)=>{return(0<i)}
+		iter=(i)=>{return i--;}
+		i=funs.length;
+    }else{
+		fin=(i,l)=>{return(i<l)}
+		iter=(i)=>{return i++;}
+		i=0;
+	}
+    for(;fin(i,funs.length);i=iter(i)){
+        acum = funs[i](acum);
         if(acum==undefined){
             return undefined;
         }
@@ -262,20 +272,18 @@ function mapFilter(array, f){
     }
     return resultado;
 }
-/*
-console.log(mapFilter(["23", "44", "das", "555", "21"],
-(str) => {
-let num = Number(str);
-if (!isNaN(num)) return num;
-})
-);*/
 
-//ejercicio 7
 
-/*Utilizando expresiones regulares, implementar la función interpretarColor(str) que, dada una cadena que representa un color en formato hexadecimal #RRVVAA  devuelva un objeto con tres atributos (rojo, verde y azul) con el valor (en base 10) de la componente correspondiente.
-Si la cadena de entrada no es un color HTML válido, se devuelve null.
-Indicación: se puede utilizar parseInt para realizar conversiones entre distintas bases.*/
-
-function interpretarColor(str){
-
+function foo(str){
+	let num=Number(str);
+	if(!isNaN(num))
+		return num;
 }
+console.log(mapFilter(["23", "44", "das", "555", "21"],
+	(str) => {
+		let num = Number(str);
+		if (!isNaN(num)) 
+			return num;
+	}
+));
+
