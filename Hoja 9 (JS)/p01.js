@@ -43,3 +43,39 @@ let medico = Object.create(persona);
 medico.especialidad = "";
 console.log(Object.getPrototypeOf(medico) === persona);// → true
 console.log(Object.getPrototypeOf(persona) === Object.prototype);// → true
+
+//Ejercicio 8
+
+class figura{
+	constructor(x,y){
+		this.x=x;
+		this.y=y;
+		esBlanco=RegExp("\#[fF]{6}");
+		esColor=RegExp("\#[0-9a-fA-F]{6}");
+	}
+	pintar(){
+		console.log(`Nos movemos a la posición ([${x}],[${y}])\n Cogemos la pintura de color [${color}]`);
+	};
+	esBlanca(){
+		return 
+	};
+}
+class elipse extends figura{
+	constructor(x,y,rh,rv){
+		this.rh=rh;
+		this.rv=rv;
+		super(x,y);
+	}
+	pintar(){
+		figura.pintar(x,y);
+		console.log(`Pintamos elipse de radios ${this.rh} y ${this.rv}`);
+	}
+}
+class circulo{
+	constructor(x,y,r){
+		this.x=x;
+		this.y=y;
+		super(x,y,r,r);
+	}
+
+}

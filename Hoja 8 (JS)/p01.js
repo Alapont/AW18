@@ -219,8 +219,9 @@ function groupBy(array, f){
 	let i =0;
 	for(atr in f.keys())
 		for(i; i< out.length;i++)
-			if (out[i][atr]===undefined)
+			if (out[i][atr]==undefined)
 				out.splice(i);
+	return out
 }
 
 //ejercicio 4
@@ -307,4 +308,18 @@ Indicación: se puede utilizar parseInt para realizar conversiones entre distint
 
 function interpretarColor(str){
     
+}
+
+
+//Ejercicio 8
+var figura{
+	x,y,color;
+}
+
+var elipse{
+	rh,rv
+}
+
+var circulo{
+	
 }
