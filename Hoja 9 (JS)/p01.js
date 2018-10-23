@@ -68,20 +68,20 @@ class figura{
 }
 class elipse extends figura{
 	constructor(x,y,rh,rv){
+		super(x,y);
 		this.rh=rh;
 		this.rv=rv;
-		super(x,y);
 	}
 	pintar(){
-		figura.pintar(x,y);
+		super.pintar(this.x,this.y);
 		console.log(`Pintamos elipse de radios ${this.rh} y ${this.rv}`);
 	}
 }
 class circulo extends elipse{
 	constructor(x,y,r){
+		super(x,y,r,r);
 		this.x=x;
 		this.y=y;
-		super(x,y,r,r);
 	}
 
 }
