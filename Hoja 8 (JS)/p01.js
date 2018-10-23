@@ -287,3 +287,12 @@ console.log(mapFilter(["23", "44", "das", "555", "21"],
 	}
 ));
 
+//ejercicio 7
+
+/*Utilizando expresiones regulares, implementar la función interpretarColor(str) que, dada una cadena que representa un color en formato hexadecimal #RRVVAA  devuelva un objeto con tres atributos (rojo, verde y azul) con el valor (en base 10) de la componente correspondiente.
+Si la cadena de entrada no es un color HTML válido, se devuelve null.
+Indicación: se puede utilizar parseInt para realizar conversiones entre distintas bases.*/
+
+function interpretarColor(str){
+    
+}
