@@ -215,6 +215,12 @@ function partition(array,p){
 //HA MANDADO TERMINAR LO QUE NOS FALTASE Y HA AÑADIDO DOS EJERCICIOS MÁS
 /*Escribir una función where(array, modelo) que reciba un array de objetos y un objeto modelo. La función ha de devolver aquellos objetos del array que contengan todos los atributos contenidos en modelo con los mismos valores.*/
 function groupBy(array, f){
+	let out=array.slice()
+	let i =0;
+	for(atr in f.keys())
+		for(i; i< out.length;i++)
+			if (out[i][atr]===undefined)
+				out.splice(i);
 }
 
 //ejercicio 4
@@ -227,6 +233,12 @@ function pluck2(elems,fieldName){
 function partition2(array,p) {
     //Separador de array según la función p
     return [array.filter(n=>(n.edad>=60)),array.filter(n=>(n.edad<60))];
+}
+
+function groupBy2(array,f)=>{
+	return array.splice().map((elem,f)=>{
+		
+	})
 }
 
 //ejercicio 5
