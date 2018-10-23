@@ -50,14 +50,20 @@ class figura{
 	constructor(x,y){
 		this.x=x;
 		this.y=y;
-		esBlanco=RegExp("\#[fF]{6}");
-		esColor=RegExp("\#[0-9a-fA-F]{6}");
+		this.esBlanco=/\#[fF]{6}/;
+		this.esColor=/\#[0-9a-fA-F]{6}/
+	}
+	set color(color){
+		if ( this.esColor.test(color) )
+			this.colour=color;
+		else
+			throw `${color} is not a color`;
 	}
 	pintar(){
-		console.log(`Nos movemos a la posición ([${x}],[${y}])\n Cogemos la pintura de color [${color}]`);
+		console.log(`Nos movemos a la posición (${this.x},${this.y})\nCogemos la pintura de color ${this.colour}`);
 	};
 	esBlanca(){
-		return 
+		return this.esBlanco.test(this.colour)
 	};
 }
 class elipse extends figura{
@@ -71,7 +77,7 @@ class elipse extends figura{
 		console.log(`Pintamos elipse de radios ${this.rh} y ${this.rv}`);
 	}
 }
-class circulo{
+class circulo extends elipse{
 	constructor(x,y,r){
 		this.x=x;
 		this.y=y;
