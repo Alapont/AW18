@@ -215,6 +215,13 @@ function partition(array,p){
 //HA MANDADO TERMINAR LO QUE NOS FALTASE Y HA AÑADIDO DOS EJERCICIOS MÁS
 /*Escribir una función where(array, modelo) que reciba un array de objetos y un objeto modelo. La función ha de devolver aquellos objetos del array que contengan todos los atributos contenidos en modelo con los mismos valores.*/
 function groupBy(array, f){
+	let out=array.slice()
+	let i =0;
+	for(atr in f.keys())
+		for(i; i< out.length;i++)
+			if (out[i][atr]==undefined)
+				out.splice(i);
+	return out
 }
 
 //ejercicio 4
@@ -227,6 +234,12 @@ function pluck2(elems,fieldName){
 function partition2(array,p) {
     //Separador de array según la función p
     return [array.filter(n=>(n.edad>=60)),array.filter(n=>(n.edad<60))];
+}
+
+function groupBy2(array,f)=>{
+	return array.splice().map((elem,f)=>{
+		
+	})
 }
 
 //ejercicio 5
@@ -287,3 +300,26 @@ console.log(mapFilter(["23", "44", "das", "555", "21"],
 	}
 ));
 
+//ejercicio 7
+
+/*Utilizando expresiones regulares, implementar la función interpretarColor(str) que, dada una cadena que representa un color en formato hexadecimal #RRVVAA  devuelva un objeto con tres atributos (rojo, verde y azul) con el valor (en base 10) de la componente correspondiente.
+Si la cadena de entrada no es un color HTML válido, se devuelve null.
+Indicación: se puede utilizar parseInt para realizar conversiones entre distintas bases.*/
+
+function interpretarColor(str){
+    
+}
+
+
+//Ejercicio 8
+var figura{
+	x,y,color;
+}
+
+var elipse{
+	rh,rv
+}
+
+var circulo{
+	
+}

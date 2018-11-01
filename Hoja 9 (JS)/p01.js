@@ -44,65 +44,44 @@ medico.especialidad = "";
 console.log(Object.getPrototypeOf(medico) === persona);// → true
 console.log(Object.getPrototypeOf(persona) === Object.prototype);// → true
 
-/*
-Esto funciona poco
+//Ejercicio 8
 
-// SE CREA UN OBJETO-PROTOTIPO QUE CONTIENE LOS MÉTODOS
-let prototipoComplejo = {
-	modulo: function() {
-		return Math.sqrt(this.r * this.r + this.i * this.i);
-	},
-	argumento: function() {
-		return Math.atan2(this.i, this. r);
+class figura{
+	constructor(x,y){
+		this.x=x;
+		this.y=y;
+		this.esBlanco=/\#[fF]{6}/;
+		this.esColor=/\#[0-9a-fA-F]{6}/
 	}
-};
-// SE PROGRAMA UNA FUNCIÓN QUE CREA UN OBJETO A PARTIR DEL PROTOTIPO
-// Y LE CREA SUS PROPIOS ATRIBUTOS
-function construirComplejo(real, imag) {
-	var resultado = Object.create(prototipoComplejo);
-	resultado.r = real;
-	resultado.i = imag;
-	return resultado;
-};
-
-prototipoComplejo.toString = function() {
-	return "(" + this.r + "," + this.i + ")";
+	set color(color){
+		if ( this.esColor.test(color) )
+			this.colour=color;
+		else
+			throw `${color} is not a color`;
+	}
+	pintar(){
+		console.log(`Nos movemos a la posición (${this.x},${this.y})\nCogemos la pintura de color ${this.colour}`);
+	};
+	esBlanca(){
+		return this.esBlanco.test(this.colour)
+	};
 }
-
-let c3 = construirComplejo(1, 3);
-alert(c3); // muestra una ventana con el texto (1,3)
-*/
-
-
-
-let prototipoPersona = {
-	valueOf: function() {
-	return this.edad;
+class elipse extends figura{
+	constructor(x,y,rh,rv){
+		super(x,y);
+		this.rh=rh;
+		this.rv=rv;
 	}
-};
-function construirPersona(nom, ap, e) {
-	var resultado = Object.create(prototipoPersona);
-	resultado.nombre = nom;
-	resultado.apellido = ap;
-	resultado.edad = e;
-	return resultado;
-}
-var p1 = construirPersona("Juan", "Gómez", 15);
-var p2 = construirPersona("Ana", "Torres", 18);
-console.log(p1+p2); // → 33
-
-
-
-class Complejo {
-	constructor(real, imag) {
-		this.r = real;
-		this.i = imag;
-	}
-	modulo() {
-		return Math.sqrt(this.r * this.r + this.i * this.i);
-	}
-	argumento() {
-		return Math.atan2(this.i, this.r);
+	pintar(){
+		super.pintar(this.x,this.y);
+		console.log(`Pintamos elipse de radios ${this.rh} y ${this.rv}`);
 	}
 }
+class circulo extends elipse{
+	constructor(x,y,r){
+		super(x,y,r,r);
+		this.x=x;
+		this.y=y;
+	}
 
+}
