@@ -51,4 +51,28 @@ pool.getConnection(function (err, connection) {
     }
 });
 
+
+console.log("añadir contacto");
+
+
+pool.getConnection(function (err, connection) {
+    if (err) {
+        console.log(`Error al obtener la conexión: ${err.message}`);
+    } else {
+        const sql = "INSERT INTO Contactos(Nombre, Apellidos) " +
+            "VALUES ('Neku','esMaja')"
+        connection.query(sql, function (err, resultado) {
+            connection.release();
+            if (err) {
+                console.log("Error de inserción: " + err);
+            } else {
+                // Imprime el identificador de la nueva fila
+                console.log(resultado.insertId);
+                // Imprime el número de filas insertadas
+                console.log(resultado.affectedRows);
+            }
+        });
+    }
+});
+
 console.log("fin")
