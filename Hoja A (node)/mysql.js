@@ -7,7 +7,7 @@ const pool = mysql.createPool({
     password: "",
     database: "AW"
 });
-
+/*
 console.log("\n\ncódigo de cada diapositiva");
 pool.getConnection(function (err, connection) {
     if (err) {
@@ -49,18 +49,16 @@ pool.getConnection(function (err, connection) {
             }
         )
     }
-});
+});*/
 
-
+/*
 console.log("añadir contacto");
-
-
 pool.getConnection(function (err, connection) {
     if (err) {
         console.log(`Error al obtener la conexión: ${err.message}`);
     } else {
         const sql = "INSERT INTO Contactos(Nombre, Apellidos) " +
-            "VALUES ('Neku','esMaja')"
+            "VALUES ('Neku','EsMaja')"
         connection.query(sql, function (err, resultado) {
             connection.release();
             if (err) {
@@ -73,6 +71,44 @@ pool.getConnection(function (err, connection) {
             }
         });
     }
+});*/
+
+
+/*
+// Suponemos que la variable `id` contiene el identificador
+// introducido por el usuario
+let id="3 OR TRUE"
+pool.getConnection(function (err, connection) {
+    if (err) {
+        console.log(`Error al obtener la conexión: ${err.message}`);
+    } else {
+        const sql = `SELECT Nombre Apellidos FROM contactos WHERE Id=${id}`
+        connection.query(sql, function (err, filas) {
+            connection.release();
+            if (err) {
+                console.log("Error en la consulta");
+            } else {
+                console.log(filas);
+            }
+        });
+    }
 });
+*/
+
+console.log("consulta paramétrica");
+let id = "3 OR TRUE"
+connection.query(
+    `SELECT Nombre, Apellidos FROM contactos WHERE Id = ?`,
+    [id],
+    function (err, rows) {
+        if (err) {
+            console.log('Error en la consulta');
+        } else {
+            console.log(rows);
+        }
+    });
+
+
+
 
 console.log("fin")
