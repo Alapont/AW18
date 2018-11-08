@@ -2,31 +2,51 @@
 const mysql =require ("mysql");
 
 class DAOUsers{
-    constructor(host, user, pass, base){
-        this._pool=mysql.createPool({
-            host: host,
-            user: user,
-            password: pass,
-            database: base
-        });
+    constructor(pool){
+        this._pool=pool;
     }
 
     isUserCorrect(email,password, callback){
-
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= `SELECT email, password FROM user WHERE email= ? AND password = ?`;
+                connection.query(sql, [email,password], function(err,resultado){
+                    if(err){
+                        callback(`Error de acceso a la base de datos`);
+                    }else{
+                        callback(null,resultado.length==1);
+                    }
+                })
+            }
+            connection.release();
+        });
     }
 
     getUserImageName(email,callback){
-
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= `SELECT img FROM user WHERE email=?`;
+                connection.query(sql, [email], function(err,resultado){
+                    if(err){
+                        callback(`Error de acceso a la base de datos`);
+                    }else{
+                        if(resultado.length==0){
+                            callback(`No existe el usuario`);
+                        }else{
+                            callback(null,resultado[0]);
+                        } 
+                    }
+                })
+            }
+            connection.release();
+        });
     }
 
 
-}
-
-function test(err,data){
-    if(err){
-        console.log(err);
-    }
-    console.log(data);
 }
 
 module.exports=DAOUsers;

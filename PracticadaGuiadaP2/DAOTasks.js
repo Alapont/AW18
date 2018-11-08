@@ -1,38 +1,33 @@
 'use strict';
-const mysql =require ("mysql");
+const mysql = require("mysql");
 
-class DAOTasks{
-    constructor(host, user, pass, base){
-        this._pool=mysql.createPool({
-            host: host,
-            user: user,
-            password: pass,
-            database: base
-        });
+class DAOTasks {
+    constructor(pool) {
+        this._pool = pool;
     }
 
-    getAllTasks(email,callback){
+    getAllTasks(email, callback) {
 
     }
 
-    insertTask(email,task,callback){
+    insertTask(email, task, callback) {
 
     }
 
-    markTaskDone(idTask, callback){
+    markTaskDone(idTask, callback) {
 
     }
 
-    deleteCompleted(email,callback){
-        
+    deleteCompleted(email, callback) {
+
     }
 }
 
-function test(err,data){
-    if(err){
+function test(err, data) {
+    if (err) {
         console.log(err);
     }
     console.log(data);
 }
 
-module.exports=DAOTasks;
+module.exports = DAOTasks;
