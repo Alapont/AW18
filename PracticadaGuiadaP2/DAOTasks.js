@@ -17,8 +17,18 @@ class DAOTasks {
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else{
-                        
-                        callback(null);
+                        let tareas = [];
+
+                        resultado.forEach(element => {
+                            let pos=tareas.indexOf({id:resultado.id});
+                            if(pos==-1){
+                                tareas.push({id:element.id, text:element.text, done:element.done, tags: []});
+                                pos=tareas.findIndex(i=>i.id==element.id);
+                            }
+                            tareas[pos].tags.push(element.tag);
+                            
+                        });
+                        callback(null,tareas);
                     }
                 })
             }
