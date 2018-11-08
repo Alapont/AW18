@@ -19,15 +19,16 @@ class DAO {
 
         this._pool.getConnection(function (err, connection) {
             if (err) {
-                console.log(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
+                callback(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
             } else {
                 const sql = "INSERT INTO `usuarios` (`id`, `nombre`, `correo`, `telefono`) VALUES (NULL,?,?,?)";
                 connection.query(sql, [usuario.nombre, usuario.correo, usuario.telefono], function (err, resultado) {
                     if (err) {
-                        console.log(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
+                        callback(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
                     } else {
                         usuario.id = resultado.insertId;
-                        console.log(`Usuario insertado con id: ${resultado.insertid}`);
+                        callback(null,resultado.insertId);
+                        //console.log(`Usuario insertado con id: ${resultado.insertid}`);
                     }
                 })
             }
@@ -38,15 +39,16 @@ class DAO {
     enviarMensaje(usuarioOrigen, usuarioDestino, mensaje, callback) {
         this._pool.getConnection(function (err, connection) {
             if (err) {
-                console.log(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
+                callback(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
             } else {
                 //Deberíamos ver si el usuario existe
                 const sql = "INSERT INTO `mensajes` (`id`, `idOrigen`, `idDestino`, `mensaje`, `hora`, `leido`) VALUES (NULL, ?, ?, ?, CURRENT_TIMESTAMP, '0');";
                 connection.query(sql, [usuarioOrigen.id, usuarioDestino.id, mensaje], function (err, resultado) {
                     if (err) {
-                        console.log(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
+                        callback(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
                     } else {
-                        console.log(`Mensaje enviado :${resultado.insertId}`);
+                        callback(null,resultado.insertId)
+                        //console.log(`Mensaje enviado :${resultado.insertId}`);
                     }
                 })
             }
@@ -57,17 +59,17 @@ class DAO {
     bandejaEntrada(usuario,callback) {
         this._pool.getConnection(function (err, connection) {
             if (err) {
-                console.log(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
+                callback(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
             } else {
                 const sql = "Select DISTINCT mensaje "+
                 "FROM mensajes "+
                 "WHERE idDestino = ? AND leido = 0";
                 connection.query(sql, [usuario.id], function (err, resultado) {
                     if (err) {
-                        console.log(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
+                        callback(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
                     } else {
                         resultado.forEach(mensaje => {
-                            console.log(`${mensaje.mensaje}`)
+                            calback(null,`${mensaje.mensaje}`)
                         });
                     }
                 })
@@ -78,17 +80,20 @@ class DAO {
     buscarUsuario(str, callback){
         this._pool.getConnection(function (err, connection) {
             if (err) {
-                console.log(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
+                callback(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
             } else {
                 const sql = "Select * FROM usuarios WHERE nombre LIKE ?";
                 connection.query(sql, ["%"+str+"%"], function (err, resultado) {//Se ponen las wildcards ahí antes de que lo escape
                     if (err) {
-                        console.log(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
+                        callback(`ERROR AL OBTENER LA CONEXION: ${err.message}`);
                     } else {
-                        console.log(`La búsqueda '${str}' resultó en ${resultado.length}:`)
-                        resultado.forEach(element => {
-                            console.log(`${element.nombre}`)
-                        });
+                        //console.log(`La búsqueda '${str}' resultó en ${resultado.length}:`)
+                        //resultado.forEach(element => {
+                        //    console.log(`${element.nombre}`)
+                        //});
+                        callback(null,resultado.map(function(x){
+                            return x.nombre;
+                        }))
                     }
                 })
             }
