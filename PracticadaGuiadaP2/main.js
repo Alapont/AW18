@@ -39,8 +39,11 @@ daoUser.getUserImageName("pont@locjnsdjkso.es",test);
 /*
 console.log('getAllTasks');
 daoTask.getAllTasks(`pont@loco.es`, test);
-*/
+
 console.log('inserTask');
-daoTask.insertTask(`pont@loco.es`, ['sobre', '0', ['pp','psoe']], test);
+daoTask.insertTask(`pont@loco.es`, ['sobre', '1', ['pp','psoe']], test);
+*/
+console.log('deleteCompleted');
+daoTask.deleteCompleted(`pont@loco.es`, test);
 
 
