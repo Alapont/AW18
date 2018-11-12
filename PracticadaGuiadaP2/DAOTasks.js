@@ -65,7 +65,23 @@ class DAOTasks {
     }
 
     markTaskDone(idTask, callback) {
-
+    // marca la tarea idTask como realizada
+    //UPDATE `task` SET `done` = '1' WHERE `task`.`id` = 1;
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= "UPDATE `task` SET `done` = '1' WHERE `task`.`id` = ?";
+                connection.query(sql, [idTask], function(err,resultado){
+                    if(err){
+                        callback(`Error de acceso a la base de datos`);
+                    }else{
+                        callback(null,resultado.pop());
+                    }
+                })
+            }
+            connection.release();
+        });
     }
 
     deleteCompleted(email, callback) {
