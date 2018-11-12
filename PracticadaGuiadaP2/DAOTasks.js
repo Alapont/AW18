@@ -30,14 +30,37 @@ class DAOTasks {
                         });
                         callback(null,tareas);
                     }
-                })
+                });
             }
             connection.release();
         });
     }
 
     insertTask(email, task, callback) {
-
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= `INSERT INTO task (id, user, text, done) VALUES (NULL, ?,?,?);`;
+                connection.query(sql, [email, task[0], task[1]], function(err,resultado){
+                    if(err){
+                        callback(`Error de acceso a la base de datos`);
+                    }else{
+                        callback(err);
+                    }
+                });
+                const sql= `INSERT INTO tag (taskId, tag) VALUES (?,?);`;
+                connection.query(sql, [resultado.insertID, task[2]], function(err,resultado){
+                    if(err){
+                        callback(`Error de acceso a la base de datos`);
+                    }else{
+                        callback(err);
+                    }
+                });
+                
+            }
+            connection.release();
+        });
     }
 
     markTaskDone(idTask, callback) {
