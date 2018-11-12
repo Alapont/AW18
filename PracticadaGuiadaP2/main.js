@@ -36,7 +36,11 @@ console.log('getUserImage');
 daoUser.getUserImageName("pont@loco.es",test);
 daoUser.getUserImageName("pont@locjnsdjkso.es",test);
 */
+/*
 console.log('getAllTasks');
 daoTask.getAllTasks(`pont@loco.es`, test);
+*/
+console.log('inserTask');
+daoTask.insertTask(`pont@loco.es`, ['textoooooo', '0', ['aw','uni','pont']], test);
 
 

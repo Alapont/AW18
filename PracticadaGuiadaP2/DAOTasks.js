@@ -51,7 +51,7 @@ class DAOTasks {
                 });
                 const sql= `INSERT INTO tag (taskId, tag) VALUES ?;`;
                 let values = task[2].map(f=> resultado.insertID+`,`+f);
-                connection.query(sql, [resultado.insertID, values], function(err,resultado){
+                connection.query(sql, [values], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else{
