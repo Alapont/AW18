@@ -76,7 +76,10 @@ class DAOTasks {
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else{
-                        callback(null,resultado.pop());
+                        if (resultado.changedRows==0)
+                            callback("Error de acceso a la base de datos");
+                        else
+                            callback(null,resultado);
                     }
                 })
             }
