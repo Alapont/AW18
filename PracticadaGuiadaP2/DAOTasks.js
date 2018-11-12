@@ -88,9 +88,27 @@ class DAOTasks {
     }
 
     deleteCompleted(email, callback) {
-
+        //borra todas las tareas donde done = true (1) del usuario email
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= `DELETE FROM task WHERE user=? AND done = 1;`;
+                connection.query(sql, [email], function(err,resultado){
+                    if(err){
+                        callback(`Error de acceso a la base de datos`);
+                    }else{
+                        callback(null,resultado);
+                    }
+                })
+            }
+            connection.release();
+        });
     }
+
 }
+
+
 
 function test(err, data) {
     if (err) {
