@@ -41,6 +41,6 @@ console.log('getAllTasks');
 daoTask.getAllTasks(`pont@loco.es`, test);
 */
 console.log('inserTask');
-daoTask.insertTask(`pont@loco.es`, ['textoooooo', '0', ['aw','uni','pont']], test);
+daoTask.insertTask(`pont@loco.es`, ['sobre', '0', ['pp','psoe']], test);
 
 

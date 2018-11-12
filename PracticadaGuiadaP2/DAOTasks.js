@@ -46,18 +46,18 @@ class DAOTasks {
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else{
-                        callback(err);
+                        const sql1= `INSERT INTO tag (taskId, tag) VALUES ?;`;
+                        let values = task[2].map(f=> resultado.insertID+`,`+f);
+                        connection.query(sql1, [values], function(err,resultado){
+                            if(err){
+                                callback(`Error de acceso a la base de datos`);
+                            }else{
+                                callback(err);
+                            }
+                        });
                     }
                 });
-                const sql= `INSERT INTO tag (taskId, tag) VALUES ?;`;
-                let values = task[2].map(f=> resultado.insertID+`,`+f);
-                connection.query(sql, [values], function(err,resultado){
-                    if(err){
-                        callback(`Error de acceso a la base de datos`);
-                    }else{
-                        callback(err);
-                    }
-                });
+
                 
             }
             connection.release();
