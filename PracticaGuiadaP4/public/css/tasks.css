@@ -7,7 +7,7 @@
 }
 
 body{
-	background: url("Img/fondoPagina.jpg");
+	background: url("../img/fondoPagina.jpg");
 }
 a{
 	color:inherit;
