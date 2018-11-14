@@ -1,0 +1,17 @@
+{
+  "name": "ej1",
+  "version": "1.0.0",
+  "description": "Ejercicio 1",
+  "main": "main.js",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "main.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
