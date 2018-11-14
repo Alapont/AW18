@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 // Crear un servidor Express.js
 const app = express();
 app.set("view engine", "ejs"); //usamos ejs  agromenaguer y candemor
+app.set("views", path.join(__dirname, "public", "views"));
 
 // Crear un pool de conexiones a la base de datos de MySQL
 const pool = mysql.createPool(config.mysqlConfig);
@@ -34,22 +35,26 @@ function error(request, response, next) {
     });
 };
 
-const ficherosEstaticos = path.join(__dirname, "public");
+app.get("/", function (request, response) {
+    response.redirect("/tasks");
+});
 
+app.get("/tasks", function (request, response){
+    response.status(200);
+    response.render("tasks",null)
+});
 //Lista de middlewares
 app.use(logger);
-app.use(express.static(ficherosEstaticos));
-
+app.use(express.static(path.join(__dirname, "public")))
 
 
 
 app.use(error);
 // Arrancar el servidor
-app.listen(config.port, function(err) {
-   if (err) {
-       console.log("ERROR al iniciar el servidor");
-   }
-   else {
-       console.log(`Servidor arrancado en el puerto ${config.port}`);
-   }
+app.listen(config.port, function (err) {
+    if (err) {
+        console.log("ERROR al iniciar el servidor");
+    } else {
+        console.log(`Servidor arrancado en el puerto ${config.port}`);
+    }
 });
