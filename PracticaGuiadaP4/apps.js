@@ -5,6 +5,7 @@ const DAOTasks = require("./DAOTasks");
 const path = require("path");
 const mysql = require("mysql");
 const express = require("express");
+const morgan = require("morgan");//Morgan te suelta por consola lo que va pasando
 const bodyParser = require("body-parser");
 
 // Crear un servidor Express.js
@@ -44,7 +45,7 @@ app.get("/tasks", function (request, response){
     response.render("tasks",null)
 });
 //Lista de middlewares
-app.use(logger);
+app.use(morgan("dev"))
 app.use(express.static(path.join(__dirname, "public")))
 
 
