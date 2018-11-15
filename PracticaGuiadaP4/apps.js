@@ -44,6 +44,15 @@ app.get("/", function (request, response) {
 
 app.get("/tasks", function (request, response){
     response.status(200);
+    /*
+    daoT.getAllTasks("pont@loco.es",(err,data)=>{
+        if (err){
+            response.render("error")
+        }else{
+            response.render("tasks",data);
+        }
+
+    })*/
     response.render("tasks",daoT.getAllTasks("pont@loco.es"))
 });
 //Lista de middlewares
