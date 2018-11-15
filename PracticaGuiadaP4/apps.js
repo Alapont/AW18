@@ -8,6 +8,8 @@ const express = require("express");
 const morgan = require("morgan");//Morgan te suelta por consola lo que va pasando
 const bodyParser = require("body-parser");
 
+const daoTask = require("./DAOTasks");
+
 // Crear un servidor Express.js
 const app = express();
 app.set("view engine", "ejs"); //usamos ejs  agromenaguer y candemor
@@ -42,11 +44,11 @@ app.get("/", function (request, response) {
 
 app.get("/tasks", function (request, response){
     response.status(200);
-    response.render("tasks",null)
+    response.render("tasks",daoT.getAllTasks("pont@loco.es"))
 });
 //Lista de middlewares
-app.use(morgan("dev"))
-app.use(express.static(path.join(__dirname, "public")))
+app.use(morgan("dev"))//coso para depurar
+app.use(express.static(path.join(__dirname, "public")))//Coso para páginas estáticas
 
 
 
