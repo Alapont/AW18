@@ -7,7 +7,7 @@ class DAOTasks {
     }
     //devuelve todas las tareas asociadas a un usuario, junto a los tags asociados a cada una de ellas
     //en una unica consulta que relacione task y tags. Rdo=array de tareas
-    getAllTasks(email, callback) {
+    getAllTasks(email, callback = test) {
         this._pool.getConnection(function(err,connection){
             if(err){
                 callback(`Error de conexion a la base de datos`);
@@ -20,11 +20,14 @@ class DAOTasks {
                         let tareas = [];
 
                         resultado.forEach(element => {
-                            let pos=tareas.indexOf({id:resultado.id});
+                            let pos = tareas.findIndex(function(tarea){
+                                return tarea.id==element.id;
+                            });
+                            //let pos=tareas.indexOf({id:element.id});
                             if(pos==-1){
                                 tareas.push({id:element.id, text:element.text, done:element.done, tags: []});
-                                pos=tareas.findIndex(i=>i.id==element.id);
-                            }
+                                pos=tareas.length-1;
+                            }//Añade las taeras siempre y no devuelve bien el array
                             tareas[pos].tags.push(element.tag);
                             
                         });
