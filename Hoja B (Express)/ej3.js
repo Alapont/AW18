@@ -4,54 +4,64 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
-const fs = require("fs");
 const morgan = require("morgan");
 
-
+//text
 const head = `<!DOCTYPE html>
 <html>
 <head>
     <title>Lista de usuarios</title>
     <meta charset="utf-8">
 </head>
-<body><ul>`;
-const end = `</ul></body></html>`
+<body>`;
+const end = `</body></html>`
+const age=86400000;
 
-let usuarios = ["Javier Montoro", "Dolores Vega", "Beatriz Nito"];
 const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "public", "views"));
 //  Utils
 app.use(morgan("default"));
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
-//Contador
-app.get("/reset", function (request, response) {
+//Sumador
+app.get("/suma", function (request, response,next) {
     response.status(200);
-    response.cookie("contador", 0, {
-        maxAge: 86400000
-    });
-    response.type("text/plain");
-    response.end("Has reiniciado el contador");
+    response.cookie("sumando1",0,{maxAge:age});
+    response.cookie("sumando2",0,{maxAge:age});
+    response.type("text/html");
+    response.write(`<form action="sumando1" method="POST">
+        <input type="number" name="op1">
+        <input type="submit" value="op2">
+    </form>`)
+    response.write(end);
+    //response.end("primer sumando")
 });
-app.get("/increment", function (request, response) {
-    if (request.cookies.contador === undefined) {
-        response.redirect("/reset.html");
-    } else {
-        let contador = Number(request.cookies.contador) + 1;
-        response.cookie("contador", contador);
-        response.status(200);
-        response.type("text/plain");
-        response.end(`El valor actual del contador es ${contador}`);
-    }
+app.post("/sumando1",(request,response,next)=>{
+    response.status(300);
+    response.cookie("sumando1",request.body.op1,{maxAge:age});
+    response.redirect("suma2");
 });
 
+app.get("/suma2", function (request, response) {
+    response.status(200);
+    response.type("text/html");
+    response.write(`<form action="calcular" method="post">
+        <input type="number" name="op2">
+        <input type="submit" value="result">
+    </form>`)
+    response.write(end);
+});
+app.post("/calcular",(request,response,status)=>{
+    response.status(200);
+    response.type("text/html");
+    response.write(`<h1> ${request.cookies.sumando1} + ${request.body.op2} = ${Number(request.cookies.sumando1) + Number(request.body.op2)} </h1>`)
+});
 
 
-app.get('/users', function (request, response, next) {
+
+app.get('/resultado', function (request, response, next) {
     response.write(head)
     usuarios.forEach((user, index) => {
         response.write(`<li><form action="borrarUsuario" method="POST">
@@ -59,8 +69,8 @@ app.get('/users', function (request, response, next) {
             <input type="submit" value="Borrar">
         </form></li>`); //Enlace de borrar
         response.write(user)
-    });
-    response.write(end)
+        response.write(end)
+    })
 })
 app.post('/borrarUsuario', function (request, response, next) {
     usuarios.splice(request.body.index, 1)
