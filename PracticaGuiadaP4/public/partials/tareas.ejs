@@ -1,5 +1,25 @@
 <div class="content">
     <ul class="tareas">
+    <% for each (var tarea in tasklist) { %>
+        <li class="tarea">
+                <span class="tarea2">
+                <%= tarea.nombre =%>
+                <% for each (var tag in tarea.tags){ %>
+                    <span class="tag"> <%=tag.name =%> </span>
+    <%  } %>
+                </span>
+                <span class="fin">Marcar Finalizar</span>
+    <%}%>
+    </ul>
+</div>
+<!--
+                //Nombre Tarea
+                //Bucle de tags
+                    <span class="tag">nombreTag</span>
+            </span>
+            <span class="fin">Marcar Finalizar</span>
+        </li>
+
         <li class="tarea">
             <span class="tarea2">
                 Preparar práctica AW
@@ -31,3 +51,4 @@
             <span class="fin">Marcar Finalizar</span>
         </li>
     </ul>
+    -->
