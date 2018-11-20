@@ -1,54 +1,14 @@
 <div class="content">
     <ul class="tareas">
-    <% for each (var tarea in tasklist) { %>
-        <li class="tarea">
+        <% taskList.forEach((tarea)=>{ %>
+            <li class="tarea">
                 <span class="tarea2">
-                <%= tarea.nombre =%>
-                <% for each (var tag in tarea.tags){ %>
-                    <span class="tag"> <%=tag.name =%> </span>
-    <%  } %>
+                    <%= tarea.text %>
+                    <% tarea.tags.forEach((tag)=>{ %>
+                        <span class="tag"> <%= tag.text %> </span>
+                    <% }); %>
                 </span>
-                <span class="fin">Marcar Finalizar</span>
-    <%}%>
+            </li>
+        <%});%>
     </ul>
 </div>
-<!--
-                //Nombre Tarea
-                //Bucle de tags
-                    <span class="tag">nombreTag</span>
-            </span>
-            <span class="fin">Marcar Finalizar</span>
-        </li>
-
-        <li class="tarea">
-            <span class="tarea2">
-                Preparar práctica AW
-                <span class="tag">AW</span>
-                <span class="tag">práctica</span>
-            </span>
-            <span class="fin">Marcar Finalizar</span>
-        </li>
-        <li class="tarea terminada">
-            <span class="tarea2">
-                Mirar fechas congreso
-                <span class="tag">congreso</span>
-            </span>
-            <span class="fin">Marcar Finalizar</span>
-        </li>
-        <li class="tarea">
-            <span class="tarea2">
-                Ir al supermercado
-                <span class="tag">personal</span>
-            </span>
-            <span class="fin">Marcar Finalizar</span>
-        </li>
-
-        <li class="tarea">
-            <span class="tarea2">
-                Mudanza
-                <span class="tag">personal</span>
-            </span>
-            <span class="fin">Marcar Finalizar</span>
-        </li>
-    </ul>
-    -->
