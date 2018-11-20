@@ -1,15 +1,18 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title>ERROR 404</title>
+    <title>Error del servidor</title>
     <meta charset="UTF-8">
 </head>
 
 <body>
-    <h1><marquee>Parguela</marquee></h1>
-    <h2>Error 404</h2>
-    <p>La dirección <code>
-            <%= url %></code> no existe</p>
+    <h1>500 - Error interno del servidor</h1>
+    <p>Se ha producido el siguiente error:
+        <%= mensaje %>
+    </p>
+    <p>Pila de ejecución:</p>
+    <pre><%= pila %></pre>
 </body>
 
 </html>
