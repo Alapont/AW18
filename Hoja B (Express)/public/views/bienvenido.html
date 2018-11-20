@@ -8,10 +8,16 @@
 
 <body>
     <h1>¡Bienvenido!</h1>
-    <form action="borrarUsuario" method="POST">
-        <input type="hidden" value=>
-        <input type="submit" value="Borrar">
-    </form>
+    <li>
+        <form action="borrarUsuario" method="POST">
+            <input type="hidden" name="index" value=${index}>
+            <input type="submit" value="Borrar">
+        </form>
+        <form action="sumando2" method="POST">
+            <input type="number" name="op1">
+            <input type="submit" value="op2">
+        </form>
+    </li>
 </body>
 
 </html>

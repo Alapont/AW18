@@ -5,7 +5,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const morgan = require("morgan");
-const miRouter = require("./miRouter")
+const miRouter = require("./miRouter");
 
 
 const app = express();
