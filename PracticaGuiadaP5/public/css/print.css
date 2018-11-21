@@ -1,0 +1,62 @@
+/**{
+    border:dashed 1px hotpink ;
+}*/
+
+body{
+    margin: 60px;
+}
+.title{
+    font-weight: bold;
+}
+.title>img{display:none;}
+
+.foto{display:none;}
+
+.datos{display:none;}
+
+.caja{display:none;}
+
+.añadir{display:none;}
+
+.eliminarCompletadas{display: none;}
+
+.hide-text{
+    text-align: left;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.fin{display:none;}
+
+.content{
+    text-align: left;
+}
+.terminada{
+    text-decoration: line-through;
+    margin: 10px;
+}
+
+.tarea{
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+
+.terminada>.tarea2>.tag,
+.terminada>.fin{
+	display:none;
+}
+
+.tag:before{
+    content: "( ";
+}
+
+.tag:after{
+    content:" )";
+}
+
+.tag{
+    font-weight: lighter;
+    margin-right: 10px;
+    margin-left:10px;
+}
