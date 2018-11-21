@@ -5,9 +5,11 @@
                 <span class="tarea2">
                     <%= tarea.text %>
                     <% tarea.tags.forEach((tag)=>{ %>
-                        <span class="tag"> <%= tag.text %> </span>
+                        <span class="tag"> <%= tag %> </span>
                     <% }); %>
+                    
                 </span>
+                <span class="fin">Marcar Finalizar</span>
             </li>
         <%});%>
     </ul>
