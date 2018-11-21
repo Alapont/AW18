@@ -12,7 +12,7 @@ class DAOTasks {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql = `SELECT tag, done, id,text FROM tag JOIN task ON taskId=id WHERE user=?;`;
+                const sql = `SELECT tag, done, id,text FROM tag RIGHT JOIN task ON taskId=id WHERE user=?;`;
                 connection.query(sql, [email], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
@@ -50,12 +50,12 @@ class DAOTasks {
                 callback(`Error de conexion a la base de datos`);
             } else {
                 const sql = `INSERT INTO task (user, text, done) VALUES (?,?,?);`;
-                connection.query(sql, [email, task[0], task[1]], function (err, resultado) {
+                connection.query(sql, [email, task.text, task.done], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
                         const sql1 = `INSERT INTO tag (taskId, tag) VALUES ?;`;
-                        let values = task[2].map(f => [resultado.insertId, f]);
+                        let values = task.tags.map(f => [resultado.insertId, f]);
                         connection.query(sql1, [values], function (err, rdo) {
                             if (err) {
                                 callback(`Error de acceso a la base de datos`);
@@ -84,10 +84,7 @@ class DAOTasks {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        if (resultado.changedRows == 0)
-                            callback("Error de acceso a la base de datos");
-                        else
-                            callback(null, resultado);
+                        callback(null, resultado);
                     }
                 })
             }
