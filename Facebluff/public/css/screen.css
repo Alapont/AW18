@@ -1,0 +1,36 @@
+*{
+	margin:0;
+	padding: 0;
+	background-color: inherit;
+	font-family: 'PT Sans', sans-serif;
+	font-weight: bold;
+}
+
+body{
+	background: url("../img/fondoPagina.jpg");
+}
+
+
+/*Banner*/
+.banner{
+
+}
+.logo{
+
+}
+.menu{
+}
+.menuOpt{
+
+}
+.userBox{
+
+}
+
+/*Content*/
+.pannel{
+
+}
+.button{
+	
+}
