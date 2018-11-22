@@ -1,0 +1,23 @@
+<div class="banner">
+    <div class="title">
+        <p class=hide-text>Lista de tareas</p><img src="img/logoTareas.png" alt="Logotipo tareas">
+    </div>
+    <div class="user">
+        <% if((typeof(sesion) != 'undefined') && sesion.usuario!=null){ %>
+        <div class="foto"><img src="<%= sesion.pic %>" alt="Imagen del usuario"></div>
+        <div class="datos">
+            <div>
+                <p class=mail>
+                    <%= sesion.usuario %>
+                </p>
+                <a class="desconectar" href="#desconectar">Desconectar</a>
+            </div>
+            <% }else{ %>
+            <div>
+                <p class=mail> <a href="/login/">login</a> </p>
+                <p class=mail> <a href="/registro/">Registrate</a> </p>
+            </div>
+            <%}%>
+        </div>
+    </div>
+</div>

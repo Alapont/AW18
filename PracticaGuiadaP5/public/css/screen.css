@@ -162,3 +162,14 @@ div.foto>img{
 .terminada{
 	text-decoration: line-through;
 }
+/*Login*/
+.loginPannel{
+	border: #Fabada solid 2px;
+	background: #c0ffee;
+	border-radius: 5px;
+}
+.error{
+	color: red;
+	font-size: 2em;
+	font-weight: bolder;
+}

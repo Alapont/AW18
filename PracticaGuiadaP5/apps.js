@@ -6,6 +6,8 @@ const mysql = require("mysql");
 const express = require("express");
 const morgan = require("morgan"); //Morgan te suelta por consola lo que va pasando
 const bodyParser = require("body-parser");
+const expressSession = require("express-session");
+const expressMSession = require("express-mysql-session");
 //const ejsLint = require("ejs-lint");
 const daoTask = require("./DAOTasks");
 
@@ -32,8 +34,7 @@ const sesion = {
 function goHome(err, target = "/tasks.html") { //to be done
     response.status((err) ? 500 : 200);
     response.redirect(target);
-}
-
+};
 function error(request, response, next) {
     response.status(404);
     response.render("error", {
@@ -44,7 +45,6 @@ function error(request, response, next) {
 
     });
 };
-
 function createTask(texto) { //tarea @tag @tag'
     let getTag = /\@[\w\d]+/g;
     let tags = texto.match(getTag)
@@ -63,10 +63,11 @@ function createTask(texto) { //tarea @tag @tag'
 app.use(morgan("dev")) //coso para depurar
 app.use(express.static(path.join(__dirname, "public"))) //Coso para páginas estáticas
 
+/* Páginas de Tasks */
 app.get("/", function (request, response) {
     response.redirect("/tasks.html");
 });
-app.get(/\/[Tt]ask(s)?(.html)?/, function (request, response) {
+app.get(/\/[Tt]ask(s)?(.html)?/, function (request, response) { //Tasks
     //var lint=ejsLint("tasks");
     daoT.getAllTasks(sesion.usuario, (err, data) => {
         if (err) {
@@ -75,7 +76,7 @@ app.get(/\/[Tt]ask(s)?(.html)?/, function (request, response) {
         } else {
             response.status(200);
             response.type("text/html");
-            response.render("tasks", {
+            response.render("main", {
                 taskList: data,
                 sesion: sesion,
                 config: {
@@ -111,6 +112,17 @@ app.get("/deleteCompleted", (request, response) => {
     });
 });
 
+/* Páginas de login */
+app.get(/[lL]ogin(.html)?/,(request,response)=>{
+    response.status(200);
+    response.type("text.html");
+    response.render("main",{
+        config:{
+            pageName:"login",
+            error:null
+        }
+    });
+});
 
 
 
