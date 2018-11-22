@@ -23,6 +23,7 @@ campos de la sesión. (cosas como las solicitudes o los amigos, que son
 arrays dentro de un campo, muy posiblemente sean consultas).
 
 To do:
+Formularios y respuestas
 CSS
 Dao
 Login
