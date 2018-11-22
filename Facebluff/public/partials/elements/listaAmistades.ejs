@@ -1,0 +1,8 @@
+<div class="amigos solicitudes">
+    <% sesion.amigos.forEach((amigo)=>{%>
+        <span>
+            <img src=" <% amigo.img %> " alt="foto de perfil de <%- amigo.nombre %>">
+            <%- amigo.nombre %>
+        </span><br>
+    <%});%>
+</div>

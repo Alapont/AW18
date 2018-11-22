@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({
 // Crear un pool de conexiones a la base de datos de MySQL
 const pool = mysql.createPool(config.mysqlConfig);
 //util
+let test=config.testData;//Datos de testeo antes de hacer DAO y tal
 function error(request, response, next) {
     response.status(404);
     response.render("error", {
@@ -24,13 +25,130 @@ function error(request, response, next) {
         config: {
             pageName: "Error 404"
         }
-
     });
 };
-
 //Lista de middlewares
 app.use(morgan("dev")) //coso para depurar
 app.use(express.static(path.join(__dirname, "public"))) //Coso para páginas estáticas
+
+
+//Handlers
+//  Si no está logueado
+//      Login
+app.get(/login(.html)?/,(request,response)=>{
+    if(test.sesion.user){//Salimos si está logueado
+        response.status(300);
+        response.redirect("/perfil");
+    }else{
+        response.status(200);
+        response.type("text/html")
+        response.render("main",{
+            sesion:test.sesion,
+            config:{
+                pageName: "login"
+            }
+        });
+
+    }
+});
+//      Registro
+app.get(/register(.html)?/,(request,response)=>{
+    if(test.sesion.user){//Salimos si está logueado
+        response.status(300);
+        response.redirect("/perfil");
+    }else{
+        response.status(200);
+        response.type("text/html")
+        response.render("main",{
+            sesion:test.sesion,
+            config:{
+                pageName: "register"
+            }
+        });
+
+    }
+});
+
+//  Si está logueado
+//      Perfil
+app.get(/perfil(.html)?/,(request,response)=>{
+    if(!test.sesion.user){//Salimos si no está logueado
+        response.status(300);
+        response.redirect("/login");
+    }else{
+        response.status(200);
+        response.type("text/html")
+        response.render("main",{
+            sesion:test.sesion,
+            config:{
+                pageName: "perfil"
+            }
+        });
+
+    }
+});
+//      Edit
+app.get(/edit(.html)?/,(request,response)=>{
+    if(!test.sesion.user){//Salimos si no está logueado
+        response.status(300);
+        response.redirect("/login");
+    }else{
+        response.status(200);
+        response.type("text/html")
+        response.render("main",{
+            sesion:test.sesion,
+            config:{
+                pageName: "edit"
+            }
+        });
+
+    }
+});
+//      Amigos
+app.get(/amigos(.html)?/,(request,response)=>{
+    if(!test.sesion.user){//Salimos si no está logueado
+        response.status(300);
+        response.redirect("/login");
+    }else{
+        response.status(200);
+        response.type("text/html")
+        response.render("main",{
+            sesion:test.sesion,
+            config:{
+                pageName: "amigos"
+            }
+        });
+
+    }
+});
+//          Solicitar amistad
+app.get("/solicitar/:taskid", (request, response) => {
+
+});
+//          Aceptar amistadº
+app.get("/aceptar/:taskid", (request, response) => {
+    
+});
+//          Rechazar amistad
+app.get("/rechazar/:taskid", (request, response) => {
+    
+});
+app.post("/busca",(request,response)=>{
+    let busqueda=request.body.busqueda;
+});
+//      Preguntas
+//      Desconectar
+app.get(/desconectar(.html)?/,(request,response)=>{
+    response.status(300);
+    test.sesion.user=null;
+    response.redirect("/login");
+});
+
+//Default handler
+app.get('/',(request,response)=>{
+    response.status(300);
+    response.redirect("/login");
+});
 
 app.use(error);
 // Arrancar el servidor
