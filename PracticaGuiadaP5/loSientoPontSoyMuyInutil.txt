@@ -1,0 +1,4 @@
+cambiado en get(/task) user por middleware...
+el login siempre funciona, hay que ver como hacer lo de ErrorMsg. Victor ha hecho una variable global y la muestra
+revisar DAOuseriscorrect. No da error aunque no sea correcto :(
+He hecho lo que he podido lo siento u.u
