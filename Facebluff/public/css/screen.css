@@ -6,7 +6,7 @@
 	font-weight: bold;
 }
 *{
-	border: 1px orange dashed;
+	border: 1px fuchsia dashed;
 }
 
 body{
@@ -85,14 +85,18 @@ a{
 	justify-content: center;
 }
 .foto{
-	flex-grow: 1;
-	border-radius: 1em;
+	flex-grow: 0;
+	width: auto;
 	max-height: 10em;
+	max-width: 10em;
 	overflow:hidden;
+	margin:1em;
 }
 .foto>img{
+	border-radius: 1em;
 	height: 100%;
 }
 .datos{
 	flex-grow: 5;
+	margin-left: 5em;
 }
