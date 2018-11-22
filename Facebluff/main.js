@@ -133,6 +133,7 @@ app.get("/aceptar/:taskid", (request, response) => {
 app.get("/rechazar/:taskid", (request, response) => {
     
 });
+//          Buscar amistad
 app.post("/busca",(request,response)=>{
     let busqueda=request.body.busqueda;
 });
