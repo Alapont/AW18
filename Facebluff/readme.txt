@@ -1,16 +1,19 @@
-Handlers
+Capitán Morgan
+Hogwarts Express
 
-no logueado
---login
---registro
-logueado
---Perfil
---Edit
---Amigos
-----Solicitar amistad
-----Aceptar amistad
-----Rechazr amistad
-----Buscar amistad
---preguntas
---desconectar
-/
+Handlers
+    no logueado
+    --login
+    --registro
+    logueado
+    --Perfil
+    --Edit
+    --Amigos
+    ----Solicitar amistad
+    ----Aceptar amistad
+    ----Rechazr amistad
+    ----Buscar amistad
+    --preguntas
+    --desconectar
+    /
+    error
