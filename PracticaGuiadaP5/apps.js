@@ -127,8 +127,7 @@ app.get(/[lL]ogin(.html)?/, (request, response) => {
     response.type("text.html");
     response.render("main", {
         config: {
-            pageName: "login",
-            error: null
+            pageName: "login"
         }
     });
 });
@@ -140,8 +139,15 @@ app.post(/[pP]rocesar_login(.html)?/, function (request, response) {
             response.error("Error de base de datos");
             response.redirect("/login");
         } else {
-            response.currentUser = request.body.user;
-            response.redirect("/tasks");
+            if(data==true){
+                response.currentUser = request.body.user;
+                response.redirect("/tasks");
+                config.error=null;
+                
+            }else{
+                config.error="ERROR";
+            }
+            
         }
     })
 
