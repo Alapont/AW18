@@ -30,12 +30,18 @@ const _sesion = {
     errorMsg: null
 };
 //const usuario = "pont@loco.es"
-const middlewareSession = expressSession ({
+const middlewareSession = expressSession({
     saveUninitialized: false,
     secret: "foobar34",
-    resave:false
+    resave: false
 });
 
+const sessionStore = new expressMSession({
+    host: config.host,
+    user: config.user,
+    password: config.password,
+    database: config.database
+});
 app.use(middlewareSession);
 //Utils
 function goHome(err, target = "/tasks.html") { //to be done
@@ -127,7 +133,8 @@ app.get(/[lL]ogin(.html)?/, (request, response) => {
     response.type("text.html");
     response.render("main", {
         config: {
-            pageName: "login"
+            pageName: "login",
+            error:(errorMsg==null)?null:response.error
         }
     });
 });
@@ -139,16 +146,16 @@ app.post(/[pP]rocesar_login(.html)?/, function (request, response) {
             response.error("Error de base de datos");
             response.redirect("/login");
         } else {
-            if(data==true){
-                response.currentUser = request.body.user;
+            if (data) {
+                request.session.currentUser = request.body.user;
                 response.redirect("/tasks");
-                config.error=null;
-                
             }else{
-                config.error="ERROR";
+                response.error="ERROR";
+                response.redirect("/login");
             }
-            
+
         }
+
     })
 
 });
