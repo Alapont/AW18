@@ -17,14 +17,7 @@ class DAOUsers{
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else{
-                        callback("longitud:"+resultado.length)
-                        /*
-                        if(resultado.length==0)
-                            callback("Usuario no encontrado")
-                        else
-                            callback(null,resultado.length);
-                        //callback(null,resultado.length==1);
-                        */
+                        callback(null,resultado.length==0?email:resultado[0])
                     }
                 })
             }

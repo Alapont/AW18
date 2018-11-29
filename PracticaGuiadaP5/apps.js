@@ -161,8 +161,9 @@ app.post(/[pP]rocesar_login(.html)?/, function (request, response) {
 		} else {
 			if (data!=null) {
 				middlewareSession.error=("data:"+data);
-				middlewareSession.usuario=(data);
-				response.redirect("/login");//Debería redirigir a tasks
+				request.currentUser=(data);
+				response.redirect("/tasks");//Debería redirigir a tasks
+				//Hace el login pero no devuelve el nombre del usuario
 			}else{
 				middlewareSession.error=("Error de búsqueda de usuario");
 				response.redirect("/login");
