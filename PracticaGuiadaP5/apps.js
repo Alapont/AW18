@@ -153,19 +153,19 @@ app.get(/[lL]ogin(.html)?/, (request, response) => {
 });
 
 app.post(/[pP]rocesar_login(.html)?/, function (request, response) {
-	daoU.isUserCorrect(request.body.user,request.body.password, (err, data) => {
+	daoU.isUserCorrect(request.body.user,request.body.pass, (err, data) => {
 		if (err) {
 			middlewareSession.error=(err);
 			response.status(500);
 			response.redirect("/login");
 		} else {
 			if (data!=null) {
-				middlewareSession.error=("data:"+data);
+				//middlewareSession.error=("data:"+data);
 				request.currentUser=(data);
 				response.redirect("/tasks");//Debería redirigir a tasks
 				//Hace el login pero no devuelve el nombre del usuario
 			}else{
-				middlewareSession.error=("Error de búsqueda de usuario");
+				middlewareSession.error=("Dirección de correo y/o contraseña no válidos");
 				response.redirect("/login");
 			}
 
