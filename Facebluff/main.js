@@ -11,6 +11,7 @@ const mysqlSession=require("express-mysql-session");
 const multer = require("multer");
 const expressValidator = require("express-validator");
 const mySQLStore = mysqlSession(session);
+const daoUser = require("./DAOUsers");
 const sessionStore=new mySQLStore({
     host:"localhost",
     user: "root",
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({
 // Crear un pool de conexiones a la base de datos de MySQL
 const pool = mysql.createPool(config.mysqlConfig);
 //util
+const daoU = new daoUser(pool); // Crear una instancia de DAOUsers
 let test = config.testData; //Datos de testeo antes de hacer DAO y tal
 function error(request, response, next) {
     response.status(404);
@@ -80,14 +82,30 @@ if (middlewareSession.user) { //Salimos si está logueado
     response.cookie("user", request.body.user);
     response.status(200);
     response.type("text/html"); 
-    middlewareSession.user="pont";
-    response.render("main", {
-        sesion: response.cookie.user,
-        config: {
-            pageName: "perfil"
-        }
-    });
+    //comprobamos si el usuario existe y es correcto
+    daoU.isUserCorrect(response.cookie.user, response.cookie.password, (err, data) => {
+		if (err) {
+			middlewareSession.error=(err);
+			response.status(500);
+			response.redirect("/login");
+		} else {
+			if (data!=null) {
+				response.render("main", {
+                    sesion: {
+                        user:  response.cookie.user
+                    },
+                    config: {
+                        pageName: "perfil"
+                    }
+                });
+			}else{
+				middlewareSession.error=("Error de búsqueda de usuario");
+				response.redirect("/login");
+			}
 
+		}
+
+    });
 }
 });
 
