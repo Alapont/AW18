@@ -98,12 +98,13 @@ app.get(/\/[Tt]ask(s)?(.html)?/, function (request, response) { //Tasks
             response.type("text/html");
             response.render("main", {
                 taskList: data,
-                sesion: middlewareSession.currentUser,
+                sesion: {
+                    usuario:middlewareSession.currentUser
+                },
                 config: {
                     pageName: "Tareas"
                 }
             });
-            //ejsLint("tasks",{taskList:data});
         }
 
     })
@@ -139,26 +140,27 @@ app.get(/[lL]ogin(.html)?/, (request, response) => {
     response.render("main", {
         config: {
             pageName: "login",
-            error:(response.error!=undefined)?null:response.error,
+            error:(middlewareSession.error)?middlewareSession.error:null,
             sesion:{
-                usuario:request.session.currentUser
+                usuario:middlewareSession.currentUser
             }
         }
     });
 });
 
 app.post(/[pP]rocesar_login(.html)?/, function (request, response) {
-    daoU.isUserCorrect("pont@loco.es","kaka", (err, data) => {
+    daoU.isUserCorrect(request.body.user,request.body.password, (err, data) => {
         if (err) {
             response.status(500);
-            response.error("Error de base de datos");
+            middlewareSession.error="Error de base de datos";
             response.redirect("/login");
         } else {
-            if (data) {
-                request.session.currentUser = request.body.user;
+            if (data!=null) {
+                middlewareSession.user = data;
+                middlewareSession.error=null;
                 response.redirect("/tasks");
             }else{
-                response.error("ERROR");
+                middlewareSession.error="Error de acceso";
                 response.redirect("/login");
             }
 

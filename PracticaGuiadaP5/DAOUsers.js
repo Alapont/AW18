@@ -11,12 +11,13 @@ class DAOUsers{
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `SELECT email, password FROM user WHERE email= ? AND password = ?`;
+                const sql= `SELECT email,user, password FROM user WHERE email= ? AND password = ?`;
                 connection.query(sql, [email,password], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else{
-                        callback(null,resultado.length==1);
+                        callback(null,(resultado.length==1)?resultado[0].user:null);
+                        //callback(null,resultado.length==1);
                     }
                 })
             }
