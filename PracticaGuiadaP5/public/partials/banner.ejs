@@ -4,7 +4,9 @@
     </div>
     <div class="user">
         <% if((typeof(sesion) != "undefined") && sesion.usuario!=null){ %>
-        <div class="foto"><img src="<%= sesion.pic %>" alt="Imagen del usuario"></div>
+        <div class="foto">
+            <img src="<%= sesion.pic %>" alt="Imagen del usuario">
+        </div>
         <div class="datos">
             <div>
                 <p class=mail>
@@ -12,12 +14,12 @@
                 </p>
                 <a class="desconectar" href="#desconectar">Desconectar</a>
             </div>
-            <% }else{ %>
-            <div>
-                <p class=mail> <a href="/login/">login</a> </p>
-                <p class=mail> <a href="/registro/">Registrate</a> </p>
-            </div>
-            <%}%>
         </div>
+        <% }else{ %>
+        <div>
+            <p class=mail> <a href="/login">login</a> </p>
+            <p class=mail> <a href="/registro">Registrate</a> </p>
+        </div>
+        <%}%>
     </div>
 </div>

@@ -1,5 +1,6 @@
 'use strict';
 const mysql =require ("mysql");
+const config=require("./config");
 
 class DAOUsers{
     constructor(pool){
@@ -16,8 +17,14 @@ class DAOUsers{
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else{
-                        callback(null,resultado.length==1);
+                        callback("longitud:"+resultado.length)
+                        /*
+                        if(resultado.length==0)
+                            callback("Usuario no encontrado")
+                        else
+                            callback(null,resultado.length);
                         //callback(null,resultado.length==1);
+                        */
                     }
                 })
             }
