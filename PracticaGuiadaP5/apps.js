@@ -90,8 +90,7 @@ app.get("/", function (request, response) {
 	response.redirect("/tasks.html");
 });
 app.get(/\/[Tt]ask(s)?(.html)?/, function (request, response) { //Tasks
-	//var lint=ejsLint("tasks");
-	if(middlewareSession.sesionID!=null)response.redirect("login");
+	if(request.session.current!=null)response.redirect("login");
 	daoT.getAllTasks(middlewareSession.currentUser, (err, data) => {
 		if (err) {
 			response.status(500);
@@ -155,15 +154,17 @@ app.get(/[lL]ogin(.html)?/, (request, response) => {
 
 app.post(/[pP]rocesar_login(.html)?/, function (request, response) {
 	daoU.isUserCorrect(request.body.user,request.body.password, (err, data) => {
-			middlewareSession.error=err;
 		if (err) {
+			middlewareSession.error=("Error de base de datos");
 			response.status(500);
 			response.redirect("/login");
 		} else {
 			if (data!=null) {
-				middlewareSession.user = data;
+				middlewareSession.error=("data:"+data);
+				request.session.usuario = data;
 				response.redirect("/tasks");
 			}else{
+				middlewareSession.error=("Error de búsqueda de usuario");
 				response.redirect("/login");
 			}
 

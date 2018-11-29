@@ -16,7 +16,7 @@ class DAOUsers{
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else{
-                        callback(null,(resultado.length==1)?resultado[0]:null);
+                        callback(null,resultado.length==1);
                         //callback(null,resultado.length==1);
                     }
                 })
