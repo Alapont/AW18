@@ -8,6 +8,7 @@ const morgan = require("morgan"); //Morgan te suelta por consola lo que va pasan
 const bodyParser = require("body-parser");
 const expressSession = require("express-session");
 const expressMSession = require("express-mysql-session");
+const cookieParser = require("cookie-parser");
 //const ejsLint = require("ejs-lint");
 const daoTask = require("./DAOTasks");
 const daoUser = require("./DAOUsers");
@@ -43,6 +44,7 @@ const sessionStore = new expressMSession({
     database: config.database
 });
 app.use(middlewareSession);
+app.use(cookieParser());
 //Utils
 function goHome(err, target = "/tasks.html") { //to be done
     response.status((err) ? 500 : 200);
@@ -77,7 +79,10 @@ function createTask(texto) { //tarea @tag @tag'
 //Lista de middlewares
 app.use(morgan("dev")) //coso para depurar
 app.use(express.static(path.join(__dirname, "public"))) //Coso para páginas estáticas
-
+app.get("/cleanCookies",(request,response)=>{
+    response.cookie("currentUser",0,{maxAge:-1});
+    response.redirect("/");
+});
 /* Páginas de Tasks */
 app.get("/", function (request, response) {
     response.redirect("/tasks.html");
@@ -134,13 +139,16 @@ app.get(/[lL]ogin(.html)?/, (request, response) => {
     response.render("main", {
         config: {
             pageName: "login",
-            error:(errorMsg==null)?null:response.error
+            error:(response.error!=undefined)?null:response.error,
+            sesion:{
+                usuario:request.session.currentUser
+            }
         }
     });
 });
 
 app.post(/[pP]rocesar_login(.html)?/, function (request, response) {
-    daoU.isUserCorrect(request.body.user, request.body.pass, (err, data) => {
+    daoU.isUserCorrect("pont@loco.es","kaka", (err, data) => {
         if (err) {
             response.status(500);
             response.error("Error de base de datos");
@@ -150,7 +158,7 @@ app.post(/[pP]rocesar_login(.html)?/, function (request, response) {
                 request.session.currentUser = request.body.user;
                 response.redirect("/tasks");
             }else{
-                response.error="ERROR";
+                response.error("ERROR");
                 response.redirect("/login");
             }
 
