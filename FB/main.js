@@ -30,3 +30,5 @@ console.log("Test de DAO Users");
 DaoU.isUserCorrect("pont","kaka");
 DaoU.isUserCorrect("pont@loco.es","kaka");
 DaoU.getUserImageName("pont@loco.es");
+
+console.log("DAO Amistad");
