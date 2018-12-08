@@ -1,0 +1,15 @@
+<div class="content">
+    <div class="loginPannel content">
+        <form action="/save" method="POST">
+            User:<input type="text" name="user" value="<%- sesion.user %>"><br>
+            Pass:<input type="password" name="pass"><br>
+            Nombre Completo:<input type="text" name="user" value="<%- sesion.nombre %>"><br>
+            Sexo: <br>
+            Imagen de Perfil:<input type="file" name="user"><br>
+            <input type="submit" name="register" value="guardar">
+        </form>
+    </div>
+    <% if(config.error!=null) %>
+    <span class="error">
+        <%- config.error %></span>
+</div>

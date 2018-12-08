@@ -1,0 +1,9 @@
+<div class="amigos solicitudes">
+    <% sesion.solicitudes.forEach((amigo)=>{%>
+        <span>
+            <img src=" <% amigo.img %> " alt="foto de perfil de <%- amigo.nombre %>">
+            <%- amigo.nombre %>
+            <a href="/solicitar/:<%amigo.user%>">Aceptar</a>
+        </span><br>
+    <%});%>
+</div>

@@ -12,6 +12,7 @@ const multer = require("multer");
 const expressValidator = require("express-validator");
 const mySQLStore = mysqlSession(session);
 const daoUser = require("./DAOUsers");
+const daoAmistad = require("./DAOAmistad");
 const sessionStore=new mySQLStore({
     host:"localhost",
     user: "root",
