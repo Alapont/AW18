@@ -43,8 +43,8 @@ class DAOAmistad {
                             //si resultado==0 es trur=> dcha:izqda
                             callback(null, resultado1.concat(resultado2).map((relaccion)=>{
                                 return {
-                                    estado:relaccion.estado,
-                                    amistad:(relaccion.hasOwnProperty("amigado")?relaccion.amigado:amigador)
+                                    amigo:(relaccion.hasOwnProperty("amigado")?relaccion.amigado:relaccion.amigador),
+                                    estado:relaccion.estado
                                 }
                             }));
                         });
