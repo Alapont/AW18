@@ -25,12 +25,12 @@ class DAOUsers{
             connection.release();
         });
     }
-    getUserImageName(email,callback=test){
+    getUser(email,callback=test){
         this._pool.getConnection(function(err,connection){
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `SELECT img FROM users WHERE email=?`;
+                const sql= `SELECT * FROM users WHERE email=?`;
                 connection.query(sql, [email], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);

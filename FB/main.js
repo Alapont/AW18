@@ -39,12 +39,13 @@ function tester(comment=null){
 }
 
 
-console.log("Test de DAO Users");/*
+console.log("Test de DAO Users");
+DaoU.getUser("pont@loco.es",tester("Test user mage"));
+/*
 DaoU.isUserCorrect("pont","kaka",tester("Test: usuario incorrecto"));
 DaoU.isUserCorrect("pont@loco.es","kaka",tester("Test, usuario correcto"));
-DaoU.getUserImageName("pont@loco.es",tester("Test user mage"));
-DaoU.addUser("Pont@ascii.es","a","pont","Hombre","19900215",null,tester("añadir usuario"))*/
-DaoU.findUser("P",tester("Encontrar usuario"))
+DaoU.addUser("Pont@ascii.es","a","pont","Hombre","19900215",null,tester("añadir usuario"))
+DaoU.findUser("P",tester("Encontrar usuario"))*/
 
 /*
 console.log("DAO Amistad");

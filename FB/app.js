@@ -94,18 +94,26 @@ app.post("/login", (request, response) => {
                 response.status(500);
                 response.redirect("/login");
             } else {
-                if (data != null) {
-                  response.status(300);
-                  middlewareSession.user= data.userName;
-                  response.redirect("/login");
-                     
-                } else {
+                if (data != null) 
+                    DaoU.getUser(request.body.user,(err,data)=>{
+                        if (err) {
+                            middlewareSession.error = (err);
+                            response.status(500);
+                            response.redirect("/login");
+                        }else{
+                            response.status(300);
+                            middlewareSession.user= data.userName;
+                            middlewareSession.edad= data.edad;
+                            middlewareSession.sexo= data.sexo;
+                            middlewareSession.puntos=data.puntos;
+                            response.redirect("/login");
+                        }
+                    });
+                else {
                     middlewareSession.error = ("Error de búsqueda de usuario");
                     response.redirect("/login");
                 }
-
             }
-
         });
     }
 });
@@ -133,6 +141,24 @@ app.get(/register(.html)?/, (request, response) => {
 app.post(/register(.html)?/, (request, response) =>{
     
 });
+
+//Perfil
+app.get("/perfil",(request,response)=>{
+    if (middlewareSession.user) { //Salimos si está logueado
+        response.status(200);
+        response.type("text/html");
+        response.render("main",{
+            sesion: middlewareSession,
+            config: {
+                pageName: "perfil"
+            }
+        })
+    } else {
+        response.redirect("/login")
+    }
+})
+
+
 //Default handler
 app.get('/', (request, response) => {
     response.status(300);

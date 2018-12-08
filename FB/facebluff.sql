@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2018 a las 17:56:04
+-- Tiempo de generación: 09-12-2018 a las 00:27:47
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -40,7 +40,8 @@ CREATE TABLE `amistad` (
 
 INSERT INTO `amistad` (`Amigado`, `Amigador`, `Estado`) VALUES
 ('neku@ascii.com', 'pont@loco.es', 'amigo'),
-('pascal@ascii.com', 'pont@loco.es', 'solicitud');
+('pascal@ascii.com', 'pont@loco.es', 'solicitud'),
+('pont@loco.es', 'yago@ascii.com', 'amigo');
 
 -- --------------------------------------------------------
 
@@ -64,25 +65,35 @@ INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user`
+-- Estructura de tabla para la tabla `users`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `img` varchar(100) DEFAULT NULL,
-  `userName` varchar(100) NOT NULL
+  `userName` varchar(100) NOT NULL,
+  `sexo` varchar(15) NOT NULL,
+  `nacimiento` varchar(10) NOT NULL,
+  `puntos` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `user`
+-- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `user` (`email`, `password`, `img`, `userName`) VALUES
-('neku@ascii.com', 'caraculo', 'gato.jpg', 'nerea'),
-('pont@loco.es', 'kaka', 'diploascii.jpg', 'pont'),
-('pascal@ascii.com', 'pascal', NULL, 'Pascal'),
-('yago@ascii.com', 'yago', NULL, 'Yago');
+INSERT INTO `users` (`email`, `password`, `img`, `userName`, `sexo`, `nacimiento`, `puntos`) VALUES
+('neku@ascii.com', 'caraculo', 'gato.jpg', 'nerea', '', '', 0),
+('pont@loco.es', 'kaka', 'diploascii.jpg', 'pont', '', '', 0),
+('pascal@ascii.com', 'pascal', NULL, 'Pascal', '', '', 0),
+('yago@ascii.com', 'yago', NULL, 'Yago', '', '', 0),
+('Noel@ascii.com', 'caca', NULL, 'Noel', 'hombre', '19890615', 0),
+('alapont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
+('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
+('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
+('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
+('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
+('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0);
 
 --
 -- Índices para tablas volcadas
