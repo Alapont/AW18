@@ -46,8 +46,22 @@ class DAOUsers{
             connection.release();
         });
     }
-    addUser(email,userName,pass){
-        return {userName:"Pont"}
+    addUser(email,password,userName,sexo="null",nacimiento="null",img="null",callback=test){
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= "INSERT INTO `user` (`email`, `password`, `img`, `userName`, `sexo`, `nacimiento`) VALUES (?,?,?,?,?,?);";
+                connection.query(sql, [email,password,userName,sexo,nacimiento,img],function (err,resultado){
+                    if(err){
+                        callback(`No se ha podido insertar el usuario`);
+                    }else{
+                        callback(null,userName);
+                    }
+                })
+            }
+            connection.release();
+        });
     }
 }
 function test(err, data){
