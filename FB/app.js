@@ -110,6 +110,25 @@ app.post("/login", (request, response) => {
     }
 });
 
+
+//////REGISTRO////
+//      Registro
+app.get(/register(.html)?/, (request, response) => {
+    if (middlewareSession.user) { //Salimos si está logueado
+        response.status(300);
+        response.redirect("/perfil");
+    } else {
+        response.status(200);
+        response.type("text/html")
+        response.render("main", {
+            sesion: middlewareSession.sesion,
+            config: {
+                pageName: "register"
+            }
+        });
+
+    }
+});
 //Default handler
 app.get('/', (request, response) => {
     response.status(300);
