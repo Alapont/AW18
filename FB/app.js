@@ -7,16 +7,16 @@ const express = require("express");
 const morgan = require("morgan"); //Morgan te suelta por consola lo que va pasando
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const mysqlSession=require("express-mysql-session");
+const mysqlSession = require("express-mysql-session");
 const multer = require("multer");
 const expressValidator = require("express-validator");
 const mySQLStore = mysqlSession(session);
 const daoUser = require("./DAOUsers");
 const daoAmistad = require("./DAOAmistad");
-const sessionStore=new mySQLStore({
-    host:"localhost",
+const sessionStore = new mySQLStore({
+    host: "localhost",
     user: "root",
-    password:"",
+    password: "",
     database: config.database
 });
 const pool = mysql.createPool({
@@ -50,9 +50,9 @@ app.use(morgan("dev")) //coso para depurar
 app.use(express.static(path.join(__dirname, "public"))) //Coso para páginas estáticas
 
 const middlewareSession = session({
-    saveUnitialized:false,
+    saveUnitialized: false,
     secret: "foobar34",
-    resave:false,
+    resave: false,
     store: sessionStore
 });
 
@@ -70,7 +70,7 @@ app.get(/login(.html)?/, (request, response) => {
         response.type("text/html")
         response.render("main", {
             sesion: {
-                user: (request.session!=undefined)?request.session.user:null
+                user: (request.session != undefined) ? request.session.user : null
             },
             config: {
                 pageName: "login"
@@ -81,44 +81,51 @@ app.get(/login(.html)?/, (request, response) => {
 });
 //          login action
 app.post("/login", (request, response) => {
-if (middlewareSession.user) { //Salimos si está logueado
-    response.status(300);
-    response.redirect("/perfil");
-} else {
-    response.status(200);
-    response.type("text/html"); 
-    //comprobamos si el usuario existe y es correcto
-    daoU.isUserCorrect(request.body.user, request.body.password, (err, data) => {
-		if (err) {
-			middlewareSession.error=(err);
-			response.status(500);
-			response.redirect("/login");
-		} else {
-			if (data!=null) {
-				response.render("main", {
-                    sesion: {
-                        user:  response.cookie.user
-                    },
-                    config: {
-                        pageName: "perfil"
-                    }
-                });
-			}else{
-				middlewareSession.error=("Error de búsqueda de usuario");
-				response.redirect("/login");
-			}
+    if (middlewareSession.user) { //Salimos si está logueado
+        response.status(300);
+        response.redirect("/perfil");
+    } else {
+        response.status(200);
+        response.type("text/html");
+        //comprobamos si el usuario existe y es correcto
+        DaoU.isUserCorrect(request.body.user, request.body.password, (err, data) => {
+            if (err) {
+                middlewareSession.error = (err);
+                response.status(500);
+                response.redirect("/login");
+            } else {
+                if (data != null) {
+                    response.render("main", {
+                        sesion: {
+                            user: response.cookie.user
+                        },
+                        config: {
+                            pageName: "perfil"
+                        }
+                    });
+                } else {
+                    middlewareSession.error = ("Error de búsqueda de usuario");
+                    response.redirect("/login");
+                }
 
-		}
+            }
 
-    });
-}
+        });
+    }
 });
 
-/*
-console.log("Test de DAO Users");
-DaoU.isUserCorrect("pont","kaka");
-DaoU.isUserCorrect("pont@loco.es","kaka");
-DaoU.getUserImageName("pont@loco.es");
+//Default handler
+app.get('/', (request, response) => {
+    response.status(300);
+    response.redirect("/login");
+});
 
-console.log("DAO Amistad");
-*/
+app.use(error);
+// Arrancar el servidor
+app.listen(config.port, function (err) {
+    if (err) {
+        console.log("ERROR al iniciar el servidor");
+    } else {
+        console.log(`Servidor arrancado en el puerto ${config.port}`);
+    }
+});
