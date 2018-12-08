@@ -29,14 +29,14 @@ const DaoU = new daoUser(pool);
 const DaoA = new daoAmistad(pool);
 
 
-/*
+
 console.log("Test de DAO Users");
 DaoU.isUserCorrect("pont","kaka");
 DaoU.isUserCorrect("pont@loco.es","kaka");
 DaoU.getUserImageName("pont@loco.es");
-*/
+
 
 console.log("DAO Amistad");
-//DaoA.getAmigos("pont@loco.es");
-//DaoA.getAmigos("pont@Muyloco.es");
+DaoA.getAmigos("pont@loco.es");
+DaoA.getAmigos("pont@Muyloco.es");
 DaoA.setAmistad("pont@loco.es","yago@ascii.com");

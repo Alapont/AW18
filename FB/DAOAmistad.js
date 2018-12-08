@@ -1,5 +1,4 @@
 'use strict';
-const mysql = require("mysql");
 
 class DAOAmistad {
     constructor(pool, debug = false) {

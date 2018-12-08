@@ -1,5 +1,4 @@
 'use strict';
-const mysql =require ("mysql");
 
 class DAOUsers{
     constructor(pool,debug=false){
@@ -19,7 +18,7 @@ class DAOUsers{
                         callback(`Error de acceso a la base de datos`);
                     }else{
                         //si resultado==0 es trur=> dcha:izqda
-                        callback(null,resultado.length==0?null:resultado[0]);
+                        callback(null,resultado.length==0?null:resultado.shift());
                     }
                 })
             }
