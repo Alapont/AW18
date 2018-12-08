@@ -83,7 +83,7 @@ app.get(/login(.html)?/, (request, response) => {
 app.post("/login", (request, response) => {
     if (middlewareSession.user) { //Salimos si está logueado
         response.status(300);
-        response.redirect("/perfil");
+        response.redirect("/login");
     } else {
         response.status(200);
         response.type("text/html");
@@ -95,14 +95,10 @@ app.post("/login", (request, response) => {
                 response.redirect("/login");
             } else {
                 if (data != null) {
-                    response.render("main", {
-                        sesion: {
-                            user: response.cookie.user
-                        },
-                        config: {
-                            pageName: "perfil"
-                        }
-                    });
+                  response.status(300);
+                  middlewareSession.user= data.userName;
+                  response.redirect("/login");
+                     
                 } else {
                     middlewareSession.error = ("Error de búsqueda de usuario");
                     response.redirect("/login");
