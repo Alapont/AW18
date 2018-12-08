@@ -63,6 +63,25 @@ class DAOUsers{
             connection.release();
         });
     }
+    findUser(nombre,callback=test){
+        //Busca a un usuario por subcadenas
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= `SELECT * FROM users WHERE userName LIKE ? `;
+                connection.query(sql, [("%"+nombre+"%")], function(err,resultado){
+                    if(err){
+                        callback(`Error de acceso a la base de datos`);
+                    }else
+                        //callback(null,resultado); //Todo el objeto usuario
+                        callback(null,resultado.map(user=>user.userName)); //Solo los nombres
+                })
+                
+            }
+            connection.release();
+        });
+    }
 }
 function test(err, data){
     console.log((err)?"error: "+err:"No error");
