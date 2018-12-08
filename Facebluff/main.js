@@ -6,6 +6,18 @@ const mysql = require("mysql");
 const express = require("express");
 const morgan = require("morgan"); //Morgan te suelta por consola lo que va pasando
 const bodyParser = require("body-parser");
+const session = require("express-session");
+const mysqlSession=require("express-mysql-session");
+const multer = require("multer");
+const expressValidator = require("express-validator");
+const mySQLStore = mysqlSession(session);
+const daoUser = require("./DAOUsers");
+const sessionStore=new mySQLStore({
+    host:"localhost",
+    user: "root",
+    password:"",
+    database: config.database
+});
 
 // Crear un servidor Express.js
 const app = express();
@@ -17,6 +29,7 @@ app.use(bodyParser.urlencoded({
 // Crear un pool de conexiones a la base de datos de MySQL
 const pool = mysql.createPool(config.mysqlConfig);
 //util
+const daoU = new daoUser(pool); // Crear una instancia de DAOUsers
 let test = config.testData; //Datos de testeo antes de hacer DAO y tal
 function error(request, response, next) {
     response.status(404);
@@ -31,19 +44,28 @@ function error(request, response, next) {
 app.use(morgan("dev")) //coso para depurar
 app.use(express.static(path.join(__dirname, "public"))) //Coso para páginas estáticas
 
+const middlewareSession = session({
+    saveUnitialized:false,
+    secret: "foobar34",
+    resave:false,
+    store: sessionStore
+});
+
 
 //Handlers
 //  Si no está logueado
 //      Login
 app.get(/login(.html)?/, (request, response) => {
-    if (test.sesion.user) { //Salimos si está logueado
+    if (middlewareSession.user) { //Salimos si está logueado
         response.status(300);
         response.redirect("/perfil");
     } else {
         response.status(200);
         response.type("text/html")
         response.render("main", {
-            sesion: test.sesion,
+            sesion: {
+                user: (request.session!=undefined)?request.session.user:null
+            },
             config: {
                 pageName: "login"
             }
@@ -53,33 +75,50 @@ app.get(/login(.html)?/, (request, response) => {
 });
 //          login action
 app.post("/login", (request, response) => {
-if (test.sesion.user) { //Salimos si está logueado
+if (middlewareSession.user) { //Salimos si está logueado
     response.status(300);
     response.redirect("/perfil");
 } else {
+    response.cookie("user", request.body.user);
     response.status(200);
     response.type("text/html"); 
-    test.sesion.user="pont";
-    response.render("main", {
-        sesion: test.sesion,
-        config: {
-            pageName: "perfil"
-        }
-    });
+    //comprobamos si el usuario existe y es correcto
+    daoU.isUserCorrect(response.cookie.user, response.cookie.password, (err, data) => {
+		if (err) {
+			middlewareSession.error=(err);
+			response.status(500);
+			response.redirect("/login");
+		} else {
+			if (data!=null) {
+				response.render("main", {
+                    sesion: {
+                        user:  response.cookie.user
+                    },
+                    config: {
+                        pageName: "perfil"
+                    }
+                });
+			}else{
+				middlewareSession.error=("Error de búsqueda de usuario");
+				response.redirect("/login");
+			}
 
+		}
+
+    });
 }
 });
 
 //      Registro
 app.get(/register(.html)?/, (request, response) => {
-    if (test.sesion.user) { //Salimos si está logueado
+    if (middlewareSession.user) { //Salimos si está logueado
         response.status(300);
         response.redirect("/perfil");
     } else {
         response.status(200);
         response.type("text/html")
         response.render("main", {
-            sesion: test.sesion,
+            sesion: middlewareSession.sesion,
             config: {
                 pageName: "register"
             }
@@ -91,14 +130,14 @@ app.get(/register(.html)?/, (request, response) => {
 //  Si está logueado
 //      Perfil
 app.get(/perfil(.html)?/, (request, response) => {
-    if (!test.sesion.user) { //Salimos si no está logueado
+    if (!middlewareSession.sesion.user) { //Salimos si no está logueado
         response.status(300);
         response.redirect("/login");
     } else {
         response.status(200);
         response.type("text/html")
         response.render("main", {
-            sesion: test.sesion,
+            sesion: middlewareSession.sesion,
             config: {
                 pageName: "perfil"
             }
@@ -108,14 +147,14 @@ app.get(/perfil(.html)?/, (request, response) => {
 });
 //      Edit
 app.get(/edit(.html)?/, (request, response) => {
-    if (!test.sesion.user) { //Salimos si no está logueado
+    if (!middlewareSession.sesion.user) { //Salimos si no está logueado
         response.status(300);
         response.redirect("/login");
     } else {
         response.status(200);
         response.type("text/html")
         response.render("main", {
-            sesion: test.sesion,
+            sesion: middlewareSession.sesion,
             config: {
                 pageName: "edit"
             }
@@ -125,14 +164,14 @@ app.get(/edit(.html)?/, (request, response) => {
 });
 //      Amigos
 app.get(/amigos(.html)?/, (request, response) => {
-    if (!test.sesion.user) { //Salimos si no está logueado
+    if (!middlewareSession.sesion.user) { //Salimos si no está logueado
         response.status(300);
         response.redirect("/login");
     } else {
         response.status(200);
         response.type("text/html")
         response.render("main", {
-            sesion: test.sesion,
+            sesion: middlewareSession.sesion,
             config: {
                 pageName: "amigos"
             }
@@ -160,7 +199,7 @@ app.post("/busca", (request, response) => {
 //      Desconectar
 app.get(/desconectar(.html)?/, (request, response) => {
     response.status(300);
-    test.sesion.user = null;
+    middlewareSession.sesion.user = null;
     response.redirect("/login");
 });
 

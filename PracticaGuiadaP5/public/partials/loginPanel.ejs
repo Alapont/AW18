@@ -6,7 +6,9 @@
             <input type="submit" name="login">
         </form>
     </div>
-    <% if(config.error!=null) %>
+    <% if(config.error!=null) {%>
     <span class="error">
-        <%- config.error %></span>
+        <%- config.error %>
+    </span>
+    <% } %>
 </div>
