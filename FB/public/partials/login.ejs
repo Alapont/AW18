@@ -1,0 +1,12 @@
+<div class="content">
+        <div class="loginPannel content">
+            <form action="/login" method="POST">
+                User:<input type="text" name="user"><br>
+                Pass:<input type="password" name="pass"><br>
+                <input type="submit" name="login" value="Login">
+            </form>
+        </div>
+        <% if(config.error!=null) %>
+        <span class="error">
+            <%- config.error %></span>
+    </div>
