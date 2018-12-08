@@ -18,3 +18,15 @@ const sessionStore=new mySQLStore({
     password:"",
     database: config.database
 });
+const pool = mysql.createPool({
+    host: config.mysqlConfig.host,
+    user: config.mysqlConfig.user,
+    password: config.mysqlConfig.password,
+    database: config.mysqlConfig.database
+});
+const DaoU = new daoUser(pool);
+
+console.log("Test de DAO Users");
+DaoU.isUserCorrect("pont","kaka");
+DaoU.isUserCorrect("pont@loco.es","kaka");
+DaoU.getUserImageName("pont@loco.es");
