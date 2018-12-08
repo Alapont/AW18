@@ -79,11 +79,10 @@ if (middlewareSession.user) { //Salimos si está logueado
     response.status(300);
     response.redirect("/perfil");
 } else {
-    response.cookie("user", request.body.user);
     response.status(200);
     response.type("text/html"); 
     //comprobamos si el usuario existe y es correcto
-    daoU.isUserCorrect(response.cookie.user, response.cookie.password, (err, data) => {
+    daoU.isUserCorrect(request.body.user, request.body.password, (err, data) => {
 		if (err) {
 			middlewareSession.error=(err);
 			response.status(500);
