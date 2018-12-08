@@ -46,6 +46,9 @@ class DAOUsers{
             connection.release();
         });
     }
+    addUser(email,userName,pass){
+        return {userName:"Pont"}
+    }
 }
 function test(err, data){
     console.log((err)?"error: "+err:"No error");
