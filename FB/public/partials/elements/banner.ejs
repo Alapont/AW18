@@ -3,7 +3,7 @@
         <img src="img/logoFace.png" alt="Logotipo FaceBluff">
     </div>
     <div class="menu">
-        <% if(sesion.user!=null){ //Miramos si estamos logueados %>
+        <% if(sesion!=null&&  sesion.userName!=null){ //Miramos si estamos logueados %>
             <span class="menuOpt"><a href="/perfil">Perfil</a></span>
             <span class="menuOpt"><a href="/amigos">Amigos</a></span>
             <span class="menuOpt"><a href="/preguntas">Preguntas</a></span>
