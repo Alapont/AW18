@@ -6,6 +6,7 @@ class DAOAmistad{
         this._pool=pool;
         if(debug)
         console.log(pool);
+        this._estados=["amigo","solicitud"];
     }
     getAmigos(user,callback=test){
         this._pool.getConnection(function(err,connection){
