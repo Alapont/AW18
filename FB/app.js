@@ -129,6 +129,10 @@ app.get(/register(.html)?/, (request, response) => {
 
     }
 });
+
+app.post(/register(.html)?/, (request, response) =>{
+    
+});
 //Default handler
 app.get('/', (request, response) => {
     response.status(300);
