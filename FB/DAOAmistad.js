@@ -32,8 +32,8 @@ class DAOAmistad {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql1 = `SELECT userName, estado FROM amistad JOIN users ON email=amigado WHERE amigador=?`;
-                const sql2 = `SELECT userName, estado FROM amistad JOIN users ON email=amigador WHERE amigado= ?`;
+                const sql1 = `SELECT userName, estado, img FROM amistad JOIN users ON email=amigado WHERE amigador=?`;
+                const sql2 = `SELECT userName, estado, img FROM amistad JOIN users ON email=amigador WHERE amigado= ?`;
                 connection.query(sql1, [user], function (err, resultado1) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
