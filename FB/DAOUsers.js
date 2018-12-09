@@ -12,7 +12,7 @@ class DAOUsers{
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `SELECT userName FROM users WHERE email= ? AND password = ?`;
+                const sql= `SELECT userName FROM user WHERE email= ? AND password = ?`;
                 connection.query(sql, [email,password], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);
@@ -30,7 +30,7 @@ class DAOUsers{
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `SELECT * FROM users WHERE email=?`;
+                const sql= `SELECT * FROM user WHERE email=?`;
                 connection.query(sql, [email], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);
@@ -51,7 +51,7 @@ class DAOUsers{
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= "INSERT INTO users (email, password, img, userName, sexo, nacimiento) VALUES (?,?,?,?,?,?);";
+                const sql= "INSERT INTO user (email, password, img, userName, sexo, nacimiento) VALUES (?,?,?,?,?,?);";
                 connection.query(sql, [email,password,img,userName,sexo,nacimiento],function (err,resultado){
                     if(err){
                         callback(`No se ha podido insertar el usuario`);
@@ -69,7 +69,7 @@ class DAOUsers{
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `SELECT * FROM users WHERE userName LIKE ? `;
+                const sql= `SELECT * FROM user WHERE userName LIKE ? `;
                 connection.query(sql, [("%"+nombre+"%")], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);
