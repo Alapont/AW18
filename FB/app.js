@@ -154,10 +154,15 @@ app.get("/perfil",(request,response)=>{
             }
         })
     } else {
-        response.redirect("/login")
+        response.redirect("/login");
     }
 })
 
+/////////LOGOUT////////
+app.get("/desconectar", (request, response)=>{
+    request.clearCookie(cookies.Name);
+    response.redirect("/login");
+});
 
 //Default handler
 app.get('/', (request, response) => {
