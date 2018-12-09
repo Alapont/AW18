@@ -47,6 +47,23 @@ function error(request, response, next) {
     });
 };
 
+function flashMiddleware(request, response, next) {
+    //añades el atributo setFlash al objeto response
+    response.setFlash = function (msg) {
+        //función que añade el objeto flashMsg con valor msg a session
+        request.session.flashMsg = msg;
+    };
+    //el objeto locals es un objeto que, nada más crear la aplicación, se le añade a app.
+    //puedes acceder desde cualquier plantilla a este objeto
+    response.locals.getAndClearFlash = function () {
+        //coge el mensaje guardado en la sesión, lo borra de la sesión (son mensajes que solo valen 1 vez), y devuleve el mensaje
+        let msg = request.session.flashMsg;
+        delete request.session.flashMsg;
+        return msg;
+    };
+    next();
+};
+
 //Lista de middlewares
 app.use(morgan("dev")) //coso para depurar
 app.use(express.static(path.join(__dirname, "public"))) //Coso para páginas estáticas
@@ -55,9 +72,11 @@ const middlewareSession = session({
     secret: "foobar34",
     resave: false,
     store: sessionStore
-    });
+});
 app.use(middlewareSession);
 app.use(cookieParser());
+app.use(expressValidator());
+app.use(flashMiddleware);
 //////LOGIN//////
 
 //  Si no está logueado
@@ -88,6 +107,7 @@ app.post("/login", (request, response) => {
     } else {
         response.status(200);
         response.type("text/html");
+<<<<<<< Updated upstream
         //comprobamos si el usuario existe y es correcto
         DaoU.isUserCorrect(request.body.user, request.body.password, (err, data) => {
             if (err) {
@@ -109,13 +129,42 @@ app.post("/login", (request, response) => {
                             request.session.nacimiento= data.nacimiento;
                             request.session.sexo= data.sexo;
                             request.session.puntos=data.puntos;
+=======
+        request.checkBody("user", "Nombre de usuario vacío").notEmpty();
+        request.checkBody("password", "La contraseña no es válida").notEmpty();
+        request.getValidationResult().then(function (result) {
+            if (result.isEmpty()) {
+                DaoU.isUserCorrect(request.body.user, request.body.password, (err, data) => {
+                    if (err) {
+                        request.session.error = (err);
+                        response.status(500);
+                        response.redirect("/login");
+                    } else {
+                        if (data != null)
+                            DaoU.getUser(request.body.user, (err, data) => {
+                                if (err) {
+                                    request.session.error = (err);
+                                    response.status(500);
+                                    response.redirect("/login");
+                                } else {
+                                    response.status(300);
+                                    request.session.userName = data.userName;
+                                    request.session.edad = data.edad;
+                                    request.session.sexo = data.sexo;
+                                    request.session.puntos = data.puntos;
+                                    response.redirect("/login");
+                                }
+                            });
+                        else {
+                            request.session.error = ("Error de búsqueda de usuario");
+>>>>>>> Stashed changes
                             response.redirect("/login");
                         }
-                    });
-                else {
-                    request.session.error = ("Error de búsqueda de usuario");
-                    response.redirect("/login");
-                }
+                    }
+                });
+            } else {
+                response.setFlash(result.array());
+                response.redirect("/login");
             }
         });
     }
@@ -186,6 +235,7 @@ app.get(/register(.html)?/, (request, response) => {
     }
 });
 
+<<<<<<< Updated upstream
 app.post(/register(.html)?/, (request, response) =>{
     if(request.session.userName==null){
         response.redirect("login");
@@ -197,14 +247,27 @@ app.post(/register(.html)?/, (request, response) =>{
         })
 
     }
+=======
+app.post(/register(.html)?/, (request, response) => {
+
+
+    request.getValidationResult().then(function (result) {
+        if (result.isEmpty()) {
+            response.redirect("correcto.html");
+        } else {
+            response.setFlash(result.array());
+            response.redirect("/");
+        }
+    });
+>>>>>>> Stashed changes
 });
 
 //Perfil
-app.get("/perfil",(request,response)=>{
+app.get("/perfil", (request, response) => {
     if (request.session.userName) { //Salimos si está logueado
         response.status(200);
         response.type("text/html");
-        response.render("main",{
+        response.render("main", {
             sesion: request.session,
             config: {
                 pageName: "perfil"
@@ -216,8 +279,10 @@ app.get("/perfil",(request,response)=>{
 })
 
 /////////LOGOUT////////
-app.get("/desconectar", (request, response)=>{
-    response.clearCookie("connect.sid",{ path: '/' });
+app.get("/desconectar", (request, response) => {
+    response.clearCookie("connect.sid", {
+        path: '/'
+    });
     response.redirect("/login");
 });
 
