@@ -107,29 +107,6 @@ app.post("/login", (request, response) => {
     } else {
         response.status(200);
         response.type("text/html");
-<<<<<<< Updated upstream
-        //comprobamos si el usuario existe y es correcto
-        DaoU.isUserCorrect(request.body.user, request.body.password, (err, data) => {
-            if (err) {
-                request.session.error = (err);
-                response.status(500);
-                response.redirect("/login");
-            } else {
-                if (data != null) 
-                    DaoU.getUser(request.body.user,(err,data)=>{
-                        if (err) {
-                            request.session.error = (err);
-                            response.status(500);
-                            response.redirect("/login");
-                        }else{
-                            response.status(300);
-                            request.session.userName= data.userName;
-                            request.session.email= data.email;
-                            request.session.img= data.img;
-                            request.session.nacimiento= data.nacimiento;
-                            request.session.sexo= data.sexo;
-                            request.session.puntos=data.puntos;
-=======
         request.checkBody("user", "Nombre de usuario vacío").notEmpty();
         request.checkBody("password", "La contraseña no es válida").notEmpty();
         request.getValidationResult().then(function (result) {
@@ -157,7 +134,6 @@ app.post("/login", (request, response) => {
                             });
                         else {
                             request.session.error = ("Error de búsqueda de usuario");
->>>>>>> Stashed changes
                             response.redirect("/login");
                         }
                     }
@@ -235,19 +211,6 @@ app.get(/register(.html)?/, (request, response) => {
     }
 });
 
-<<<<<<< Updated upstream
-app.post(/register(.html)?/, (request, response) =>{
-    if(request.session.userName==null){
-        response.redirect("login");
-    }else{
-        response.status(200);
-        response.type("text/html");
-        DaoU.findUser(request.body.busqueda,(err,data)=>{
-
-        })
-
-    }
-=======
 app.post(/register(.html)?/, (request, response) => {
 
 
@@ -259,7 +222,6 @@ app.post(/register(.html)?/, (request, response) => {
             response.redirect("/");
         }
     });
->>>>>>> Stashed changes
 });
 
 //Perfil
