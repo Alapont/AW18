@@ -1,10 +1,10 @@
 <div class="amigos solicitudes">
     <% sesion.solicitudes.forEach((amigo)=>{%>
         <span>
-            <img src=" <% amigo.img %> " alt="foto de perfil de <%- amigo.nombre %>">
-            <%- amigo.nombre %>
+            <img src="../img/usuario.jpg" height="50" alt="foto de perfil de <%- amigo.userName %>">
+            <%- amigo.userName %>
             <a href="/aceptar/:<%amigo.user%>">Aceptar</a>
-            <a href="/rechacar/:<%amigo.user%>">Rechazar</a>
+            <a href="/rechazar/:<%amigo.user%>">Rechazar</a>
         </span><br>
     <%});%>
 </div>

@@ -1,9 +1,11 @@
-<div class="amigos solicitudes">
-    <% sesion.solicitudes.forEach((amigo)=>{%>
-        <span>
-            <img src=" <% amigo.img %> " alt="foto de perfil de <%- amigo.nombre %>">
-            <%- amigo.nombre %>
-            <a href="/solicitar/:<%amigo.user%>">Aceptar</a>
-        </span><br>
-    <%});%>
+<div class="content">
+    <div class="amigos solicitudes">
+        <% sesion.busqueda.forEach((amigo)=>{%>
+            <span>
+                <img src=" <% amigo.img %> " alt="foto de perfil de <%- amigo.userName %>">
+                <%- amigo.userName %>
+                <a href="/adeptar/:<%amigo.email%>">Aceptar</a>
+            </span><br>
+        <%});%>
+    </div>
 </div>
