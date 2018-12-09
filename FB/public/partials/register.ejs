@@ -1,12 +1,15 @@
 <div class="content">
         <div class="loginPannel content">
-            <form action="/register" method="POST">
-                Email <input type="email" name="user"><br>
-                Contraseña <input type="password" name="password"><br>
-                Nombre completo <input type="text" name="userName"><br>
+            <form class="registro" action="/register" method="POST">
+                Email <input class="write email" type="email" name="user"><br>
+                Contraseña <input class="write pass" type="password" name="password"><br>
+                Nombre completo <input class="write name" type="text" name="userName"><br>
                 Sexo
-                Fecha de nacimiento
-                Imagen de perfil
+                <input class= "write sex" type="radio" name="gender" value="male" checked> Male
+                <input type="radio" name="gender" value="female"> Female
+                <input type="radio" name="gender" value="other"> Other<br>
+                Fecha de nacimiento <input class="write date" type="date" name="fechaNac" max="2000-12-31"><br>
+                Imagen de perfil<input class="write picture" type="file" name="imagenPerfil"><br>
                 <input type="submit" name="login">
             </form>
         </div>

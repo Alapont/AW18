@@ -78,6 +78,13 @@ a{
 	width:8em;
 
 }
+/*Registro Form*/
+.registro{
+	display: block;
+}
+.write{
+	margin-left: 10%;
+}
 
 /*Perfil*/
 .perfilPannel{
