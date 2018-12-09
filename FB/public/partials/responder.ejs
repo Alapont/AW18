@@ -1,0 +1,10 @@
+<div class=container>
+    <h2>Pregunta</h2>
+    <form action="/responder" method="POST">
+        <% respuestas.forEach((respuesta)=>{%>
+            <input class="option" type="button" name="<%-Respuesta.text%>"value="<%-respuesta.id%>"/>
+        <%}) %>
+        <!--No se hacer una opción que sea un textbox bla bla, así que si se da el botón de "otro" se lee el texto-->
+        <span><input type="button" name="otra"value="<%-respuesta.id%>"><input type="text" name="texto" placeholder="Tu respuesta"/></span>
+    </form>
+</div>

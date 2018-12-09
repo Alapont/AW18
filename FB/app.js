@@ -14,10 +14,11 @@ const mySQLStore = mysqlSession(session);
 const daoUser = require("./DAOUsers");
 const daoAmistad = require("./DAOAmistad");
 const sessionStore = new mySQLStore({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: config.database
+    host: config.mysqlConfig.host,
+    user: config.mysqlConfig.user,
+    port: config.mysqlConfig.port,
+    password: config.mysqlConfig.password,
+    database: config.mysqlConfig.database
 });
 const pool = mysql.createPool({
     host: config.mysqlConfig.host,
@@ -48,14 +49,13 @@ function error(request, response, next) {
 //Lista de middlewares
 app.use(morgan("dev")) //coso para depurar
 app.use(express.static(path.join(__dirname, "public"))) //Coso para páginas estáticas
-
 const middlewareSession = session({
-    saveUnitialized: false,
+    saveUninitialized: false,
     secret: "foobar34",
     resave: false,
     store: sessionStore
-});
-
+    });
+    app.use(middlewareSession);
 
 //////LOGIN//////
 
@@ -102,10 +102,10 @@ app.post("/login", (request, response) => {
                             response.redirect("/login");
                         }else{
                             response.status(300);
-                            middlewareSession.user= data.userName;
-                            middlewareSession.edad= data.edad;
-                            middlewareSession.sexo= data.sexo;
-                            middlewareSession.puntos=data.puntos;
+                            request.session.user= data.userName;
+                            request.session.edad= data.edad;
+                            request.session.sexo= data.sexo;
+                            request.session.puntos=data.puntos;
                             response.redirect("/login");
                         }
                     });
