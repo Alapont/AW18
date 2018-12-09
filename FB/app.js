@@ -10,6 +10,7 @@ const session = require("express-session");
 const mysqlSession = require("express-mysql-session");
 const multer = require("multer");
 const expressValidator = require("express-validator");
+const cookieParser = require ("cookie-parser");
 const mySQLStore = mysqlSession(session);
 const daoUser = require("./DAOUsers");
 const daoAmistad = require("./DAOAmistad");
@@ -55,8 +56,8 @@ const middlewareSession = session({
     resave: false,
     store: sessionStore
     });
-    app.use(middlewareSession);
-
+app.use(middlewareSession);
+app.use(cookieParser());
 //////LOGIN//////
 
 //  Si no está logueado
@@ -160,7 +161,7 @@ app.get("/perfil",(request,response)=>{
 
 /////////LOGOUT////////
 app.get("/desconectar", (request, response)=>{
-    request.clearCookie(cookies.Name);
+    response.clearCookie("connect.sid",{ path: '/' });
     response.redirect("/login");
 });
 
