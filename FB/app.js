@@ -86,15 +86,18 @@ app.get(/login(.html)?/, (request, response) => {
         response.status(300);
         response.redirect("/perfil");
     } else {
+        let err = [];
         response.status(200);
         response.type("text/html")
         response.render("main", {
+            errores:err,
             sesion: {
                 user: (request.session != undefined) ? request.session.userName : null
             },
             config: {
                 pageName: "login"
             }
+           
         });
 
     }

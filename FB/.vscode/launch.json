@@ -8,8 +8,8 @@
             "type": "node",
             "request": "launch",
             "name": "Web",
-            "program": "${workspaceFolder}\\main.js"
-        }
+            "program": "${workspaceFolder}\\app.js"
+        },
         {
             "type": "node",
             "request": "launch",
