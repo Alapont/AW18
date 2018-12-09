@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-12-2018 a las 17:03:53
+-- Tiempo de generación: 09-12-2018 a las 18:16:09
 -- Versión del servidor: 10.1.29-MariaDB
 -- Versión de PHP: 7.1.12
 
@@ -60,7 +60,12 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
-('CopaiGKnoBe5VjxY7RWbKMKdxWLV9Y_P', 1544296888, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"}}');
+('1KI4w-RbupreE4m6GtVhhVQXgEfR-dL5', 1544460905, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"error\":\"Error de búsqueda de usuario\",\"user\":\"pont\",\"sexo\":\"\",\"puntos\":0}'),
+('CopaiGKnoBe5VjxY7RWbKMKdxWLV9Y_P', 1544296888, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"}}'),
+('G6qHrChyjSoI7_DjV6CNjspRdxnFrv56', 1544461505, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"userName\":\"nerea\",\"sexo\":\"\",\"puntos\":0}'),
+('Ov7fXKIhqQyPVJI_mdW4egTY8Fjoy7wf', 1544461458, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"user\":\"pont\",\"sexo\":\"\",\"puntos\":0,\"userName\":\"pont\"}'),
+('ilzX02UZwlujJLfFNZKcdZGV8NqYWVwL', 1544460817, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"user\":\"pont\",\"sexo\":\"\",\"puntos\":0}'),
+('x87c7VTzd0jn1jpo2ErHzyLElo5YVxjR', 1544460879, '{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"user\":\"pont\",\"sexo\":\"\",\"puntos\":0}');
 
 -- --------------------------------------------------------
 
@@ -84,16 +89,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`email`, `password`, `img`, `userName`, `sexo`, `nacimiento`, `puntos`) VALUES
 ('neku@ascii.com', 'caraculo', 'gato.jpg', 'nerea', '', '', 0),
-('pont@loco.es', 'kaka', 'diploascii.jpg', 'pont', '', '', 0),
-('pascal@ascii.com', 'pascal', NULL, 'Pascal', '', '', 0),
-('yago@ascii.com', 'yago', NULL, 'Yago', '', '', 0),
 ('Noel@ascii.com', 'caca', NULL, 'Noel', 'hombre', '19890615', 0),
-('alapont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
-('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
-('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
-('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
-('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0),
-('Pont@ascii.es', 'a', NULL, 'pont', 'Hombre', '19900215', 0);
+('pascal@ascii.com', 'pascal', NULL, 'Pascal', '', '', 0),
+('pont@loco.es', 'kaka', 'diploascii.jpg', 'pont', '', '', 0),
+('yago@ascii.com', 'yago', NULL, 'Yago', '', '', 0);
 
 --
 -- Índices para tablas volcadas
@@ -110,6 +109,12 @@ ALTER TABLE `amistad`
 --
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`session_id`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD UNIQUE KEY `email` (`email`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
