@@ -62,7 +62,7 @@ const middlewareSession = session({
 //  Si no está logueado
 //      Login
 app.get(/login(.html)?/, (request, response) => {
-    if (request.session.user) { //Salimos si está logueado
+    if (request.session.userName) { //Salimos si está logueado
         response.status(300);
         response.redirect("/perfil");
     } else {
@@ -70,7 +70,7 @@ app.get(/login(.html)?/, (request, response) => {
         response.type("text/html")
         response.render("main", {
             sesion: {
-                user: (request.session != undefined) ? request.session.user : null
+                user: (request.session != undefined) ? request.session.userName : null
             },
             config: {
                 pageName: "login"
@@ -81,7 +81,7 @@ app.get(/login(.html)?/, (request, response) => {
 });
 //          login action
 app.post("/login", (request, response) => {
-    if (request.session.user) { //Salimos si está logueado
+    if (request.session.userName) { //Salimos si está logueado
         response.status(300);
         response.redirect("/login");
     } else {
@@ -102,7 +102,7 @@ app.post("/login", (request, response) => {
                             response.redirect("/login");
                         }else{
                             response.status(300);
-                            request.session.user= data.userName;
+                            request.session.userName= data.userName;
                             request.session.edad= data.edad;
                             request.session.sexo= data.sexo;
                             request.session.puntos=data.puntos;
@@ -122,7 +122,7 @@ app.post("/login", (request, response) => {
 //////REGISTRO////
 //      Registro
 app.get(/register(.html)?/, (request, response) => {
-    if (request.session.user) { //Salimos si está logueado
+    if (request.session.userName) { //Salimos si está logueado
         response.status(300);
         response.redirect("/perfil");
     } else {
@@ -144,7 +144,7 @@ app.post(/register(.html)?/, (request, response) =>{
 
 //Perfil
 app.get("/perfil",(request,response)=>{
-    if (request.session.user) { //Salimos si está logueado
+    if (request.session.userName) { //Salimos si está logueado
         response.status(200);
         response.type("text/html");
         response.render("main",{
