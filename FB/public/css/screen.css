@@ -86,6 +86,11 @@ a{
 	margin-left: 10%;
 }
 
+div.caja_errores {
+    border: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
 /*Perfil*/
 .perfilPannel{
 	flex-direction: row;
