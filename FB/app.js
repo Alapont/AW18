@@ -104,7 +104,9 @@ app.post("/login", (request, response) => {
                         }else{
                             response.status(300);
                             request.session.userName= data.userName;
-                            request.session.edad= data.edad;
+                            request.session.email= data.email;
+                            request.session.img= data.img;
+                            request.session.nacimiento= data.nacimiento;
                             request.session.sexo= data.sexo;
                             request.session.puntos=data.puntos;
                             response.redirect("/login");
@@ -119,8 +121,53 @@ app.post("/login", (request, response) => {
     }
 });
 
+////// Amigos //////
+app.get("/amigos",(request,response)=>{
+    if (request.session.userName) { //Salimos si no está logueado
+        response.status(200);
+        response.type("text/html");
+        DaoA.getAmigos(request.session.email,(err,data)=>{
+            if(err){
+                response.status(300);
+                response.redirect("/perfil");
+            }else{
+                //nos quedamos con los amigos
+                request.session.amigos=data.filter(amigo=>amigo.estado=="amigo");
+                request.session.solicitudes=data.filter(amigo=>amigo.estado=="solicitud");
+                response.render("main",{
+                    sesion: request.session,
+                    config: {
+                        pageName: "amigos"
+                    }
+                })
+            };
+        });
+    } else {
+        response.redirect("/login");
+    }
+});
 
-//////REGISTRO////
+app.post("/busca",(request,response)=>{
+
+});
+
+//////Preguntas/////
+app.get("/preguntas",(request,response)=>{
+    if (request.session.userName) { //Salimos si no está logueado
+        response.status(200);
+        response.type("text/html");
+        response.render("main",{
+            sesion: request.session,
+            config: {
+                pageName: "preguntas"
+            }
+        })
+    } else {
+        response.redirect("/login");
+    }
+});
+
+//////REGISTRO/////
 //      Registro
 app.get(/register(.html)?/, (request, response) => {
     if (request.session.userName) { //Salimos si está logueado
@@ -140,7 +187,16 @@ app.get(/register(.html)?/, (request, response) => {
 });
 
 app.post(/register(.html)?/, (request, response) =>{
-    
+    if(request.session.userName==null){
+        response.redirect("login");
+    }else{
+        response.status(200);
+        response.type("text/html");
+        DaoU.findUser(request.body.busqueda,(err,data)=>{
+
+        })
+
+    }
 });
 
 //Perfil
