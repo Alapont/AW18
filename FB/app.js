@@ -123,12 +123,14 @@ app.post("/login", (request, response) => {
                                     request.session.error = (err);
                                     response.status(500);
                                     response.redirect("/login");
-                                } else {
+                                } else{
                                     response.status(300);
-                                    request.session.userName = data.userName;
-                                    request.session.edad = data.edad;
-                                    request.session.sexo = data.sexo;
-                                    request.session.puntos = data.puntos;
+                                    request.session.userName= data.userName;
+                                    request.session.email= data.email;
+                                    request.session.img= data.img;
+                                    request.session.nacimiento= data.nacimiento;
+                                    request.session.sexo= data.sexo;
+                                    request.session.puntos=data.puntos;
                                     response.redirect("/login");
                                 }
                             });
