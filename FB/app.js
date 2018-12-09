@@ -165,6 +165,8 @@ app.get('/', (request, response) => {
     response.redirect("/login");
 });
 
+
+//Si llego hasta aqui es un fallo
 app.use(error);
 // Arrancar el servidor
 app.listen(config.port, function (err) {
