@@ -1,0 +1,13 @@
+ <div class="content">
+    <!--La pregunta va pr parámetro, y si la ha contestado o no también-->
+    <h2><%- "Título de la pregunta" %></h2>
+    <% if(respuesta!=null){ %>
+    <!--Si no se ha contestado a la pregunta-->
+        No has contestado a la pregunta
+        <a href="/Contestar/:id" class="button">Contestar pregunta</a>
+    <% }else{ %>
+    <!--Si se ha contestado a la pregunta-->
+        Respondiste
+        <h3>Respuesta del usuario</h3>
+    <%}%>
+ </div>
