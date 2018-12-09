@@ -62,7 +62,7 @@ const middlewareSession = session({
 //  Si no está logueado
 //      Login
 app.get(/login(.html)?/, (request, response) => {
-    if (middlewareSession.user) { //Salimos si está logueado
+    if (request.session.user) { //Salimos si está logueado
         response.status(300);
         response.redirect("/perfil");
     } else {
@@ -81,7 +81,7 @@ app.get(/login(.html)?/, (request, response) => {
 });
 //          login action
 app.post("/login", (request, response) => {
-    if (middlewareSession.user) { //Salimos si está logueado
+    if (request.session.user) { //Salimos si está logueado
         response.status(300);
         response.redirect("/login");
     } else {
@@ -90,14 +90,14 @@ app.post("/login", (request, response) => {
         //comprobamos si el usuario existe y es correcto
         DaoU.isUserCorrect(request.body.user, request.body.password, (err, data) => {
             if (err) {
-                middlewareSession.error = (err);
+                request.session.error = (err);
                 response.status(500);
                 response.redirect("/login");
             } else {
                 if (data != null) 
                     DaoU.getUser(request.body.user,(err,data)=>{
                         if (err) {
-                            middlewareSession.error = (err);
+                            request.session.error = (err);
                             response.status(500);
                             response.redirect("/login");
                         }else{
@@ -110,7 +110,7 @@ app.post("/login", (request, response) => {
                         }
                     });
                 else {
-                    middlewareSession.error = ("Error de búsqueda de usuario");
+                    request.session.error = ("Error de búsqueda de usuario");
                     response.redirect("/login");
                 }
             }
@@ -122,14 +122,14 @@ app.post("/login", (request, response) => {
 //////REGISTRO////
 //      Registro
 app.get(/register(.html)?/, (request, response) => {
-    if (middlewareSession.user) { //Salimos si está logueado
+    if (request.session.user) { //Salimos si está logueado
         response.status(300);
         response.redirect("/perfil");
     } else {
         response.status(200);
         response.type("text/html")
         response.render("main", {
-            sesion: middlewareSession.sesion,
+            sesion: request.session.sesion,
             config: {
                 pageName: "register"
             }
@@ -144,11 +144,11 @@ app.post(/register(.html)?/, (request, response) =>{
 
 //Perfil
 app.get("/perfil",(request,response)=>{
-    if (middlewareSession.user) { //Salimos si está logueado
+    if (request.session.user) { //Salimos si está logueado
         response.status(200);
         response.type("text/html");
         response.render("main",{
-            sesion: middlewareSession,
+            sesion: request.session,
             config: {
                 pageName: "perfil"
             }
