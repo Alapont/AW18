@@ -46,12 +46,12 @@ class DAOUsers{
             connection.release();
         });
     }
-    addUser(email,password,userName,sexo="null",nacimiento="null",img="null",callback=test){
+    addUser(email,password,img="null",userName,sexo="null",nacimiento="null",callback=test){
         this._pool.getConnection(function(err,connection){
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= "INSERT INTO users (email, password, img, userName, sexo, nacimiento) VALUES (?,?,?,?,?,?);";
+                const sql= "INSERT INTO users (email, password,img, userName, sexo, nacimiento ) VALUES (?,?,?,?,?,?);";
                 connection.query(sql, [email,password,img,userName,sexo,nacimiento],function (err,resultado){
                     if(err){
                         callback(`No se ha podido insertar el usuario`);

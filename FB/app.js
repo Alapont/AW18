@@ -169,8 +169,8 @@ app.get("/amigos",(request,response)=>{
                     config: {
                         pageName: "amigos"
                     }
-                })
-            };
+                });
+            }
         });
     } else {
         response.redirect("/login");
@@ -218,13 +218,22 @@ app.get(/register(.html)?/, (request, response) => {
 
 app.post(/register(.html)?/, (request, response) => {
 
-
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
-            response.redirect("correcto.html");
+            DaoU.addUser(request.body.user, request.body.password,
+                request.body.imagenPerfil,request.body.userName, 
+                request.body.gender, request.body.fechaNac, (err,data)=>{
+                    if(err){
+                        response.status(300);
+                        response.redirect("/register");
+                    }else{
+                        //nos quedamos con los amigos
+                        response.redirect("/login");
+                    }
+                });
         } else {
             response.setFlash(result.array());
-            response.redirect("/");
+            response.redirect("/login");
         }
     });
 });
