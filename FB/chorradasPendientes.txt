@@ -1,0 +1,13 @@
+Punto 1:
+	-Cuando se mete mal el usuario o contraseña, mensaje de error de identificación
+	-Modificar perfil
+	-Linkear amigos con su perfil
+	-Mostrar la foto de avatar si la tiene
+Punto 2:
+	Faltar enganchar todo
+Punto 3:
+	pendiente
+Punto 4:
+	no lo hacemos
+Punto 5:
+	pendiente
