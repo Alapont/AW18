@@ -81,9 +81,27 @@ class DAOPreguntas {
                 const sql = "INSERT INTO respuestas(idPregunta,idRespuesta) VALUES (?,?);";
                 connection.query(sql, [pregunta, respuesta], function (err, resultado) {
                     if (err) {
-                        callback(`No se ha podido insertar el usuario`);
+                        callback(`No se ha podido insertar la respuesta`);
                     } else {
                         callback(null, pregunta);
+                    }
+                })
+            }
+            connection.release();
+        });
+    }
+    addPregunta(pregunta, callback = test) {
+        //Añade una nueva respuesta a una pregunta 
+        this._pool.getConnection(function (err, connection) {
+            if (err) {
+                callback(`Error de conexion a la base de datos`);
+            } else {
+                const sql = "INSERT INTO preguntas(pregunta) VALUES (?);";
+                connection.query(sql, [pregunta], function (err, resultado) {
+                    if (err) {
+                        callback(`No se ha podido insertar la pregunta`);
+                    } else {
+                        callback(null, resultado);
                     }
                 })
             }
