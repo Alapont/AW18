@@ -34,19 +34,25 @@ class DAOPreguntas {
         });
     }
     getRespuestas(pregunta, callback = test) {
-        //Devuelve todas las respuestas de una pregunta dada por ID
-        //SELECT * FROM respuestas WHERE pidPregunta=pregunta
+        //Devuelve toda la información de una pregunta:
+        //{texto:"texto de la pregunta",respuestas:[opt1, opt2]}
         this._pool.getConnection(function (err, connection) {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql = `SELECT * FROM respuestas WHERE idPregunta=?`;
-                connection.query(sql, [pregunta], function (err, resultado) {
+                const sql1 = `SELECT id,texto FROM respuestas WHERE idPregunta=?`;
+                const sql2 = `SELECT texto FROM preguntas WHERE id=?`
+                connection.query(sql1, [pregunta], function (err, respuestas) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        //si resultado==0 es trur=> dcha:izqda
-                        callback(null, resultado);
+                        connection.query(sql2, [pregunta], function (err, texto){
+                            if (err){
+                                callback("error de acceso a la base de datos");
+                            }else{
+                                callback(null,{idPregunta=pregunta,texto:texto[0].texto,respuestas:respuestas});
+                            }
+                        })
                     }
                 })
             }
