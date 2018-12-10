@@ -13,6 +13,7 @@ const expressValidator = require("express-validator");
 const mySQLStore = mysqlSession(session);
 const daoUser = require("./DAOUsers");
 const daoAmistad = require("./DAOAmistad");
+const daoPreguntas = require("./DAOPreguntas");
 const sessionStore=new mySQLStore({
     host:"localhost",
     user: "root",
@@ -27,6 +28,7 @@ const pool = mysql.createPool({
 });
 const DaoU = new daoUser(pool);
 const DaoA = new daoAmistad(pool);
+const DaoP = new daoPreguntas(pool);
 
 
 function tester(comment=null){
@@ -39,7 +41,7 @@ function tester(comment=null){
 }
 
 
-console.log("Test de DAO Users");
+console.log("DAO Users");
 /*DaoU.getUser("pont@loco.es",tester("Test user mage"));
 DaoU.isUserCorrect("pont","kaka",tester("Test: usuario incorrecto"));
 DaoU.isUserCorrect("pont@loco.es","kaka",tester("Test, usuario correcto"));
@@ -52,3 +54,9 @@ DaoA.getAmigos("pont@loco.es",tester("Get amigos"));/*
 DaoA.getAmigos("pont@Muyloco.es",tester("get amigos de un usuario inexistente"));
 DaoA.setAmistad("pont@loco.es","yago@ascii.com",tester("Añadir amistad"));
 */
+
+console.log("DAO Preguntas");
+DaoP.getPreguntas(5,tester("Obtener preguntas"));
+DaoP.getRespuestas(1,tester("Respuestas de la pregunta 1"));
+DaoP.responder(1,1,"pont@loco.es",tester("Responder una pregunta"));
+DaoP.addRespuesta(1,"Las tortillas en dinamarca son cuadradas",tester("Añadir una respuesta"));

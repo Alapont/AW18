@@ -1,0 +1,7 @@
+Querida Neku:
+    Espero que esta carta te llegue sin problemas. Por aquí estamos todos bien y espero que estéis bien por allí. 
+    He estado montando el DAO de preguntas y respuestas, que aunque son dos bases de datos, es todo la misma funcionalidad. No he podido probarlo porque no consigo lanzar un xampp en condiciones y tengo demasiada mierda en este ordenador como para liarme con las bases de datos. Como no tengo xampp, no he probado las preguntas ni he montado las tablas ni las he probado. Pero debería funcionar con pocos problemas. Ya sabes que eso no es nuca así, pero la fe mueve montañas.
+    En cualquier caso, queda por montar la base de datos, poblarla y probarla. Montaré también test para ver que hace bien las cosas.
+    Un saludo afectuoso
+
+    Pont
