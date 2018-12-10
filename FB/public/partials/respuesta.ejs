@@ -1,0 +1,13 @@
+ <div class="content">
+    <!--La pregunta va pr parámetro, y si la ha contestado o no también-->
+    <h2><%- pregunta.texto %></h2>
+    <form action="/respuesta/" method="POST">
+        <input type="hidden" name="pregunta" value="preguntaID"/>
+        <% respuestas.forEach(respuesta=>{ %>
+            <input type="radio" name="respuesta" value="<%-respuesta.id%>"> <%-respuesta.texto%> <br>
+        <% }); %>
+        <input type="radio" name="respuesta" value="0">
+        <input type="text" name="nuevaRespuesta"  placeholder="Escribe tu respuesta"/>
+        <input type="submit" value="submit"/>
+    </form>
+ </div>

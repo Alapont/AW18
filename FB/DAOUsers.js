@@ -46,7 +46,7 @@ class DAOUsers{
             connection.release();
         });
     }
-    addUser(email,password,img="null",userName,sexo="null",nacimiento="null",callback=test){
+    addUser(email,password,img="../img/usuario.jpg",userName,sexo="null",nacimiento="null",callback=test){
         this._pool.getConnection(function(err,connection){
             if(err){
                 callback(`Error de conexion a la base de datos`);

@@ -5,3 +5,11 @@ Querida Neku:
     Un saludo afectuoso
 
     Pont
+
+    Handlers a montar (no se si están montados)
+
+    get preguntas lista de preguntas
+    get responder/:idPregunta página de respuestas
+    post responder envío de una respuestas
+    post preguntar envío de una pregunta
+    get pregunta info de una pregunta {has contestado & respuesta, quienes han contestado}
