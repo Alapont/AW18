@@ -41,22 +41,25 @@ function tester(comment=null){
 }
 
 
+
+//Dejo comentados los Test que alteran la base de datos
 console.log("DAO Users");
-/*DaoU.getUser("pont@loco.es",tester("Test user mage"));
+DaoU.getUser("pont@loco.es",tester("Test user mage"));
 DaoU.isUserCorrect("pont","kaka",tester("Test: usuario incorrecto"));
 DaoU.isUserCorrect("pont@loco.es","kaka",tester("Test, usuario correcto"));
 //DaoU.addUser("Pont@ascii.es","a","pont","Hombre","19900215",null,tester("añadir usuario"))
 DaoU.findUser("P",tester("Encontrar usuario"))
-*/
+
 
 console.log("DAO Amistad");
-DaoA.getAmigos("pont@loco.es",tester("Get amigos"));/*
+DaoA.getAmigos("pont@loco.es",tester("Get amigos"));
 DaoA.getAmigos("pont@Muyloco.es",tester("get amigos de un usuario inexistente"));
-DaoA.setAmistad("pont@loco.es","yago@ascii.com",tester("Añadir amistad"));
-*/
+//DaoA.setAmistad("pont@loco.es","yago@ascii.com",tester("Añadir amistad"));
+
 
 console.log("DAO Preguntas");
+//DaoP.addPregunta("Que pasa cuando mayo marcea",tester("Insertar pregunta"));
 DaoP.getPreguntas(5,tester("Obtener preguntas"));
 DaoP.getRespuestas(1,tester("Respuestas de la pregunta 1"));
-DaoP.responder(1,1,"pont@loco.es",tester("Responder una pregunta"));
-DaoP.addRespuesta(1,"Las tortillas en dinamarca son cuadradas",tester("Añadir una respuesta"));
+//DaoP.responder(3,1,"pont@loco.es",tester("Responder una pregunta"));
+//DaoP.addRespuesta(1,"Las tortillas en dinamarca son cuadradas",tester("Añadir una respuesta"));

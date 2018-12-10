@@ -78,7 +78,7 @@ class DAOPreguntas {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql = "INSERT INTO respuestas(idPregunta,idRespuesta) VALUES (?,?);";
+                const sql = "INSERT INTO respuestas(idPregunta,texto) VALUES (?,?);";
                 connection.query(sql, [pregunta, respuesta], function (err, resultado) {
                     if (err) {
                         callback(`No se ha podido insertar la respuesta`);
@@ -96,7 +96,7 @@ class DAOPreguntas {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql = "INSERT INTO preguntas(pregunta) VALUES (?);";
+                const sql = "INSERT INTO preguntas(texto) VALUES (?);";
                 connection.query(sql, [pregunta], function (err, resultado) {
                     if (err) {
                         callback(`No se ha podido insertar la pregunta`);
