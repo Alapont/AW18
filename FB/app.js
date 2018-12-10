@@ -47,6 +47,17 @@ function error(request, response, next) {
     });
 };
 
+//Lista de middlewares
+app.use(morgan("dev")) //coso para depurar
+app.use(express.static(path.join(__dirname, "public"))) //Coso para páginas estáticas
+const middlewareSession = session({
+    saveUninitialized: false,
+    secret: "foobar34",
+    resave: false,
+    store: sessionStore
+});
+
+
 function flashMiddleware(request, response, next) {
     //añades el atributo setFlash al objeto response
     response.setFlash = function (msg) {
@@ -63,16 +74,6 @@ function flashMiddleware(request, response, next) {
     };
     next();
 };
-
-//Lista de middlewares
-app.use(morgan("dev")) //coso para depurar
-app.use(express.static(path.join(__dirname, "public"))) //Coso para páginas estáticas
-const middlewareSession = session({
-    saveUninitialized: false,
-    secret: "foobar34",
-    resave: false,
-    store: sessionStore
-});
 app.use(middlewareSession);
 app.use(cookieParser());
 app.use(expressValidator());
@@ -205,9 +206,11 @@ app.get(/register(.html)?/, (request, response) => {
         response.redirect("/perfil");
     } else {
         response.status(200);
+        let err = [];
         response.type("text/html")
         response.render("main", {
             sesion: request.session.sesion,
+            errores: err,
             config: {
                 pageName: "register"
             }
@@ -218,6 +221,9 @@ app.get(/register(.html)?/, (request, response) => {
 
 app.post(/register(.html)?/, (request, response) => {
 
+    request.checkBody("user", "El email no puede estar vacío").notEmpty();
+    request.checkBody("password", "La contraseña no puede estar vacía").notEmpty();
+    request.checkBody("userName", "El nombre de usuario no puede estar vacío").notEmpty();
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
             DaoU.addUser(request.body.user, request.body.password,
@@ -227,13 +233,12 @@ app.post(/register(.html)?/, (request, response) => {
                         response.status(300);
                         response.redirect("/register");
                     }else{
-                        //nos quedamos con los amigos
                         response.redirect("/login");
                     }
                 });
         } else {
             response.setFlash(result.array());
-            response.redirect("/login");
+            response.redirect("/register");
         }
     });
 });

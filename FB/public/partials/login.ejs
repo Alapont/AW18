@@ -1,6 +1,7 @@
-<%- include("../partials/elements/flash"); %>
+
 <div class="content">
         <div class="loginPannel content">
+            <%- include("../partials/elements/flash") %>
             <form action="/login" method="POST">
                 User:<input type="text" name="user"><br>
                 <% if (errores.user) { %>
