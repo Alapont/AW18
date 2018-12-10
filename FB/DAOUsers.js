@@ -14,11 +14,11 @@ class DAOUsers{
             }else{
                 const sql= `SELECT userName FROM users WHERE email= ? AND password = ?`;
                 connection.query(sql, [email,password], function(err,resultado){
-                    if(err){
-                        callback(`Error de acceso a la base de datos`);
+                    if(err||resultado.length==0){
+                        callback(err?`Error de acceso a la base de datos`:"usuario no encontrado");
                     }else{
                         //si resultado==0 es trur=> dcha:izqda
-                        callback(null,resultado.length==0?null:resultado.shift());
+                        callback(null,resultado.shift());
                     }
                 })
             }
