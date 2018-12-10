@@ -10,7 +10,7 @@ const session = require("express-session");
 const mysqlSession = require("express-mysql-session");
 const multer = require("multer");
 const expressValidator = require("express-validator");
-const cookieParser = require ("cookie-parser");
+const cookieParser = require("cookie-parser");
 const mySQLStore = mysqlSession(session);
 const daoUser = require("./DAOUsers");
 const daoAmistad = require("./DAOAmistad");
@@ -91,14 +91,14 @@ app.get(/login(.html)?/, (request, response) => {
         response.status(200);
         response.type("text/html")
         response.render("main", {
-            errores:err,
+            errores: err,
             sesion: {
                 user: (request.session != undefined) ? request.session.userName : null
             },
             config: {
                 pageName: "login"
             }
-           
+
         });
 
     }
@@ -118,6 +118,7 @@ app.post("/login", (request, response) => {
                 DaoU.isUserCorrect(request.body.user, request.body.password, (err, data) => {
                     if (err) {
                         request.session.error = (err);
+                        response.cookie("error", err);
                         response.status(500);
                         response.redirect("/login");
                     } else {
@@ -127,14 +128,14 @@ app.post("/login", (request, response) => {
                                     request.session.error = (err);
                                     response.status(500);
                                     response.redirect("/login");
-                                } else{
+                                } else {
                                     response.status(300);
-                                    request.session.userName= data.userName;
-                                    request.session.email= data.email;
-                                    request.session.img= data.img;
-                                    request.session.nacimiento= data.nacimiento;
-                                    request.session.sexo= data.sexo;
-                                    request.session.puntos=data.puntos;
+                                    request.session.userName = data.userName;
+                                    request.session.email = data.email;
+                                    request.session.img = data.img;
+                                    request.session.nacimiento = data.nacimiento;
+                                    request.session.sexo = data.sexo;
+                                    request.session.puntos = data.puntos;
                                     response.redirect("/login");
                                 }
                             });
@@ -153,19 +154,19 @@ app.post("/login", (request, response) => {
 });
 
 ////// Amigos //////
-app.get("/amigos",(request,response)=>{
+app.get("/amigos", (request, response) => {
     if (request.session.userName) { //Salimos si no está logueado
         response.status(200);
         response.type("text/html");
-        DaoA.getAmigos(request.session.email,(err,data)=>{
-            if(err){
+        DaoA.getAmigos(request.session.email, (err, data) => {
+            if (err) {
                 response.status(300);
                 response.redirect("/perfil");
-            }else{
+            } else {
                 //nos quedamos con los amigos
-                request.session.amigos=data.filter(amigo=>amigo.estado=="amigo");
-                request.session.solicitudes=data.filter(amigo=>amigo.estado=="solicitud");
-                response.render("main",{
+                request.session.amigos = data.filter(amigo => amigo.estado == "amigo");
+                request.session.solicitudes = data.filter(amigo => amigo.estado == "solicitud");
+                response.render("main", {
                     sesion: request.session,
                     config: {
                         pageName: "amigos"
@@ -178,16 +179,16 @@ app.get("/amigos",(request,response)=>{
     }
 });
 
-app.post("/busca",(request,response)=>{
+app.post("/busca", (request, response) => {
 
 });
 
 //////Preguntas/////
-app.get("/preguntas",(request,response)=>{
+app.get("/preguntas", (request, response) => {
     if (request.session.userName) { //Salimos si no está logueado
         response.status(200);
         response.type("text/html");
-        response.render("main",{
+        response.render("main", {
             sesion: request.session,
             config: {
                 pageName: "preguntas"
@@ -227,12 +228,12 @@ app.post(/register(.html)?/, (request, response) => {
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
             DaoU.addUser(request.body.user, request.body.password,
-                request.body.imagenPerfil,request.body.userName, 
-                request.body.gender, request.body.fechaNac, (err,data)=>{
-                    if(err){
+                request.body.imagenPerfil, request.body.userName,
+                request.body.gender, request.body.fechaNac, (err, data) => {
+                    if (err) {
                         response.status(300);
                         response.redirect("/register");
-                    }else{
+                    } else {
                         response.redirect("/login");
                     }
                 });
