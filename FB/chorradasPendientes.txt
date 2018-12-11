@@ -34,6 +34,25 @@ Punto 2:
     get		/pregunta info de una pregunta {has contestado & respuesta, quienes han contestado}
 Punto 3:
 	pendiente
+	Montar DAO
+		Adivinar(_pregunta,_adivino,_adivinado,opcion,notificado)
+			preparado para la opción 5
+		DaoPreguntas
+			adivinarPregunta(pregunta,adivino,adivinado,opcion)
+			getNotificaciones(usuario)->["X ha adivinado|fallado la pregunta Y"]
+			getAdivinanzas(usuario,pregunta)[{usuario,{acertado,fallado,adivinar}}]
+				Construir fig 7	
+		Preguntas:
+			añadir columna numRespuestas que dice cuantas había originalmente
+		DaoUser
+			addPuntos(usuario,puntos,callback)
+	Vistas
+		Editar vista de preguntas (fig 7)
+		get adivinar Vista para intentar adivinar
+			vista de responder sin la opción de nueva respuesta y apuntando el form a otro sitio
+			posiblemente se puede montar en función de la página renderizada
+		post adivinar Handler del intento de adivinar
+			recepción de la adivinación
 Punto 4:
 	no lo hacemos
 Punto 5:
