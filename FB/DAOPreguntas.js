@@ -50,7 +50,7 @@ class DAOPreguntas {
                             if (err){
                                 callback("error de acceso a la base de datos");
                             }else{
-                                callback(null,{idPregunta=pregunta,texto:texto[0].texto,respuestas:respuestas});
+                                callback(null,{idPregunta:pregunta,texto:texto[0].texto,respuestas:respuestas});
                             }
                         })
                     }
