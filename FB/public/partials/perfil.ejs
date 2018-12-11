@@ -1,13 +1,15 @@
 <div class="content">
-    <h2>Tu perfil</h2>
+    <h2> <%- persona.userName %> </h2>
     <div class="perfilPannel pannel">
-        <div class="foto"><img src="../img/usuario.jpg" alt="foto de perfil de <%- sesion.userName %>"></div>
+        <div class="foto"><img src="<%- persona.img %>" alt="foto de perfil de <%- persona.userName %>"></div>
         <span class="datos">
-            <h3><%- sesion.userName %></h3>
-            <%- sesion.edad %> años<br>
-            <%- sesion.sexo %> <br>
-            <%- sesion.puntos %> puntos<br>
+            <h3><%- persona.userName %></h3>
+            <%- persona.edad %> años<br>
+            <%- persona.sexo %> <br>
+            <%- persona.puntos %> puntos<br>
         </span>
     </div>
+    <% if(persona.edit){ %>
     <a href="/edit" class="button">Modificar Perfil</a>
+    <% } %>
 </div>

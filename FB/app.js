@@ -14,6 +14,7 @@ const cookieParser = require("cookie-parser");
 const mySQLStore = mysqlSession(session);
 const daoUser = require("./DAOUsers");
 const daoAmistad = require("./DAOAmistad");
+const daoPreguntas = require("./DAOPreguntas");
 const sessionStore = new mySQLStore({
     host: config.mysqlConfig.host,
     user: config.mysqlConfig.user,
@@ -29,6 +30,7 @@ const pool = mysql.createPool({
 });
 const DaoU = new daoUser(pool);
 const DaoA = new daoAmistad(pool);
+const DaoP = new daoPreguntas(pool);
 // Crear un servidor Express.js
 const app = express();
 app.set("view engine", "ejs"); //usamos ejs 
@@ -92,7 +94,7 @@ app.get(/login(.html)?/, (request, response) => {
         response.type("text/html")
         response.render("main", {
             errores: err,
-            sesion: {
+            persona: {
                 user: (request.session != undefined) ? request.session.userName : null
             },
             config: {
@@ -167,7 +169,15 @@ app.get("/amigos", (request, response) => {
                 request.session.amigos = data.filter(amigo => amigo.estado == "amigo");
                 request.session.solicitudes = data.filter(amigo => amigo.estado == "solicitud");
                 response.render("main", {
-                    sesion: request.session,
+                    persona: {
+                        userName: request.session.userName,
+                        edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
+                        sexo: request.session.sexo,
+                        puntos: request.session.puntos,
+                        email: request.session.email
+                    },
+                    solicitudes: request.session.solicitudes,
+                    amigos: request.session.amigos,
                     config: {
                         pageName: "amigos"
                     }
@@ -186,13 +196,30 @@ app.post("/busca", (request, response) => {
 //////Preguntas/////
 app.get("/preguntas", (request, response) => {
     if (request.session.userName) { //Salimos si no está logueado
-        response.status(200);
-        response.type("text/html");
-        response.render("main", {
-            sesion: request.session,
-            config: {
-                pageName: "preguntas"
+        DaoP.getPreguntas(5, (err, data) => {
+            if (err) {
+                response.status(300);
+                response.redirect("/perfil");
+            } else {
+                response.status(200);
+                response.type("text/html");
+                response.render("main", {
+                    sesion: request.session,
+                    config: {
+                        pageName: "preguntas"
+                    },
+                    persona: {
+                        userName: request.session.userName,
+                        edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
+                        sexo: request.session.sexo,
+                        puntos: request.session.puntos,
+                        email: request.session.email,
+                        edit: true
+                    },
+                    preguntas : data
+                })
             }
+
         })
     } else {
         response.redirect("/login");
@@ -244,13 +271,24 @@ app.post(/register(.html)?/, (request, response) => {
     });
 });
 
+function calcularEdad(nacimiento) {
+    //To do
+    return 30
+}
 //Perfil
 app.get("/perfil", (request, response) => {
     if (request.session.userName) { //Salimos si está logueado
         response.status(200);
         response.type("text/html");
         response.render("main", {
-            sesion: request.session,
+            persona: {
+                userName: request.session.userName,
+                edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
+                sexo: request.session.sexo,
+                puntos: request.session.puntos,
+                email: request.session.email,
+                edit: true
+            },
             config: {
                 pageName: "perfil"
             }

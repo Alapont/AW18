@@ -15,6 +15,15 @@
             "request": "launch",
             "name": "Test",
             "program": "${workspaceFolder}\\test.js"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Useless",
+            "processId": "${command:PickProcess}",
+            "restart": true,
+            "protocol": "inspector",
+            "program": "${workspaceFolder}\\test.js"
         }
     ]
 }

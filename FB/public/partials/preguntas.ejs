@@ -1,8 +1,8 @@
  <div class="content">
      <h2>Preguntas aleatorias</h2>
      <!--Selección aleatoria de preguntas-->
-     <% preguntas.forEach((pregunta)=>{ %>
-        <a class="pregunta" href="/pregunta/<%-pregunta.id%>" >pregunta.texto</a>
+     <% preguntas.forEach((pregunta)=>{ %><br>
+        <a class="pregunta" href="/pregunta/<%-pregunta.id%>" ><%-pregunta.texto%></a>
      <% }) %>
      <h2>Añade una pregunta</h2>
      <form action="/preguntar" method="POST">
