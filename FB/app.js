@@ -250,7 +250,51 @@ app.get("/preguntas", (request, response) => {
         response.redirect("/login");
     }
 });
+app.post("/respuesta/:id",(request,response)=>{
+    //Un usuario responde a una pregunta
 
+});
+app.post("/preguntar",(request,response)=>{
+    //Un usuario añade una nueva pregunta
+});
+app.get("/pregunta/:id",(request,response)=>{
+    //Un usuario va a responder a una pregunta
+    if (request.session.userName) { //Salimos si no está logueado
+        DaoP.getRespuestas(request.params.id,(err,data)=>{
+            if (err) {
+                response.status(300);
+                response.redirect("/perfil");
+            } else {
+                response.status(200);
+                response.type("text/html");
+                response.render("main", {
+                    sesion: request.session,
+                    pregunta:{
+                        texto:data.texto,
+                        id:data.idPregunta
+                    },
+                    respuestas:data.respuestas,
+                    config: {
+                        pageName: "respuesta"
+                    },
+                    persona: {
+                        userName: request.session.userName,
+                        edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
+                        sexo: request.session.sexo,
+                        puntos: request.session.puntos,
+                        email: request.session.email,
+                        edit: true
+                    },
+                    preguntas: data
+                })
+            }
+
+        })
+    } else {
+        response.redirect("/login");
+    }
+    
+});
 //////REGISTRO/////
 //      Registro
 app.get(/register(.html)?/, (request, response) => {
