@@ -19,19 +19,22 @@
 Vuelve a aparecer el encabezado que no es en login.
 
 Punto 1:
-	-Cuando se mete mal el usuario o contraseña, mensaje de error de identificaci�n
 	-Linkear amigos con su perfil
 		-hecho, falta leerlo get /perfil/email
-	-Mostrar la foto de avatar si la tiene
-		-hecho, solo falta que la tenga de verdad.
-		-no compruebo si el fichero Existe, pero me da un poco lo mesmo
+	Hecho
+		-Cuando se mete mal el usuario o contraseña, mensaje de error de identificaci�n
+		-Mostrar la foto de avatar si la tiene
+			-hecho, solo falta que la tenga de verdad.
+			-no compruebo si el fichero Existe, pero me da un poco lo mesmo
 Punto 2:
 	Faltar enganchar todo
-	get		/preguntas lista de preguntas
-    get		/responder/:idPregunta página de respuestas
-    post	/responder envío de una respuestas
-    post	/preguntar envío de una pregunta
-    get		/pregunta info de una pregunta {has contestado & respuesta, quienes han contestado}
+		post	/responder envío de una respuestas
+		post	/preguntar envío de una pregunta
+		get		/pregunta info de una pregunta {has contestado & respuesta, quienes han contestado}
+		Arreglar dao preguntas
+	Hecho
+		get		/preguntas lista de preguntas
+		get		/responder/:idPregunta página de respuestas
 Punto 3:
 	pendiente
 	Montar DAO

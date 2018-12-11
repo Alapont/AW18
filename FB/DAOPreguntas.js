@@ -33,7 +33,7 @@ class DAOPreguntas {
             connection.release();
         });
     }
-    getRespuestas(pregunta, callback = test) {
+    getRespuestas(pregunta,usuario, callback = test) {
         //Devuelve toda la información de una pregunta:
         //{texto:"texto de la pregunta",respuestas:[opt1, opt2]}
         this._pool.getConnection(function (err, connection) {
@@ -41,16 +41,30 @@ class DAOPreguntas {
                 callback(`Error de conexion a la base de datos`);
             } else {
                 const sql1 = `SELECT id,texto FROM respuestas WHERE idPregunta=?`;
-                const sql2 = `SELECT texto FROM preguntas WHERE id=?`
-                connection.query(sql1, [pregunta], function (err, respuestas) {
+                const sql2 = `SELECT * FROM preguntas WHERE id=?`
+                const sql3 = "Select texto "+
+                "from respuestas join respuestausuario ON respuestas.idPregunta = respuestausuario.idPregunta "+
+                "WHERE respuestausuario.idPregunta=1 AND respuestas.idPregunta=? AND respuestausuario.usuario=?"
+                //const sql3 = `SELECT idRespuesta FROM respuestausuaro WHERE idPregunta=?,usuario=?`
+                connection.query(sql1, [pregunta,usuario], function (err, respuestas) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
                         connection.query(sql2, [pregunta], function (err, texto){
-                            if (err){
+                            if (err || texto.length==0){
                                 callback("error de acceso a la base de datos");
                             }else{
-                                callback(null,{idPregunta:pregunta,texto:texto[0].texto,respuestas:respuestas});
+                                connection.query(sql3,[pregunta,usuario], (err,respuestaUsuario)=>{
+                                    if(err)
+                                        callback("Error en la base de datos");
+                                    else
+                                        callback(null,{
+                                            idPregunta:pregunta,
+                                            texto:texto[0].texto,
+                                            respuestas:respuestas, 
+                                            contestado:(respuestaUsuario.length==0)?null:respuestaUsuario.texto//Devolver el texto de la pregunta
+                                        });
+                                });
                             }
                         })
                     }
