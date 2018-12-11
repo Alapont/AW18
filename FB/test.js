@@ -59,8 +59,9 @@ function tester(comment=null){
 
 console.log("DAO Preguntas");
 //DaoP.addPregunta("Que pasa cuando mayo marcea",tester("Insertar pregunta"));
+DaoP.addRespuesta(3,"Nada",tester("Añadir respuesta"))
 //DaoP.getPreguntas(5,tester("Obtener preguntas"));
 
-DaoP.getRespuestas(1,tester("Datos de la pregunta 1"));
+//DaoP.getRespuestas(1,tester("Datos de la pregunta 1"));
 //DaoP.responder(3,1,"pont@loco.es",tester("Responder una pregunta"));
 //DaoP.addRespuesta(1,"Las tortillas en dinamarca son cuadradas",tester("Añadir una respuesta"));

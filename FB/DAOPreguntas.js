@@ -103,7 +103,7 @@ class DAOPreguntas {
                     if (err) {
                         callback(`No se ha podido insertar la respuesta`);
                     } else {
-                        callback(null, resultado);
+                        callback(null, resultado.insertId);
                     }
                 })
             }
@@ -121,7 +121,7 @@ class DAOPreguntas {
                     if (err) {
                         callback(`No se ha podido insertar la pregunta`);
                     } else {
-                        callback(null, resultado);
+                        callback(null, resultado.insertId);
                     }
                 })
             }

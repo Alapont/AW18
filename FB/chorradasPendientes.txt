@@ -21,6 +21,10 @@ Vuelve a aparecer el encabezado que no es en login.
 Punto 1:
 	-Linkear amigos con su perfil
 		-hecho, falta leerlo get /perfil/email
+	-gestión de amistades
+		/adeptar/id
+		/buscar
+	-búsqueda
 	Hecho
 		-Cuando se mete mal el usuario o contraseña, mensaje de error de identificaci�n
 		-Mostrar la foto de avatar si la tiene
