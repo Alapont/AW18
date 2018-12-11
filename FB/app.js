@@ -194,11 +194,11 @@ app.post("/busca", (request, response) => {
 });
 
 ///Perfil amigo
-app.get("/perfil/:email", (request,response)=>{
-    if (request.session.userName) { 
+app.get("/perfil/:email", (request, response) => {
+    if (request.session.userName) {
         response.status(200);
         response.type("text/html");
-        DaoU.getUser(request.params.email, (error, data)=>{
+        DaoU.getUser(request.params.email, (error, data) => {
             response.render("main", {
                 persona: {
                     userName: data.userName,
@@ -211,7 +211,7 @@ app.get("/perfil/:email", (request,response)=>{
                 config: {
                     pageName: "perfil/"
                 }
-            })
+            });
         });
     } else {
         response.redirect("/perfil");
@@ -241,7 +241,7 @@ app.get("/preguntas", (request, response) => {
                         email: request.session.email,
                         edit: true
                     },
-                    preguntas : data
+                    preguntas: data
                 })
             }
 
@@ -302,7 +302,7 @@ function calcularEdad(nacimiento) {
 }
 /////PERFIL
 app.get("/perfil", (request, response) => {
-    if (request.session.userName) { 
+    if (request.session.userName) {
         response.status(200);
         response.type("text/html");
         response.render("main", {
@@ -323,39 +323,61 @@ app.get("/perfil", (request, response) => {
     }
 });
 
+app.get("/imagen/:email", (request, response) => {
+    if (request.session) {
+        DaoU.getImagen(request.params.email, (err, data) => {
+            if (err) {
+                response.status(300);
+                response.redirect("/perfil");
+            } else {
+                response.status(200);
+                response.end(data[0]);
+            }
+        });
+
+    }
+});
 
 ////MODIFICAR PERFIL
-app.get("/edit",(request,response)=>{
-    if (request.session.userName) { 
+app.get("/edit", (request, response) => {
+    if (request.session.userName) {
         response.status(200);
         let err = [];
         response.type("text/html")
         response.render("main", {
             sesion: request.session.sesion,
+
             errores: err,
             config: {
                 pageName: "edit"
             }
         });
 
-    }else {
+    } else {
         response.status(300);
         response.redirect("/login");
     }
 });
 
-app.post("/save",(request,response)=>{
+app.post("/save", (request, response) => {
     request.checkBody("password", "La contraseña no puede estar vacía").notEmpty();
     request.checkBody("userName", "El nombre de usuario no puede estar vacío").notEmpty();
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
             DaoU.updateUser(request.body.password,
                 request.body.imagenPerfil, request.body.userName,
-                request.body.gender, request.body.fechaNac,request.session.email, (err, data) => {
+                request.body.gender, request.body.fechaNac, request.session.email, (err, data) => {
                     if (err) {
                         response.status(300);
                         response.redirect("/edit");
                     } else {
+                        response.status(300);
+                        //asegurar de no pasar nulos
+                        request.session.userName = request.body.userName;
+                        request.session.img = request.body.img;
+                        request.session.nacimiento = request.body.nacimiento;
+                        request.session.sexo = request.body.sexo;
+                        request.session.puntos = request.body.puntos;
                         response.redirect("/perfil");
                     }
                 });

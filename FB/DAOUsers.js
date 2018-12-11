@@ -99,6 +99,24 @@ class DAOUsers{
             connection.release();
         });
     }
+
+    getImagen(email, callback=test){
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= `SELECT img FROM users WHERE email=?;`
+                connection.query(sql, [email], function(err,resultado){
+                    if(err){
+                        callback(`No se ha podido coger la imagen`);
+                    }else{
+                        callback(null, resultado[0]);
+                    }
+                });
+            }
+            connection.release();
+        });
+    }
 }
 function test(err, data){
     console.log((err)?"error: "+err:"No error");
