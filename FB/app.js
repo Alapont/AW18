@@ -89,14 +89,11 @@ app.get(/login(.html)?/, (request, response) => {
         response.status(300);
         response.redirect("/perfil");
     } else {
-        let err = [];
+        let err = typeof(request.session.err)!='undefined'?request.session.err:null;
         response.status(200);
         response.type("text/html")
         response.render("main", {
-            errores: err,
-            persona: {
-                user: (request.session != undefined) ? request.session.userName : null
-            },
+            errores: request.session.error,
             config: {
                 pageName: "login"
             }

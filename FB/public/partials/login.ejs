@@ -4,12 +4,12 @@
             <%- include("../partials/elements/flash") %>
             <form action="/login" method="POST">
                 User:<input type="text" name="user"><br>
-                <% if (errores.user) { %>
+                <% if (errores!=null && errores.user) { %>
                     <span class="rojo">
                         <%= errores.login.msg %> </span>
                     <% } %>
                 Pass:<input type="password" name="password"><br>
-                <% if (errores.password) { %>
+                <% if (errores!=null && errores.password) { %>
                     <span class="rojo">
                         <%= errores.pass.msg %> </span>
                     <% } %>
