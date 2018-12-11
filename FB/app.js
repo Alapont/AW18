@@ -275,7 +275,7 @@ function calcularEdad(nacimiento) {
     //To do
     return 30
 }
-//Perfil
+/////PERFIL
 app.get("/perfil", (request, response) => {
     if (request.session.userName) { //Salimos si está logueado
         response.status(200);
@@ -296,7 +296,50 @@ app.get("/perfil", (request, response) => {
     } else {
         response.redirect("/login");
     }
-})
+});
+
+
+////MODIFICAR PERFIL
+app.get("/edit",(request,response)=>{
+    if (request.session.userName) { 
+        response.status(200);
+        let err = [];
+        response.type("text/html")
+        response.render("main", {
+            sesion: request.session.sesion,
+            errores: err,
+            config: {
+                pageName: "edit"
+            }
+        });
+
+    }else {
+        response.status(300);
+        response.redirect("/login");
+    }
+});
+
+app.post("/save",(request,response)=>{
+    request.checkBody("password", "La contraseña no puede estar vacía").notEmpty();
+    request.checkBody("userName", "El nombre de usuario no puede estar vacío").notEmpty();
+    request.getValidationResult().then(function (result) {
+        if (result.isEmpty()) {
+            DaoU.updateUser(request.body.password,
+                request.body.imagenPerfil, request.body.userName,
+                request.body.gender, request.body.fechaNac,request.session.email, (err, data) => {
+                    if (err) {
+                        response.status(300);
+                        response.redirect("/edit");
+                    } else {
+                        response.redirect("/perfil");
+                    }
+                });
+        } else {
+            response.setFlash(result.array());
+            response.redirect("/edit");
+        }
+    });
+});
 
 /////////LOGOUT////////
 app.get("/desconectar", (request, response) => {

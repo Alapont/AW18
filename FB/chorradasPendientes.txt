@@ -1,4 +1,4 @@
-Notas:
+﻿Notas:
 	A la hora de hacer un render el objeto tiene esta pinta. Creo que he linkado todo, pero puede no estarlo.
 	{
 		config:{
@@ -15,11 +15,11 @@ Notas:
 		solicitudes:lista de amigos con solicitudes pendientes,
 		amigos: lista de amigos aceptados
 	}
+*****NOTA
+Vuelve a aparecer el encabezado que no es en login.
 
 Punto 1:
-	-Cuando se mete mal el usuario o contrase�a, mensaje de error de identificaci�n
-	-Modificar perfil
-		get y post /edit
+	-Cuando se mete mal el usuario o contraseña, mensaje de error de identificaci�n
 	-Linkear amigos con su perfil
 		-hecho, falta leerlo get /perfil/email
 	-Mostrar la foto de avatar si la tiene

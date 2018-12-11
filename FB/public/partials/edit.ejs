@@ -1,15 +1,30 @@
 <div class="content">
     <div class="loginPannel content">
-        <form action="/save" method="POST">
-            User:<input type="text" name="user" value="<%- sesion.user %>"><br>
-            Pass:<input type="password" name="pass"><br>
-            Nombre Completo:<input type="text" name="user" value="<%- sesion.nombre %>"><br>
-            Sexo: <br>
-            Imagen de Perfil:<input type="file" name="user"><br>
-            <input type="submit" name="register" value="guardar">
+        <%- include("../partials/elements/flash") %>
+        <form class="edit" action="/save" method="POST">
+            <div>Contraseña: <input class="write pass" type="password" name="password">
+                <% if (errores.password) { %>
+                <span class="rojo">
+                    <%= errores.password.msg %> </span>
+                <% } %>
+            </div>
+            <div>Nombre usuario: <input class="write name" type="text" name="userName">
+                <% if (errores.userName) { %>
+                <span class="rojo">
+                    <%= errores.userName.msg %> </span>
+                <%}%>
+            </div>
+            Sexo
+            <input class="write gender" type="radio" name="gender" value="male" checked> Male
+            <input type="radio" name="gender" value="female"> Female
+            <input type="radio" name="gender" value="other"> Other<br>
+            Fecha de nacimiento <input class="write date" type="date" name="fechaNac" max="2000-12-31"><br>
+            Imagen de perfil<input class="write picture" type="file" name="imagenPerfil"><br>
+            <input type="submit" name="login">
         </form>
     </div>
-    <% if(config.error!=null) %>
-    <span class="error">
-        <%- config.error %></span>
+</div>
+<% if(config.error!=null) %>
+<span class="error">
+    <%- config.error %></span>
 </div>

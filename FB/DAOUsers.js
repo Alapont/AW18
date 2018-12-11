@@ -82,6 +82,23 @@ class DAOUsers{
             connection.release();
         });
     }
+    updateUser(password,img="../img/usuario.jpg",userName,sexo="null",nacimiento="null",email,callback=test){
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= `UPDATE users SET password=?,img=?,userName=?,sexo=?,nacimiento=? WHERE email=?;`
+                connection.query(sql, [password,img,userName,sexo,nacimiento, email],function (err,resultado){
+                    if(err){
+                        callback(`No se ha podido modificar el usuario`);
+                    }else{
+                        callback(null,userName);
+                    }
+                })
+            }
+            connection.release();
+        });
+    }
 }
 function test(err, data){
     console.log((err)?"error: "+err:"No error");
