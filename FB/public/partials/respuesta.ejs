@@ -2,7 +2,7 @@
     <!--La pregunta va pr parámetro, y si la ha contestado o no también-->
     <h2><%- pregunta.texto %></h2>
     <form action="/respuesta/" method="POST">
-        <input type="hidden" name="pregunta" value="preguntaID"/>
+        <input type="hidden" name="pregunta" value="<%-pregunta.id%>"/>
         <% respuestas.forEach(respuesta=>{ %>
             <input type="radio" name="respuesta" value="<%-respuesta.id%>"> <%-respuesta.texto%> <br>
         <% }); %>

@@ -248,10 +248,19 @@ app.get("/preguntas", (request, response) => {//pull de preguntas
     }
 });
 app.post("/respuesta",(request,response)=>{//Un usuario responde a una pregunta
-    let respuesta = request.body.respuesta;
-    if(respuesta==0){
-        DaoP.addRespuesta(request.body.pregunta,request.body.nuevaRespuesta,(err,data)=>{
-
+    let respuesta = request.body.nuevaRespuesta;
+    if(request.body.respuesta==0){
+        DaoP.addRespuesta(request.body.pregunta,request.body.nuevaRespuesta,(err,idRespuesta)=>{
+            if(err)
+                response.redirect("/perfil");
+            else            
+                DaoP.responder(request.body.pregunta,idRespuesta,request.session.email,(err,data)=>{
+                    if(err){
+                        response.redirect("/perfil");
+                    }else{
+                        response.redirect("/pregunta/"+request.body.pregunta);
+                    }
+                });
         })
     }else{
         DaoP.responder(request.body.pregunta,request.body.respuesta,request.session.email,(err,data)=>{
