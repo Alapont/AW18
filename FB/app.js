@@ -186,7 +186,7 @@ app.get("/amigos", (request, response) => {
     }
 });
 
-app.post("/busca", (request, response) => {
+app.post("/busca", (request, response) => {//To-Do
 
 });
 
@@ -247,9 +247,29 @@ app.get("/preguntas", (request, response) => {//pull de preguntas
         response.redirect("/login");
     }
 });
-app.post("/respuesta/:id",(request,response)=>{//Un usuario responde a una pregunta
+app.post("/respuesta",(request,response)=>{//Un usuario responde a una pregunta
+    let respuesta = request.body.respuesta;
+    if(respuesta==0){
+        DaoP.addRespuesta(request.body.pregunta,request.body.nuevaRespuesta,(err,data)=>{
+
+        })
+    }else{
+        DaoP.responder(request.body.pregunta,request.body.respuesta,request.session.email,(err,data)=>{
+            if(err){
+                response.redirect("/perfil");
+            }else{
+                response.redirect("/pregunta/"+request.body.pregunta);
+            }
+        })
+    }
 });
 app.post("/preguntar",(request,response)=>{//Un usuario añade una nueva pregunta
+    DaoP.addPregunta(request.body.text,(err,data)=>{
+        if(err)
+            response.redirect("/perfil");
+        else
+            response.redirect("/pregunta/"+data);
+    });
 });
 app.get("/pregunta/:id",(request,response)=>{//Un usuario ve los datos sobre una pregunta
     if (request.session.userName) { //Salimos si no está logueado
