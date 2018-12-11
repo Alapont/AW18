@@ -193,6 +193,31 @@ app.post("/busca", (request, response) => {
 
 });
 
+///Perfil amigo
+app.get("/perfil/:email", (request,response)=>{
+    if (request.session.userName) { 
+        response.status(200);
+        response.type("text/html");
+        DaoU.getUser(request.params.email, (error, data)=>{
+            response.render("main", {
+                persona: {
+                    userName: data.userName,
+                    edad: calcularEdad(data.edad), //Aquí deberíamos calcularla :$
+                    sexo: data.sexo,
+                    puntos: data.puntos,
+                    email: data.email,
+                    edit: false
+                },
+                config: {
+                    pageName: "perfil/"
+                }
+            })
+        });
+    } else {
+        response.redirect("/perfil");
+    }
+});
+
 //////Preguntas/////
 app.get("/preguntas", (request, response) => {
     if (request.session.userName) { //Salimos si no está logueado
@@ -277,7 +302,7 @@ function calcularEdad(nacimiento) {
 }
 /////PERFIL
 app.get("/perfil", (request, response) => {
-    if (request.session.userName) { //Salimos si está logueado
+    if (request.session.userName) { 
         response.status(200);
         response.type("text/html");
         response.render("main", {
@@ -292,7 +317,7 @@ app.get("/perfil", (request, response) => {
             config: {
                 pageName: "perfil"
             }
-        })
+        });
     } else {
         response.redirect("/login");
     }
