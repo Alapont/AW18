@@ -132,7 +132,12 @@ app.post("/login", (request, response) => {
                                     response.status(300);
                                     request.session.userName = data.userName;
                                     request.session.email = data.email;
-                                    request.session.img = data.img;
+                                    if(data.img!=null){
+                                        request.session.img = true;
+                                    }else{
+                                        request.session.img = false;
+                                    }
+                                    
                                     request.session.nacimiento = data.nacimiento;
                                     request.session.sexo = data.sexo;
                                     request.session.puntos = data.puntos;
@@ -384,15 +389,7 @@ app.post(/register(.html)?/, (request, response) => {
     request.checkBody("user", "El email no puede estar vacío").notEmpty();
     request.checkBody("password", "La contraseña no puede estar vacía").notEmpty();
     request.checkBody("userName", "El nombre de usuario no puede estar vacío").notEmpty();
-    if (request.body.gender == null) {
-        request.body.gender == "other";
-    }
-    if (request.body.fechaNac == null) {
-        request.body.fechaNac == Date();
-    }
-    if (request.body.imagenPerfil == null) {
-        request.body.imagenPerfil == "usuario.jpg";
-    }
+
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
             multerFactory.single("imagenPerfil"),
@@ -448,16 +445,20 @@ app.get("/perfil", (request, response) => {
 
 app.get("/imagen/:email", (request, response) => {
     if (request.session) {
-        DaoU.getImagen(request.params.email, (err, data) => {
-            if (err) {
-                response.status(300);
-                response.redirect("/perfil");
-            } else {
-                response.status(200);
-                response.end(data);
-            }
-        });
-
+        if(request.session.img){
+            DaoU.getImagen(request.params.email, (err, data) => {
+                if (err) {
+                    response.status(300);
+                    response.redirect("/perfil");
+                } else {
+                    response.status(200);
+                    response.end(data);
+                }
+            });
+        }else{
+            response.status(200);
+            response.end("../img/usuario.jpg");
+        }
     }
 });
 
@@ -489,15 +490,7 @@ app.post("/save", multerFactory.single("imagenPerfil"), (request, response) => {
     }
     request.checkBody("password", "La contraseña no puede estar vacía").notEmpty();
     request.checkBody("userName", "El nombre de usuario no puede estar vacío").notEmpty();
-    if (request.body.gender == null) {
-        request.body.gender = "other";
-    }
-    if (request.body.fechaNac == null) {
-        request.body.fechaNac = Date();
-    }
-   /* if (request.body.imagenPerfil == null) {
-        request.body.imagenPerfil = "usuario.jpg";
-    }*/
+
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
             DaoU.updateUser(request.body.password,
@@ -510,7 +503,11 @@ app.post("/save", multerFactory.single("imagenPerfil"), (request, response) => {
                         response.status(300);
                         //asegurar de no pasar nulos
                         request.session.userName = request.body.userName;
-                        request.session.img = nombreFichero;
+                        if(nombreFichero!=null){
+                            request.session.img = true;
+                        }else{
+                            request.session.img = false;
+                        }
                         request.session.nacimiento = request.body.nacimiento;
                         request.session.sexo = request.body.sexo;
                         request.session.puntos = request.body.puntos;
