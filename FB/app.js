@@ -452,8 +452,11 @@ app.post(/register(.html)?/, (request, response) => {
 });
 
 function calcularEdad(nacimiento) {
-    //To do
-    return 30
+    if(typeof(nacimiento)!="undefined"){
+        var today=new Date();
+        return today.getFullYear()-nacimiento.substring(0,3)+(today.getMonth()>=nacimiento.substring(4,5)&&today.getDay()>=nacimiento.substring(6,7))?1:0;
+    }
+    return  0;
 }
 /////PERFIL
 app.get("/perfil", (request, response) => {
@@ -463,7 +466,7 @@ app.get("/perfil", (request, response) => {
         response.render("main", {
             persona: {
                 userName: request.session.userName,
-                edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
+                edad: request.session.nacimiento ==""?0:calcularEdad(request.session.nacimiento), //Aquí deberíamos calcularla :$
                 sexo: request.session.sexo,
                 puntos: request.session.puntos,
                 email: request.session.email,
