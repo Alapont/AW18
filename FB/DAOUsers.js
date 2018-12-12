@@ -75,7 +75,7 @@ class DAOUsers{
                         callback(`Error de acceso a la base de datos`);
                     }else
                         //callback(null,resultado); //Todo el objeto usuario
-                        callback(null,resultado.map(user=>user.userName)); //Solo los nombres
+                        callback(null,resultado); //Solo los nombres
                 })
                 
             }
@@ -154,7 +154,7 @@ class DAOUsers{
                     if(err){
                         callback(`No se ha podido coger la imagen`);
                     }else{
-                        callback(null, resultado[0].img);
+                        callback(null, (resultado.length==0)?null:[0].img);
                     }
                 });
             }

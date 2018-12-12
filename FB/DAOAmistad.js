@@ -7,24 +7,22 @@ class DAOAmistad {
             console.log(pool);
         this._estados = ["amigo", "solicitud"];
     }
-    setAmistad(amigado, amigador, callback = test) {
+    setAmistad(amigado, amigador,estado, callback = test) {
         this._pool.getConnection(function (err, connection) {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
                 const sql = `INSERT INTO amistad (amigador, amigado, estado) VALUES (?,?,?);`;
-                connection.query(sql, [amigador, amigado, "amigo"], function (err, resultado) {
+                connection.query(sql, [amigador, amigado, estado], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        //si resultado==0 es trur=> dcha:izqda
                         callback(null, resultado);
                     }
                 })
             }
             connection.release();
         });
-
     }
 
     getAmigos(user, callback = test) {

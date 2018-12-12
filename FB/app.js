@@ -15,6 +15,7 @@ const mySQLStore = mysqlSession(session);
 const daoUser = require("./DAOUsers");
 const daoAmistad = require("./DAOAmistad");
 const daoPreguntas = require("./DAOPreguntas");
+const UrlPattern = require("url-pattern");
 const sessionStore = new mySQLStore({
     host: config.mysqlConfig.host,
     user: config.mysqlConfig.user,
@@ -179,7 +180,7 @@ app.get("/amigos", (request, response) => {
             } else {
                 //nos quedamos con los amigos
                 request.session.amigos = data.filter(amigo => amigo.estado == "amigo");
-                request.session.solicitudes = data.filter(amigo => amigo.estado == "solicitud");
+                request.session.solicitudes = data.filter(amigo =>( amigo.estado == "solicitud"||amigo.estado=="solicitar"));
                 response.render("main", {
                     persona: {
                         userName: request.session.userName,
@@ -202,8 +203,35 @@ app.get("/amigos", (request, response) => {
 });
 
 app.post("/busca", (request, response) => { //To-Do
-
+    DaoU.findUser(request.body.busqueda,(err,data)=>{
+        if(err)
+            response.redirect("/amigos");
+        else{
+            response.render("main", {
+                persona: {
+                    userName: request.session.userName,
+                    edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
+                    sexo: request.session.sexo,
+                    puntos: request.session.puntos,
+                    email: request.session.email
+                },
+                solicitudes: data,
+                amigoSolicitado: request.body.busqueda,
+                config: {
+                    pageName: "busqueda"
+                }
+            });
+        }
+    });
 });
+["aceptar","solicitar","rechazar"].forEach(estado=>{
+    app.get("/"+estado+"/:id",(request,response)=>{
+        console.log("\t\t\tResolviendo "+request.url+request.params.id);
+        DaoA.setAmistad(request.session.email,request.params.id,estado,(err,data)=>{
+            response.redirect("/amigos");
+        })
+    });
+})
 
 ///Perfil amigo
 app.get("/perfil/:email", (request, response) => {
@@ -264,7 +292,6 @@ app.get("/preguntas", (request, response) => { //pull de preguntas
     }
 });
 app.post("/respuesta", (request, response) => { //Un usuario responde a una pregunta
-    let respuesta = request.body.nuevaRespuesta;
     if (request.body.respuesta == 0) {
         DaoP.addRespuesta(request.body.pregunta, request.body.nuevaRespuesta, (err, idRespuesta) => {
             if (err)
