@@ -3,8 +3,8 @@
         <span>
             <img src="../img/usuario.jpg" height="50" alt="foto de perfil de <%- amigo.userName %>">
             <%- amigo.userName %>
-            <a href="/aceptar/:<%amigo.email%>">Aceptar</a>
-            <a href="/rechazar/:<%amigo.email%>">Rechazar</a>
+            <a href="/aceptar/<%-amigo.email%>">Aceptar</a>
+            <a href="/rechazar/<%-amigo.email%>">Rechazar</a>
         </span><br>
     <%});%>
 </div>

@@ -200,7 +200,6 @@ app.get("/amigos", (request, response) => {
         response.redirect("/login");
     }
 });
-
 app.post("/busca", (request, response) => { //To-Do
     DaoU.findUser(request.body.busqueda,(err,data)=>{
         if(err)
@@ -223,14 +222,25 @@ app.post("/busca", (request, response) => { //To-Do
         }
     });
 });
-["aceptar","solicitar","rechazar"].forEach(estado=>{
-    app.get("/"+estado+"/:id",(request,response)=>{
-        console.log("\t\t\tResolviendo "+request.url+request.params.id);
-        DaoA.setAmistad(request.session.email,request.params.id,estado,(err,data)=>{
-            response.redirect("/amigos");
-        })
-    });
-})
+
+app.get("/aceptar/:id",(request,response)=>{
+    console.log("\t\t\tResolviendo "+request.url+request.params.id);
+    DaoA.setAmistad(request.session.email,request.params.id,"amigo",(err,data)=>{
+        response.redirect("/amigos");
+    })
+});
+app.get("/solicitar/:id",(request,response)=>{
+    console.log("\t\t\tResolviendo "+request.url+request.params.id);
+    DaoA.setAmistad(request.session.email,request.params.id,"solicitar",(err,data)=>{
+        response.redirect("/amigos");
+    })
+});
+app.get("/rechazar/:id",(request,response)=>{
+    console.log("\t\t\tResolviendo "+request.url+request.params.id);
+    DaoA.setAmistad(request.session.email,request.params.id,"rechazado",(err,data)=>{
+        response.redirect("/amigos");
+    })
+});
 
 ///Perfil amigo
 app.get("/perfil/:email", (request, response) => {
