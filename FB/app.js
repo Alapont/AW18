@@ -147,7 +147,7 @@ app.post("/login", (request, response) => {
                                         request.session.img = false;
                                     }
 
-                                    request.session.nacimiento = data.nacimiento;
+                                    request.session.nacimiento = (data.nacimiento ==""?0:calcularEdad(request.session.nacimiento));
                                     request.session.sexo = data.sexo;
                                     request.session.puntos = data.puntos;
                                     response.redirect("/login");
@@ -549,16 +549,24 @@ app.post("/save", multerFactory.single("imagenPerfil"), (request, response) => {
                 response.redirect("/edit");
             } else {
                 response.status(300);
+                DaoU.getImagen(request.session.email,(err,data)=>{
+                    if(err){
+                        request.session.img="../img/usuario.png";
+                    }else{
+                        if (boolean) {
+                            request.session.img = true;
+                        } else {
+                            request.session.img = data.img;
+                        }
+                    }
+                    
+                });
                 if(request.body.userName){
                     request.session.userName = request.body.userName;
                 }
-                if (boolean) {
-                    request.session.img = true;
-                } else {
-                    request.session.img = false;
-                }
+                
                 if(request.body.nacimiento){
-                    request.session.nacimiento = request.body.nacimiento;
+                    request.session.nacimiento = ""?0:calcularEdad(request.session.nacimiento);
                 }
                 if(request.body.sexo){
                     request.session.sexo = request.body.sexo;
