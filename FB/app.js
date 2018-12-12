@@ -551,7 +551,7 @@ app.post("/save", multerFactory.single("imagenPerfil"), (request, response) => {
                 response.status(300);
                 DaoU.getImagen(request.session.email,(err,data)=>{
                     if(err){
-                        request.session.img="../img/usuario.png";
+                        request.session.img="../img/usuario.jpg";
                     }else{
                         if (boolean) {
                             request.session.img = true;

@@ -1,8 +1,13 @@
 <div class="amigos solicitudes">
     <% amigos.forEach((amigo)=>{%>
-        <span>
-            <img src="/imagen/:amigo.email" height="50" alt="foto de perfil de <%- amigo.userName %>">
-            <a href="/perfil/<%=amigo.email%>"><%- amigo.userName %></a>
-        </span><br>
+    <span>
+        <% if(amigo.img) {%>
+            <img src="/imagen/<%=amigo.email%>" height="50" alt="foto de perfil de <%- amigo.userName %>">
+        <%}else{%>
+            <img src="/img/usuario.jpg" height="50" alt="foto de perfil de <%- amigo.userName %>">
+        <%}%>
+        <a href="/perfil/<%=amigo.email%>">
+            <%- amigo.userName %></a>
+    </span><br>
     <%});%>
 </div>
