@@ -536,7 +536,6 @@ app.post("/save", multerFactory.single("imagenPerfil"), (request, response) => {
     let boolean=false;
     if (request.file) {
         nombreFichero = request.file.buffer;
-        resultado.push(nombreFichero);
         boolean=true;
     }
 
