@@ -27,9 +27,7 @@ Punto 1:
 	-búsqueda
 	Hecho
 		-Cuando se mete mal el usuario o contraseña, mensaje de error de identificaci�n
-		-Mostrar la foto de avatar si la tiene
-			-hecho, solo falta que la tenga de verdad.
-			-no compruebo si el fichero Existe, pero me da un poco lo mesmo
+		
 Punto 2:
 	Faltar enganchar todo
 		post	/responder envío de una respuestas

@@ -58,7 +58,9 @@ const middlewareSession = session({
     resave: false,
     store: sessionStore
 });
-const multerFactory = multer({storage:multer.memoryStorage()});
+const multerFactory = multer({
+    storage: multer.memoryStorage()
+});
 //app.use(multerFactory.none());
 
 function flashMiddleware(request, response, next) {
@@ -119,6 +121,7 @@ app.post("/login", (request, response) => {
                     if (err) {
                         request.session.error = (err);
                         response.cookie("error", err);
+
                         response.status(500);
                         response.redirect("/login");
                     } else {
@@ -132,12 +135,12 @@ app.post("/login", (request, response) => {
                                     response.status(300);
                                     request.session.userName = data.userName;
                                     request.session.email = data.email;
-                                    if(data.img!=null){
+                                    if (data.img != null) {
                                         request.session.img = true;
-                                    }else{
+                                    } else {
                                         request.session.img = false;
                                     }
-                                    
+
                                     request.session.nacimiento = data.nacimiento;
                                     request.session.sexo = data.sexo;
                                     request.session.puntos = data.puntos;
@@ -445,7 +448,7 @@ app.get("/perfil", (request, response) => {
 
 app.get("/imagen/:email", (request, response) => {
     if (request.session) {
-        if(request.session.img){
+        if (request.session.img) {
             DaoU.getImagen(request.params.email, (err, data) => {
                 if (err) {
                     response.status(300);
@@ -455,7 +458,7 @@ app.get("/imagen/:email", (request, response) => {
                     response.end(data);
                 }
             });
-        }else{
+        } else {
             response.status(200);
             response.end("../img/usuario.jpg");
         }
@@ -485,40 +488,38 @@ app.get("/edit", (request, response) => {
 
 app.post("/save", multerFactory.single("imagenPerfil"), (request, response) => {
     let nombreFichero;
+    let boolean=false;
     if (request.file) {
         nombreFichero = request.file.buffer;
+        resultado.push(nombreFichero);
+        boolean=true;
     }
-    request.checkBody("password", "La contraseña no puede estar vacía").notEmpty();
-    request.checkBody("userName", "El nombre de usuario no puede estar vacío").notEmpty();
 
-    request.getValidationResult().then(function (result) {
-        if (result.isEmpty()) {
-            DaoU.updateUser(request.body.password,
-                nombreFichero, request.body.userName,
-                request.body.gender, request.body.fechaNac, request.session.email, (err, data) => {
-                    if (err) {
-                        response.status(300);
-                        response.redirect("/edit");
-                    } else {
-                        response.status(300);
-                        //asegurar de no pasar nulos
-                        request.session.userName = request.body.userName;
-                        if(nombreFichero!=null){
-                            request.session.img = true;
-                        }else{
-                            request.session.img = false;
-                        }
-                        request.session.nacimiento = request.body.nacimiento;
-                        request.session.sexo = request.body.sexo;
-                        request.session.puntos = request.body.puntos;
-                        response.redirect("/perfil");
-                    }
-                });
-        } else {
-            response.setFlash(result.array());
-            response.redirect("/edit");
-        }
-    });
+    DaoU.updateUser(request.body.password, nombreFichero,request.body.userName,
+        request.body.gender,request.body.fechaNac,request.session.email, (err, data) => {
+            if (err) {
+                response.status(300);
+                response.redirect("/edit");
+            } else {
+                response.status(300);
+                if(request.body.userName){
+                    request.session.userName = request.body.userName;
+                }
+                if (boolean) {
+                    request.session.img = true;
+                } else {
+                    request.session.img = false;
+                }
+                if(request.body.nacimiento){
+                    request.session.nacimiento = request.body.nacimiento;
+                }
+                if(request.body.sexo){
+                    request.session.sexo = request.body.sexo;
+                }
+                response.redirect("/perfil");
+            }
+        });
+
 });
 
 /////////LOGOUT////////

@@ -84,11 +84,55 @@ class DAOUsers{
     }
     updateUser(password,img,userName,sexo,nacimiento,email,callback=test){
         this._pool.getConnection(function(err,connection){
+            let llamada=[];
+            let firstElement=true;
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `UPDATE users SET img=?,userName=?,sexo=?,nacimiento=?,password=? WHERE email=?;`
-                connection.query(sql, [img, userName,sexo,nacimiento,password, email], function (err, resultado){
+                let sql= `UPDATE users SET `;
+                if(img!=null){
+                    if(!firstElement){
+                        sql+=`,`;
+                    }
+                    sql += `img=?`;
+                    firstElement=false;
+                    llamada.push(img);
+                }
+                if(userName!=null && userName!=""){
+                    if(!firstElement){
+                        sql+=`,`;
+                    }
+                    sql+=`userName=?`;
+                    firstElement=false;
+                    llamada.push(userName);
+                }
+                if(sexo!=null){
+                    if(!firstElement){
+                        sql+=`,`;
+                    }
+                    sql+=`sexo=?`;
+                    firstElement=false;
+                    llamada.push(sexo);
+                }
+                if(nacimiento!=null && nacimiento!=""){
+                    if(!firstElement){
+                        sql+=`,`;
+                    }
+                    firstElement=false;
+                    sql+=`nacimiento=?`;
+                    llamada.push(nacimiento);
+                }
+                if(password!=null && password!=""){
+                    if(!firstElement){
+                        sql+=`,`;
+                    }
+                    firstElement=false;
+                    sql+=`password=?`;
+                    llamada.push(password);
+                }
+                sql+= ` WHERE email =?;`;
+                llamada.push(email);
+                connection.query(sql, llamada, function (err, resultado){
                     if(err){
                         callback(`No se ha podido modificar el usuario`);
                     }else{
