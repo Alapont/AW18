@@ -154,7 +154,7 @@ class DAOUsers{
                     if(err){
                         callback(`No se ha podido coger la imagen`);
                     }else{
-                        callback(null, (resultado.length==0)?null:[0].img);
+                        callback(null, (resultado.length==0)?null:resultado[0].img);
                     }
                 });
             }
