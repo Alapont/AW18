@@ -1,22 +1,24 @@
-
 <div class="content">
-        <div class="loginPannel content">
-            <%- include("../partials/elements/flash") %>
-            <form action="/login" method="POST">
-                User:<input type="text" name="user"><br>
-                <% if (errores!=null && errores.user) { %>
-                    <span class="rojo">
-                        <%= errores.login.msg %> </span>
-                    <% } %>
-                Pass:<input type="password" name="password"><br>
-                <% if (errores!=null && errores.password) { %>
-                    <span class="rojo">
-                        <%= errores.pass.msg %> </span>
-                    <% } %>
-                <input type="submit" name="login" value="Login">
-            </form>
-        </div>
-        <% if(config.error!=null) %>
-        <span class="error">
-            <%- config.error %></span>
+    <div class="loginPannel content">
+        <%- include("../partials/elements/flash") %>
+        <form action="/login" method="POST">
+            User:<input type="text" name="user"><br>
+            <% if (errores!=null && errores.user) { %>
+            <span class="rojo">
+                <%= errores.login.msg %> </span>
+            <% } %>
+            Pass:<input type="password" name="password"><br>
+            <% if (errores!=null && errores.password) { %>
+            <span class="rojo">
+                <%= errores.pass.msg %> </span>
+            <% } %>
+            <input type="submit" name="login" value="Login">
+        </form>
     </div>
+    <% if(config.error!=null) %>
+    <span class="error">
+        <%- config.error %></span>
+    <% if(typeof(error) != 'undefined' && error!=null) %>
+    <span class="error">
+        <%= error %></span>
+</div>

@@ -97,6 +97,7 @@ app.get(/login(.html)?/, (request, response) => {
         response.type("text/html")
         response.render("main", {
             errores: request.session.error,
+            error: null,
             config: {
                 pageName: "login"
             }
@@ -119,13 +120,18 @@ app.post("/login", (request, response) => {
             if (result.isEmpty()) {
                 DaoU.isUserCorrect(request.body.user, request.body.password, (err, data) => {
                     if (err) {
-                        request.session.error = (err);
+                        //request.session.error = (err);
                         response.cookie("error", err);
-
                         response.status(500);
-                        response.redirect("/login");
+                        response.render("main",{ 
+                            error: err,
+                            errores: request.session.error,
+                            config: {
+                                pageName: "login"
+                            }
+                        });
                     } else {
-                        if (data != null)
+                        if (data != null){
                             DaoU.getUser(request.body.user, (err, data) => {
                                 if (err) {
                                     request.session.error = (err);
@@ -147,7 +153,7 @@ app.post("/login", (request, response) => {
                                     response.redirect("/login");
                                 }
                             });
-                        else {
+                        }else {
                             request.session.error = ("Error de búsqueda de usuario");
                             response.redirect("/login");
                         }
