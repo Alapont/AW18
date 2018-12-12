@@ -15,7 +15,6 @@ const mySQLStore = mysqlSession(session);
 const daoUser = require("./DAOUsers");
 const daoAmistad = require("./DAOAmistad");
 const daoPreguntas = require("./DAOPreguntas");
-const UrlPattern = require("url-pattern");
 const sessionStore = new mySQLStore({
     host: config.mysqlConfig.host,
     user: config.mysqlConfig.user,
