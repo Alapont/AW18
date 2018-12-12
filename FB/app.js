@@ -463,8 +463,11 @@ app.post(/register(.html)?/, (request, response) => {
 
 function calcularEdad(nacimiento) {
     if(typeof(nacimiento)!="undefined"){
+        nacimiento=nacimiento.toString()
         var today=new Date();
-        return today.getFullYear()-nacimiento.substring(0,3)+(today.getMonth()>=nacimiento.substring(4,5)&&today.getDay()>=nacimiento.substring(6,7))?1:0;
+        return ((today.getFullYear()-Number(nacimiento.substring(0,4)))
+                +((today.getMonth()>=Number(nacimiento.substring(4,6))&&
+                    today.getDay()>=Number(nacimiento.substring(6,8)))?1:0));
     }
     return  0;
 }
