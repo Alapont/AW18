@@ -32,19 +32,16 @@ class DAOAmistad {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql1 = `SELECT userName, estado, img, email FROM amistad JOIN users ON email=amigado WHERE amigador=?`;
-                const sql2 = `SELECT userName, estado, img, email FROM amistad JOIN users ON email=amigador WHERE amigado=?`;
-                connection.query(sql1, [user], function (err, resultado1) {
+                const sql = `SELECT userName, estado, img, email FROM amistad JOIN users ON email=amigado WHERE amigador=? OR amigado=?`;
+                connection.query(sql, [user, user], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        connection.query(sql2, [user], function (err, resultado2) {
                             //si resultado==0 es trur=> dcha:izqda
-                            callback(null, resultado1.concat(resultado2));
-                        });
+                            callback(null, resultado);
                     }
                     connection.release();
-                });
+                });  
             }
         });
     }
