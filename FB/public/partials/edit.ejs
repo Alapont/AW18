@@ -1,7 +1,7 @@
 <div class="content">
     <div class="loginPannel content">
         <%- include("../partials/elements/flash") %>
-        <form class="edit" action="/save" method="POST">
+        <form class="edit" action="/save" method="POST" enctype="multipart/form-data">
             <div>Contraseña: <input class="write pass" type="password" name="password">
                 <% if (errores.password) { %>
                 <span class="rojo">

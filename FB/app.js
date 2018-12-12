@@ -58,7 +58,8 @@ const middlewareSession = session({
     resave: false,
     store: sessionStore
 });
-
+const multerFactory = multer({storage:multer.memoryStorage()});
+//app.use(multerFactory.none());
 
 function flashMiddleware(request, response, next) {
     //añades el atributo setFlash al objeto response
@@ -89,7 +90,7 @@ app.get(/login(.html)?/, (request, response) => {
         response.status(300);
         response.redirect("/perfil");
     } else {
-        let err = typeof(request.session.err)!='undefined'?request.session.err:null;
+        let err = typeof (request.session.err) != 'undefined' ? request.session.err : null;
         response.status(200);
         response.type("text/html")
         response.render("main", {
@@ -186,7 +187,7 @@ app.get("/amigos", (request, response) => {
     }
 });
 
-app.post("/busca", (request, response) => {//To-Do
+app.post("/busca", (request, response) => { //To-Do
 
 });
 
@@ -202,6 +203,7 @@ app.get("/perfil/:email", (request, response) => {
                     edad: calcularEdad(data.edad), //Aquí deberíamos calcularla :$
                     sexo: data.sexo,
                     puntos: data.puntos,
+                    img: data.img,
                     email: data.email,
                     edit: false
                 },
@@ -216,7 +218,7 @@ app.get("/perfil/:email", (request, response) => {
 });
 
 //////Preguntas/////
-app.get("/preguntas", (request, response) => {//pull de preguntas
+app.get("/preguntas", (request, response) => { //pull de preguntas
     if (request.session.userName) { //Salimos si no está logueado
         DaoP.getPreguntas(5, (err, data) => {
             if (err) {
@@ -247,42 +249,42 @@ app.get("/preguntas", (request, response) => {//pull de preguntas
         response.redirect("/login");
     }
 });
-app.post("/respuesta",(request,response)=>{//Un usuario responde a una pregunta
+app.post("/respuesta", (request, response) => { //Un usuario responde a una pregunta
     let respuesta = request.body.nuevaRespuesta;
-    if(request.body.respuesta==0){
-        DaoP.addRespuesta(request.body.pregunta,request.body.nuevaRespuesta,(err,idRespuesta)=>{
-            if(err)
+    if (request.body.respuesta == 0) {
+        DaoP.addRespuesta(request.body.pregunta, request.body.nuevaRespuesta, (err, idRespuesta) => {
+            if (err)
                 response.redirect("/perfil");
-            else            
-                DaoP.responder(request.body.pregunta,idRespuesta,request.session.email,(err,data)=>{
-                    if(err){
+            else
+                DaoP.responder(request.body.pregunta, idRespuesta, request.session.email, (err, data) => {
+                    if (err) {
                         response.redirect("/perfil");
-                    }else{
-                        response.redirect("/pregunta/"+request.body.pregunta);
+                    } else {
+                        response.redirect("/pregunta/" + request.body.pregunta);
                     }
                 });
         })
-    }else{
-        DaoP.responder(request.body.pregunta,request.body.respuesta,request.session.email,(err,data)=>{
-            if(err){
+    } else {
+        DaoP.responder(request.body.pregunta, request.body.respuesta, request.session.email, (err, data) => {
+            if (err) {
                 response.redirect("/perfil");
-            }else{
-                response.redirect("/pregunta/"+request.body.pregunta);
+            } else {
+                response.redirect("/pregunta/" + request.body.pregunta);
             }
         })
     }
 });
-app.post("/preguntar",(request,response)=>{//Un usuario añade una nueva pregunta
-    DaoP.addPregunta(request.body.text,(err,data)=>{
-        if(err)
+app.post("/preguntar", (request, response) => { //Un usuario añade una nueva pregunta
+    DaoP.addPregunta(request.body.text, (err, data) => {
+        if (err)
             response.redirect("/perfil");
         else
-            response.redirect("/pregunta/"+data);
+            response.redirect("/pregunta/" + data);
     });
 });
-app.get("/pregunta/:id",(request,response)=>{//Un usuario ve los datos sobre una pregunta
+app.get("/pregunta/:id", (request, response) => { //Un usuario ve los datos sobre una pregunta
     if (request.session.userName) { //Salimos si no está logueado
-        DaoP.getRespuestas(request.params.id,request.session.email,(err,data)=>{
+        DaoP.getRespuestas(request.params.id, request.session.email, (err, data) => {
             if (err) {
                 response.status(300);
                 console.log(err);
@@ -292,12 +294,12 @@ app.get("/pregunta/:id",(request,response)=>{//Un usuario ve los datos sobre una
                 response.type("text/html");
                 response.render("main", {
                     sesion: request.session,
-                    pregunta:{
-                        texto:data.texto,
-                        id:data.idPregunta
+                    pregunta: {
+                        texto: data.texto,
+                        id: data.idPregunta
                     },
-                    respuestas:data.respuestas,
-                    respuestaUsuario:data.contestado,
+                    respuestas: data.respuestas,
+                    respuestaUsuario: data.contestado,
                     config: {
                         pageName: "pregunta"
                     },
@@ -317,11 +319,11 @@ app.get("/pregunta/:id",(request,response)=>{//Un usuario ve los datos sobre una
     } else {
         response.redirect("/login");
     }
-    
+
 });
-app.get("/respuesta/:id",(request,response)=>{//Un usuario va a responder a una pregunta
+app.get("/respuesta/:id", (request, response) => { //Un usuario va a responder a una pregunta
     if (request.session.userName) { //Salimos si no está logueado
-        DaoP.getRespuestas(request.params.id,request.session.email,(err,data)=>{
+        DaoP.getRespuestas(request.params.id, request.session.email, (err, data) => {
             if (err) {
                 response.status(300);
                 response.redirect("/perfil");
@@ -330,11 +332,11 @@ app.get("/respuesta/:id",(request,response)=>{//Un usuario va a responder a una 
                 response.type("text/html");
                 response.render("main", {
                     sesion: request.session,
-                    pregunta:{
-                        texto:data.texto,
-                        id:data.idPregunta
+                    pregunta: {
+                        texto: data.texto,
+                        id: data.idPregunta
                     },
-                    respuestas:data.respuestas,
+                    respuestas: data.respuestas,
                     config: {
                         pageName: "respuesta"
                     },
@@ -354,7 +356,7 @@ app.get("/respuesta/:id",(request,response)=>{//Un usuario va a responder a una 
     } else {
         response.redirect("/login");
     }
-    
+
 });
 //////REGISTRO/////
 //      Registro
@@ -382,10 +384,26 @@ app.post(/register(.html)?/, (request, response) => {
     request.checkBody("user", "El email no puede estar vacío").notEmpty();
     request.checkBody("password", "La contraseña no puede estar vacía").notEmpty();
     request.checkBody("userName", "El nombre de usuario no puede estar vacío").notEmpty();
+    if (request.body.gender == null) {
+        request.body.gender == "other";
+    }
+    if (request.body.fechaNac == null) {
+        request.body.fechaNac == Date();
+    }
+    if (request.body.imagenPerfil == null) {
+        request.body.imagenPerfil == "usuario.jpg";
+    }
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
+            multerFactory.single("imagenPerfil"),
+                function (request, response) {
+                    let nombreFichero = null;
+                    if (request.file) {
+                        nombreFichero = request.file.filename;
+                    }
+                }
             DaoU.addUser(request.body.user, request.body.password,
-                request.body.imagenPerfil, request.body.userName,
+                nombreFichero, request.body.userName,
                 request.body.gender, request.body.fechaNac, (err, data) => {
                     if (err) {
                         response.status(300);
@@ -436,7 +454,7 @@ app.get("/imagen/:email", (request, response) => {
                 response.redirect("/perfil");
             } else {
                 response.status(200);
-                response.end(data[0]);
+                response.end(data);
             }
         });
 
@@ -464,13 +482,26 @@ app.get("/edit", (request, response) => {
     }
 });
 
-app.post("/save", (request, response) => {
+app.post("/save", multerFactory.single("imagenPerfil"), (request, response) => {
+    let nombreFichero;
+    if (request.file) {
+        nombreFichero = request.file.buffer;
+    }
     request.checkBody("password", "La contraseña no puede estar vacía").notEmpty();
     request.checkBody("userName", "El nombre de usuario no puede estar vacío").notEmpty();
+    if (request.body.gender == null) {
+        request.body.gender = "other";
+    }
+    if (request.body.fechaNac == null) {
+        request.body.fechaNac = Date();
+    }
+   /* if (request.body.imagenPerfil == null) {
+        request.body.imagenPerfil = "usuario.jpg";
+    }*/
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
             DaoU.updateUser(request.body.password,
-                request.body.imagenPerfil, request.body.userName,
+                nombreFichero, request.body.userName,
                 request.body.gender, request.body.fechaNac, request.session.email, (err, data) => {
                     if (err) {
                         response.status(300);
@@ -479,7 +510,7 @@ app.post("/save", (request, response) => {
                         response.status(300);
                         //asegurar de no pasar nulos
                         request.session.userName = request.body.userName;
-                        request.session.img = request.body.img;
+                        request.session.img = nombreFichero;
                         request.session.nacimiento = request.body.nacimiento;
                         request.session.sexo = request.body.sexo;
                         request.session.puntos = request.body.puntos;

@@ -46,7 +46,7 @@ class DAOUsers{
             connection.release();
         });
     }
-    addUser(email,password,img="../img/usuario.jpg",userName,sexo="null",nacimiento="null",callback=test){
+    addUser(email,password,img,userName,sexo,nacimiento,callback=test){
         this._pool.getConnection(function(err,connection){
             if(err){
                 callback(`Error de conexion a la base de datos`);
@@ -82,17 +82,17 @@ class DAOUsers{
             connection.release();
         });
     }
-    updateUser(password,img="../img/usuario.jpg",userName,sexo="null",nacimiento="null",email,callback=test){
+    updateUser(password,img,userName,sexo,nacimiento,email,callback=test){
         this._pool.getConnection(function(err,connection){
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `UPDATE users SET password=?,img=?,userName=?,sexo=?,nacimiento=? WHERE email=?;`
-                connection.query(sql, [password,img,userName,sexo,nacimiento, email],function (err,resultado){
+                const sql= `UPDATE users SET img=?,userName=?,sexo=?,nacimiento=?,password=? WHERE email=?;`
+                connection.query(sql, [img, userName,sexo,nacimiento,password, email], function (err, resultado){
                     if(err){
                         callback(`No se ha podido modificar el usuario`);
                     }else{
-                        callback(null,userName);
+                        callback(null, resultado);
                     }
                 })
             }
@@ -110,7 +110,7 @@ class DAOUsers{
                     if(err){
                         callback(`No se ha podido coger la imagen`);
                     }else{
-                        callback(null, resultado[0]);
+                        callback(null, resultado[0].img);
                     }
                 });
             }
