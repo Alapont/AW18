@@ -63,14 +63,15 @@ class DAOUsers{
             connection.release();
         });
     }
-    findUser(nombre,callback=test){
+    findUser(nombre,email,callback=test){
         //Busca a un usuario por subcadenas
         this._pool.getConnection(function(err,connection){
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `SELECT * FROM users WHERE userName LIKE ? `;
-                connection.query(sql, [("%"+nombre+"%")], function(err,resultado){
+                const sql= `SELECT userName,email,img,estado FROM users LEFT OUTER JOIN amistad on users.email=amistad.amigador WHERE userName LIKE ? AND amistad.amigado =? UNION ` + 
+                           `SELECT userName,email,img,estado FROM users LEFT OUTER JOIN amistad on users.email=amistad.amigado  WHERE userName LIKE ? AND amistad.amigador =? `;
+                connection.query(sql, [("%"+nombre+"%"),email,("%"+nombre+"%"),email], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else

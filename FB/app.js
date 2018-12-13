@@ -201,7 +201,7 @@ app.get("/amigos", (request, response) => {
     }
 });
 app.post("/busca", (request, response) => { //To-Do
-    DaoU.findUser(request.body.busqueda,(err,data)=>{
+    DaoU.findUser(request.body.busqueda,request.session.email,(err,data)=>{
         if(err)
             response.redirect("/amigos");
         else{
@@ -213,7 +213,7 @@ app.post("/busca", (request, response) => { //To-Do
                     puntos: request.session.puntos,
                     email: request.session.email
                 },
-                solicitudes: data,
+                solicitudes: data.filter(a=>{a.estado!="solicitado"&&a.estado!="amigo"}),
                 amigoSolicitado: request.body.busqueda,
                 config: {
                     pageName: "busqueda"
@@ -553,8 +553,14 @@ app.get("/edit", (request, response) => {
         let err = [];
         response.type("text/html")
         response.render("main", {
-            sesion: request.session.sesion,
-
+            persona: {
+                userName: request.session.userName,
+                edad: request.session.nacimiento ==""?0:calcularEdad(request.session.nacimiento), //Aquí deberíamos calcularla :$
+                sexo: request.session.sexo,
+                puntos: request.session.puntos,
+                email: request.session.email,
+                edit: true
+            },
             errores: err,
             config: {
                 pageName: "edit"
