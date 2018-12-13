@@ -123,7 +123,7 @@ app.post("/login", (request, response) => {
                         //request.session.error = (err);
                         response.cookie("error", err);
                         response.status(500);
-                        response.render("main",{ 
+                        response.render("main", {
                             error: err,
                             errores: request.session.error,
                             config: {
@@ -131,7 +131,7 @@ app.post("/login", (request, response) => {
                             }
                         });
                     } else {
-                        if (data != null){
+                        if (data != null) {
                             DaoU.getUser(request.body.user, (err, data) => {
                                 if (err) {
                                     request.session.error = (err);
@@ -147,13 +147,13 @@ app.post("/login", (request, response) => {
                                         request.session.img = false;
                                     }
 
-                                    request.session.nacimiento = (data.nacimiento ==""?0:calcularEdad(request.session.nacimiento));
+                                    request.session.nacimiento = (data.nacimiento == "" ? 0 : calcularEdad(request.session.nacimiento));
                                     request.session.sexo = data.sexo;
                                     request.session.puntos = data.puntos;
                                     response.redirect("/login");
                                 }
                             });
-                        }else {
+                        } else {
                             request.session.error = ("Error de búsqueda de usuario");
                             response.redirect("/login");
                         }
@@ -179,7 +179,7 @@ app.get("/amigos", (request, response) => {
             } else {
                 //nos quedamos con los amigos
                 request.session.amigos = data.filter(amigo => amigo.estado == "amigo");
-                request.session.solicitudes = data.filter(amigo =>( amigo.estado == "solicitud"||amigo.estado=="solicitar"));
+                request.session.solicitudes = data.filter(amigo => (amigo.estado == "solicitud" || amigo.estado == "solicitar"));
                 response.render("main", {
                     persona: {
                         userName: request.session.userName,
@@ -201,49 +201,66 @@ app.get("/amigos", (request, response) => {
     }
 });
 app.post("/busca", (request, response) => { //To-Do
-    DaoU.findUser(request.body.busqueda,request.session.email,(err,data)=>{
-        if(err)
+    DaoU.findUser(request.body.busqueda, request.session.email, (err, data) => {
+        if (err)
             response.redirect("/amigos");
-        else{
-            response.render("main", {
-                persona: {
-                    userName: request.session.userName,
-                    edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
-                    sexo: request.session.sexo,
-                    puntos: request.session.puntos,
-                    email: request.session.email
-                },
-                solicitudes: data.filter(a=>a.estado!="amigo"||a.estado==null),
-                amigoSolicitado: request.body.busqueda,
-                config: {
-                    pageName: "busqueda"
-                }
-            });
+        else {
+            if (data.length == 0) {
+                response.render("main", {
+                    persona: {
+                        userName: request.session.userName,
+                        edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
+                        sexo: request.session.sexo,
+                        puntos: request.session.puntos,
+                        email: request.session.email
+                    },
+                    solicitudes: null,
+                    amigoSolicitado: request.body.busqueda,
+                    config: {
+                        pageName: "busqueda"
+                    }
+                });
+            } else {
+                response.render("main", {
+                    persona: {
+                        userName: request.session.userName,
+                        edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
+                        sexo: request.session.sexo,
+                        puntos: request.session.puntos,
+                        email: request.session.email
+                    },
+                    solicitudes: data.filter(a => a.estado != "amigo"),
+                    amigoSolicitado: request.body.busqueda,
+                    config: {
+                        pageName: "busqueda"
+                    }
+                });
+            }
         }
     });
 });
 
-app.get("/aceptar/:id",(request,response)=>{
-    console.log("\t\t\tResolviendo "+request.url);
-    DaoA.setAmistad(request.session.email,request.params.id,"amigo",(err,data)=>{
-        if(err){
+app.get("/aceptar/:id", (request, response) => {
+
+    DaoA.editAmistad(request.session.email, request.params.id, "amigo", (err, data) => {
+        if (err) {
             response.status(500);
-        }else{
+        } else {
             response.status(200);
             response.redirect("/amigos");
         }
-       
+
     });
 });
-app.get("/solicitar/:id",(request,response)=>{
-    console.log("\t\t\tResolviendo "+request.url);
-    DaoA.setAmistad(request.session.email,request.params.id,"solicitar",(err,data)=>{
+app.get("/solicitar/:id", (request, response) => {
+
+    DaoA.setAmistad(request.session.email, request.params.id, "solicitar", (err, data) => {
         response.redirect("/amigos");
     })
 });
-app.get("/rechazar/:id",(request,response)=>{
-    console.log("\t\t\tResolviendo "+request.url);
-    DaoA.setAmistad(request.session.email,request.params.id,"rechazado",(err,data)=>{
+app.get("/rechazar/:id", (request, response) => {
+
+    DaoA.editAmistad(request.session.email, request.params.id, "rechazado", (err, data) => {
         response.redirect("/amigos");
     })
 });
@@ -260,7 +277,7 @@ app.get("/perfil/:email", (request, response) => {
                     edad: calcularEdad(data.edad), //Aquí deberíamos calcularla :$
                     sexo: data.sexo,
                     puntos: data.puntos,
-                    img: data.img==null?true:false,
+                    img: data.img == null ? true : false,
                     email: data.email,
                     edit: false
                 },
@@ -330,12 +347,12 @@ app.post("/respuesta", (request, response) => { //Un usuario responde a una preg
         })
     }
 });
-app.post("/preguntaEdit",(request,response)=>{//Un usuario genera las opciones para su propia pregunta
-    DaoP.addRespuesta(request.body.id,request.body.op1);
-    DaoP.addRespuesta(request.body.id,request.body.op2);
-    DaoP.addRespuesta(request.body.id,request.body.op3);
-    DaoP.addRespuesta(request.body.id,request.body.op4,(err,data)=>{
-        response.redirect("/pregunta/"+request.body.id);
+app.post("/preguntaEdit", (request, response) => { //Un usuario genera las opciones para su propia pregunta
+    DaoP.addRespuesta(request.body.id, request.body.op1);
+    DaoP.addRespuesta(request.body.id, request.body.op2);
+    DaoP.addRespuesta(request.body.id, request.body.op3);
+    DaoP.addRespuesta(request.body.id, request.body.op4, (err, data) => {
+        response.redirect("/pregunta/" + request.body.id);
     });
 
 });
@@ -359,9 +376,10 @@ app.post("/preguntar", (request, response) => { //Un usuario añade una nueva pr
                     email: request.session.email,
                     edit: true
                 },
-                pregunta:{
+                pregunta: {
                     texto: request.body.text,
-                    id:data}
+                    id: data
+                }
 
             })
         }
@@ -497,14 +515,14 @@ app.post(/register(.html)?/, (request, response) => {
 });
 
 function calcularEdad(nacimiento) {
-    if(typeof(nacimiento)!="undefined"){
-        nacimiento=nacimiento.toString()
-        var today=new Date();
-        return ((today.getFullYear()-Number(nacimiento.substring(0,4)))
-                +((today.getMonth()>=Number(nacimiento.substring(4,6))&&
-                    today.getDay()>=Number(nacimiento.substring(6,8)))?1:0));
+    if (typeof (nacimiento) != "undefined") {
+        nacimiento = nacimiento.toString()
+        var today = new Date();
+        return ((today.getFullYear() - Number(nacimiento.substring(0, 4))) +
+            ((today.getMonth() >= Number(nacimiento.substring(4, 6)) &&
+                today.getDay() >= Number(nacimiento.substring(6, 8))) ? 1 : 0));
     }
-    return  0;
+    return 0;
 }
 /////PERFIL
 app.get("/perfil", (request, response) => {
@@ -514,7 +532,7 @@ app.get("/perfil", (request, response) => {
         response.render("main", {
             persona: {
                 userName: request.session.userName,
-                edad: request.session.nacimiento ==""?0:calcularEdad(request.session.nacimiento), //Aquí deberíamos calcularla :$
+                edad: request.session.nacimiento == "" ? 0 : calcularEdad(request.session.nacimiento), //Aquí deberíamos calcularla :$
                 sexo: request.session.sexo,
                 puntos: request.session.puntos,
                 email: request.session.email,
@@ -538,16 +556,16 @@ app.get("/imagen/:email", (request, response) => {
                     response.redirect("/perfil");
                 } else {
                     response.status(200);
-                    if(data==null){
-                        response.sendFile(path.join(__dirname, "public", "img","usuario.jpg"));
-                    }else{
+                    if (data == null) {
+                        response.sendFile(path.join(__dirname, "public", "img", "usuario.jpg"));
+                    } else {
                         response.end(data);
                     }
                 }
             });
         } else {
             response.status(200);
-            response.end("../img/usuario.jpg");
+            response.sendFile(path.join(__dirname, "public", "img", "usuario.jpg"));
         }
     }
 });
@@ -561,7 +579,7 @@ app.get("/edit", (request, response) => {
         response.render("main", {
             persona: {
                 userName: request.session.userName,
-                edad: request.session.nacimiento ==""?0:calcularEdad(request.session.nacimiento), //Aquí deberíamos calcularla :$
+                edad: request.session.nacimiento == "" ? 0 : calcularEdad(request.session.nacimiento), //Aquí deberíamos calcularla :$
                 sexo: request.session.sexo,
                 puntos: request.session.puntos,
                 email: request.session.email,
@@ -581,39 +599,39 @@ app.get("/edit", (request, response) => {
 
 app.post("/save", multerFactory.single("imagenPerfil"), (request, response) => {
     let nombreFichero;
-    let boolean=false;
+    let boolean = false;
     if (request.file) {
         nombreFichero = request.file.buffer;
-        boolean=true;
+        boolean = true;
     }
 
-    DaoU.updateUser(request.body.password, nombreFichero,request.body.userName,
-        request.body.gender,request.body.fechaNac,request.session.email, (err, data) => {
+    DaoU.updateUser(request.body.password, nombreFichero, request.body.userName,
+        request.body.gender, request.body.fechaNac, request.session.email, (err, data) => {
             if (err) {
                 response.status(300);
                 response.redirect("/edit");
             } else {
                 response.status(300);
-                DaoU.getImagen(request.session.email,(err,data)=>{
-                    if(err){
-                        request.session.img="../img/usuario.jpg";
-                    }else{
+                DaoU.getImagen(request.session.email, (err, data) => {
+                    if (err) {
+                        request.sendFile(path.join(__dirname, "public", "img", "usuario.jpg"));
+                    } else {
                         if (boolean) {
                             request.session.img = true;
                         } else {
                             request.session.img = data.img;
                         }
                     }
-                    
+
                 });
-                if(request.body.userName){
+                if (request.body.userName) {
                     request.session.userName = request.body.userName;
                 }
-                
-                if(request.body.nacimiento){
-                    request.session.nacimiento = ""?0:calcularEdad(request.session.nacimiento);
+
+                if (request.body.nacimiento) {
+                    request.session.nacimiento = "" ? 0 : calcularEdad(request.session.nacimiento);
                 }
-                if(request.body.sexo){
+                if (request.body.sexo) {
                     request.session.sexo = request.body.sexo;
                 }
                 response.redirect("/perfil");

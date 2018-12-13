@@ -12,29 +12,42 @@ class DAOAmistad {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql = (estado=="solicitar")?`INSERT INTO amistad (estado, amigado,amigador) VALUES (?,?,?);`:
-                                                    `UPDATE amistad SET estado=? WHERE amigado=? AND amigador=?`;
+                const sql = `INSERT INTO amistad (estado, amigado,amigador) VALUES (?,?,?);`
                 connection.query(sql, [estado, amigado,amigador], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        if(resultado.affectedRows==0){
-                            connection.query(sql, [estado,amigador,amigado], function (err, resultado){
-                                if (err) {
-                                    callback(`Error de acceso a la base de datos`);
-                                } else{
-                                    callback(null, resultado);
-                                }
-                               
-                            });
-                        }
-                        callback(null, resultado);
+                        
+                         callback(null, resultado);
+                         
                     }
-                })
+                });
             }
             connection.release();
         });
     }
+
+    editAmistad(amigado, amigador,estado, callback = test) {
+        
+            this._pool.getConnection(function (err, connection) {
+                if (err) {
+                    callback(`Error de conexion a la base de datos`);
+                } else {
+                    const sql = `UPDATE amistad SET estado=? WHERE (amigado=? AND amigador=?) OR (amigado=? AND amigador=?)`;
+                    connection.query(sql, [estado, amigado,amigador, amigador, amigado], function (err, resultado) {
+                        if (err) {
+                            callback(`Error de acceso a la base de datos`);
+                        } else {
+                            
+                             callback(null, resultado);
+                             
+                        }
+                    });
+                }
+                connection.release();
+            });
+        }
+    
 
     getAmigos(user, callback = test) {
         this._pool.getConnection((err, connection)=>{

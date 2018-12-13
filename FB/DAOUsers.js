@@ -69,14 +69,15 @@ class DAOUsers{
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= "SELECT userName,email,img,amistad.estado as estado FROM `amistad` RIGHT OUTER JOIN `users` on amistad.amigador=users.email WHERE userName LIKE ? AND (amistad.amigado IS NULL OR amistad.amigado =?) UNION " + 
-                           "SELECT userName,email,img,amistad.estado as estado FROM `amistad` RIGHT OUTER JOIN `users` on amistad.amigado=users.email WHERE userName LIKE ? AND (amistad.amigador IS NULL OR amistad.amigador =?) ";
-                connection.query(sql, [("%"+nombre+"%"),email,("%"+nombre+"%"),email], function(err,resultado){
+                const sql= `SELECT * FROM users WHERE users.email NOT IN(SELECT amistad.amigador FROM amistad where amistad.amigado =?)
+                AND users.email NOT IN(SELECT amistad.amigado FROM amistad where amistad.amigador=? ) AND users.userName LIKE ?`
+                connection.query(sql, [email, email,("%"+nombre+"%")], function(err,resultado){
+                    
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else
-                        //callback(null,resultado); //Todo el objeto usuario
-                        callback(null,resultado); //Solo los nombres
+                        //console.log(resultado[0]);
+                        callback(null,resultado); 
                 })
                 
             }
