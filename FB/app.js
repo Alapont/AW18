@@ -324,12 +324,41 @@ app.post("/respuesta", (request, response) => { //Un usuario responde a una preg
         })
     }
 });
+app.post("/preguntaEdit",(request,response)=>{//Un usuario genera las opciones para su propia pregunta
+    DaoP.addRespuesta(request.body.id,request.body.op1);
+    DaoP.addRespuesta(request.body.id,request.body.op2);
+    DaoP.addRespuesta(request.body.id,request.body.op3);
+    DaoP.addRespuesta(request.body.id,request.body.op4,(err,data)=>{
+        response.redirect("/pregunta/"+request.body.id);
+    });
+
+});
 app.post("/preguntar", (request, response) => { //Un usuario añade una nueva pregunta
     DaoP.addPregunta(request.body.text, (err, data) => {
         if (err)
             response.redirect("/perfil");
-        else
-            response.redirect("/pregunta/" + data);
+        else {
+            response.status(200);
+            response.type("text/html");
+            response.render("main", {
+                sesion: request.session,
+                config: {
+                    pageName: "preguntaEdit"
+                },
+                persona: {
+                    userName: request.session.userName,
+                    edad: calcularEdad(request.session.edad), //Aquí deberíamos calcularla :$
+                    sexo: request.session.sexo,
+                    puntos: request.session.puntos,
+                    email: request.session.email,
+                    edit: true
+                },
+                pregunta:{
+                    texto: request.body.text,
+                    id:data}
+
+            })
+        }
     });
 });
 app.get("/pregunta/:id", (request, response) => { //Un usuario ve los datos sobre una pregunta

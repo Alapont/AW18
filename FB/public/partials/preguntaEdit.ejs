@@ -1,0 +1,12 @@
+<div class="content">
+   <h2><%- pregunta.texto %></h2>
+   Introduzca cuatro opciones
+   <form action="/preguntaEdit" method="POST">
+   <input type="text" name="op1" placeholder="opción 1"/><br/>
+   <input type="text" name="op2" placeholder="opción 2"/><br/>
+   <input type="text" name="op3" placeholder="opción 3"/><br/>
+   <input type="text" name="op4" placeholder="opción 4"/><br/>
+   <input type="hidden" name="id" value="<%-pregunta.id%>" />
+   <input type="submit" value="Submit">
+   </form>
+</div>

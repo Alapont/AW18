@@ -44,7 +44,7 @@ class DAOPreguntas {
                 const sql2 = `SELECT * FROM preguntas WHERE id=?`
                 const sql3 = "Select texto "+
                 "from respuestas join respuestausuario ON respuestas.idPregunta = respuestausuario.idPregunta "+
-                "WHERE respuestausuario.idPregunta=1 AND respuestas.idPregunta=? AND respuestausuario.usuario=?"
+                "WHERE respuestausuario.idPregunta=? AND respuestausuario.usuario=?"
                 //const sql3 = `SELECT idRespuesta FROM respuestausuaro WHERE idPregunta=?,usuario=?`
                 connection.query(sql1, [pregunta,usuario], function (err, respuestas) {
                     if (err) {
@@ -62,7 +62,7 @@ class DAOPreguntas {
                                             idPregunta:pregunta,
                                             texto:texto[0].texto,
                                             respuestas:respuestas, 
-                                            contestado:(respuestaUsuario.length==0)?null:respuestaUsuario.texto//Devolver el texto de la pregunta
+                                            contestado:(respuestaUsuario.length==0)?null:respuestaUsuario[0].texto//Devolver el texto de la pregunta
                                         });
                                 });
                             }
