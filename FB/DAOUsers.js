@@ -69,8 +69,8 @@ class DAOUsers{
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `SELECT * FROM users WHERE users.email NOT IN(SELECT amistad.amigador FROM amistad where amistad.amigado =?)
-                AND users.email NOT IN(SELECT amistad.amigado FROM amistad where amistad.amigador=? ) AND users.userName LIKE ?`
+                const sql= `SELECT * FROM users WHERE users.email NOT IN(SELECT amistad.amigador FROM amistad where amistad.amigado =? AND estado<>"rechazado")
+                AND users.email NOT IN(SELECT amistad.amigado FROM amistad where amistad.amigador=? AND estado<>"rechazado") AND users.userName LIKE ?`
                 connection.query(sql, [email, email,("%"+nombre+"%")], function(err,resultado){
                     
                     if(err){
