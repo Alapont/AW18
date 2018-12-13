@@ -1,8 +1,10 @@
 <div class="amigos solicitudes">
     <% solicitudes.forEach((amigo)=>{%>
         <span>
-            <img src="../img/usuario.jpg" height="50" alt="foto de perfil de <%- amigo.userName %>">
-            <%- amigo.userName %>
+            <img src="/imagen/<%=amigo.email%>" height="50" alt="foto de perfil de <%- amigo.userName %>">
+            <a href="/perfil/<%=amigo.email%>">
+                <%- amigo.userName %></a>
+            <!-- <%- amigo.userName %> -->
             <a href="/aceptar/<%-amigo.email%>">Aceptar</a>
             <a href="/rechazar/<%-amigo.email%>">Rechazar</a>
         </span><br>

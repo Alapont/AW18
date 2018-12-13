@@ -2,7 +2,7 @@
     <div class="amigos solicitudes">
         <% sesion.busqueda.forEach((amigo)=>{%>
             <span>
-                <img src=" <% amigo.img %> " alt="foto de perfil de <%- amigo.userName %>">
+                <img src="/imagen/<%=amigo.email%>" alt="foto de perfil de <%- amigo.userName %>">
                 <%- amigo.userName %>
                 <a href="/aceptar/:<%amigo.email%>">Aceptar</a>
             </span><br>

@@ -19,12 +19,10 @@
 Vuelve a aparecer el encabezado que no es en login.
 
 Punto 1:
-	-Linkear amigos con su perfil
-		-hecho, falta leerlo get /perfil/email
+	
 	-gestión de amistades
-		/adeptar/id
+		/aceptar/id
 		/buscar
-	-búsqueda
 		
 Punto 2:
 	Faltar enganchar todo

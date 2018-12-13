@@ -224,21 +224,34 @@ app.post("/busca", (request, response) => { //To-Do
 });
 
 app.get("/aceptar/:id",(request,response)=>{
-    console.log("\t\t\tResolviendo "+request.url+request.params.id);
+    console.log("\t\t\tResolviendo "+request.url);
     DaoA.setAmistad(request.session.email,request.params.id,"amigo",(err,data)=>{
-        response.redirect("/amigos");
+        if(err){
+            response.status(500);
+        }else{
+            response.redirect("/amigos");
+        }
+       
     })
 });
 app.get("/solicitar/:id",(request,response)=>{
-    console.log("\t\t\tResolviendo "+request.url+request.params.id);
+    console.log("\t\t\tResolviendo "+request.url);
     DaoA.setAmistad(request.session.email,request.params.id,"solicitar",(err,data)=>{
-        response.redirect("/amigos");
+        if(err){
+            response.status(500);
+        }else{
+            response.redirect("/amigos");
+        }
     })
 });
 app.get("/rechazar/:id",(request,response)=>{
-    console.log("\t\t\tResolviendo "+request.url+request.params.id);
+    console.log("\t\t\tResolviendo "+request.url);
     DaoA.setAmistad(request.session.email,request.params.id,"rechazado",(err,data)=>{
-        response.redirect("/amigos");
+        response.redirect("/amigos");if(err){
+            response.status(500);
+        }else{
+            response.redirect("/amigos");
+        }
     })
 });
 
