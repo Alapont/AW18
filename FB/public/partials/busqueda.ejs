@@ -2,7 +2,7 @@
     <h2>Buscando a <%- amigoSolicitado %></h2>
     <% solicitudes.forEach((amigo)=>{%>
         <span>
-            <img src="../img/usuario.jpg" height="50" alt="foto de perfil de <%- amigo.userName %>">
+            <img src="<%- amigo.img %>>" height="50" alt="foto de perfil de <%- amigo.userName %>">
             <%- amigo.userName %>
             <a href="/solicitar/:<%amigo.email%>">Enviar Solicitud</a>
         </span><br>

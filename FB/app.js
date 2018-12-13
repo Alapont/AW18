@@ -213,7 +213,7 @@ app.post("/busca", (request, response) => { //To-Do
                     puntos: request.session.puntos,
                     email: request.session.email
                 },
-                solicitudes: data.filter(a=>{a.estado!="solicitado"&&a.estado!="amigo"}),
+                solicitudes: data.filter(a=>a.estado!="amigo"||a.estado==null),
                 amigoSolicitado: request.body.busqueda,
                 config: {
                     pageName: "busqueda"
