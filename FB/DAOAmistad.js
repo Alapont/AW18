@@ -41,12 +41,12 @@ class DAOAmistad {
             } else {
                 const sql = `SELECT userName, estado, img, email `+
                 `FROM amistad JOIN users ON email=amigado `+
-                `WHERE amigador=? `+
+                `WHERE amigador=?`+
                 `UNION `+
                 `SELECT userName, estado, img, email `+
                 `FROM amistad JOIN users ON email=amigador `+
-                `WHERE amigado=?`;
-                connection.query(sql, [user, user], function (err, resultado) {
+                `WHERE amigado=? AND NOT estado = 'solicitar'`;
+                connection.query(sql, [user, user, user], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
