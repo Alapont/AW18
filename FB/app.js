@@ -254,7 +254,7 @@ app.get("/perfil/:email", (request, response) => {
                     edad: calcularEdad(data.edad), //Aquí deberíamos calcularla :$
                     sexo: data.sexo,
                     puntos: data.puntos,
-                    img: data.img,
+                    img: data.img==null?true:false,
                     email: data.email,
                     edit: false
                 },
@@ -503,7 +503,11 @@ app.get("/imagen/:email", (request, response) => {
                     response.redirect("/perfil");
                 } else {
                     response.status(200);
-                    response.end(data);
+                    if(data==null){
+                        response.sendFile(path.join(__dirname, "public", "img","usuario.jpg"));
+                    }else{
+                        response.end(data);
+                    }
                 }
             });
         } else {
