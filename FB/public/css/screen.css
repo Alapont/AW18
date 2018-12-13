@@ -1,121 +1,154 @@
-*{
-	margin:0;
+* {
+	margin: 0;
 	padding: 0;
 	background-color: inherit;
 	font-family: 'PT Sans', sans-serif;
 	font-weight: bold;
 }
-body{
+
+body {
 	background: url("../img/fondoPagina.jpg");
 }
 
-h2{
+h2 {
 	margin: 0.8em;
 	justify-content: center;
+	font-size: 25px;
+	font-family: 'Gill Sans', serif;
 }
-h3{
-	margin:0.5em;
+
+h3 {
+	margin: 0.5em;
 	justify-content: center;
 }
-a{
-	color:inherit;
-    text-decoration: none;
+
+a {
+	color: inherit;
+	text-decoration: none;
 }
-.a:hover{
-	cursor:crosshair;
+
+.a:hover {
+	cursor: crosshair;
 }
-ul{
-	list-style:none;
+
+ul {
+	list-style: none;
 }
+
 /*Banner*/
-.banner{
-	position:fixed;
-	top:0;
-	height: 150px;
-	width:100%;
+.banner {
+	position: fixed;
+	top: 0;
+	height: 200px;
+	width: 100%;
 	display: flex;
-	background-color: lightgrey;
+	background: url("../img/fondoPagina.jpg");
 	justify-content: space-between;
 	flex-direction: column;
 }
-.logo{
+
+.logo {
 	display: flex;
-	justify-content: center
+	justify-content: center;
+	height: 50%;
 }
-.menu{
+
+.menu {
 	display: flex;
 	justify-content: flex-start;
 	margin-bottom: 1em;
 }
-.menuOpt{
+
+.menuOpt {
 	padding-left: 2em;
+	font-size: 25px;
 }
-.userBox{
+
+.userBox {
 	max-height: 2em;
 }
-.userBox>img{
+
+.userBox>img {
 	height: 90%;
 	border-radius: 20%;
 }
 
 /*Content*/
-.content{
-	padding-top:150px;
-	margin:3em;
+.content {
+	padding-top: 150px;
+	margin: 3em;
 }
-.content>.content{
+
+.content>.content {
 	padding-top: initial;
 }
-.pannel{
+
+.pannel {
 	display: flex;
 }
-.button{
+
+.button {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	width:8em;
+	width: 80px;
+	height: 40px;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	background: white;
+	border-radius: 5px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+	cursor: pointer;
+
 
 }
+
 /*Registro Form*/
-.registro{
+.registro {
 	display: block;
 }
-.write{
+
+.write {
 	margin-left: 10%;
 }
 
 .rojo {
-    color: red;
+	color: red;
 }
 
 div.caja_errores {
-    border: 2px solid red;
-    background-color: rgba(255, 0, 0, 0.5);
+	border: 2px solid red;
+	background-color: rgba(255, 0, 0, 0.5);
 }
 
 /*Perfil*/
-.perfilPannel{
+.perfilPannel {
 	flex-direction: row;
 	justify-content: center;
 }
-.foto{
+
+.foto {
 	flex-grow: 0;
 	width: auto;
-	max-height: 10em;
-	max-width: 10em;
-	overflow:hidden;
-	margin:1em;
+	max-height: 20em;
+	max-width: 20em;
+	overflow: hidden;
+	margin: 1em;
 }
-.foto>img{
+
+.foto>img {
 	border-radius: 1em;
 	height: 100%;
 }
-.datos{
+
+.datos {
 	flex-grow: 5;
 	margin-left: 5em;
+	font-size: 20px;
+	font-family: 'Gill Sans', serif;
 }
 
 /*Preguntas*/
-.option{
-	
-}
+.option {}
