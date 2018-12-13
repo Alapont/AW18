@@ -5,10 +5,6 @@
 	font-family: 'PT Sans', sans-serif;
 	font-weight: bold;
 }
-*{
-	border: 1px fuchsia dashed;
-}
-
 body{
 	background: url("../img/fondoPagina.jpg");
 }
