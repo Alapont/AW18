@@ -1,12 +1,12 @@
  <div class="content">
-     <h2>Preguntas aleatorias</h2>
+     <h2 class=encabezado>Preguntas aleatorias</h2>
      <!--Selección aleatoria de preguntas-->
      <% preguntas.forEach((pregunta)=>{ %><br>
         <a class="pregunta" href="/pregunta/<%-pregunta.id%>" ><%-pregunta.texto%></a>
      <% }) %>
-     <h2>Añade una pregunta</h2>
+     <h2 class=encabezado>Añade una pregunta</h2>
      <form action="/preguntar" method="POST">
-        <input type="text" name="text"/>
-        <input type="submit" name="nuevaPregunta" value="nuevaPregunta"/>
+        <input class= "campo" id=other type="text" name="text"/>
+        <input class=button id ="quest" type="submit" name="nuevaPregunta" value="Añadir Pregunta"/>
     </form>
  </div>

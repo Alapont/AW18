@@ -1,11 +1,11 @@
 <div class="content">
-    <h2>Solicitudes de amistad</h2>
+    <h2 class= encabezado>Solicitudes de amistad</h2>
     <%- include("../partials/elements/listaSolicitudes") %>
-    <h2>Búsqueda de amigos</h2>
+    <h2 class=encabezado>Búsqueda de amigos</h2>
     <form action="/busca" method="POST">
-            <input type="text" class="caja" name="busqueda">
-            <input type="submit" class="boton" name="Buscar">
+            <input class="campo" id=other type="text" class="caja" name="busqueda">
+            <input type="submit" class="button" id="amigo" name="Buscar">
         </form>
-    <h2>Mis amigos</h2>
+    <h2 class=encabezado>Mis amigos</h2>
     <%- include("../partials/elements/listaAmistades") %>
 </div>

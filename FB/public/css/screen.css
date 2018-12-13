@@ -42,7 +42,7 @@ ul {
 	height: 200px;
 	width: 100%;
 	display: flex;
-	background: url("../img/fondoPagina.jpg");
+	background: url("../img/fondoPagina.png");
 	justify-content: space-between;
 	flex-direction: column;
 }
@@ -74,6 +74,12 @@ ul {
 }
 
 /*Content*/
+.loginPannel{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	
+}
 .content {
 	padding-top: 150px;
 	margin: 3em;
@@ -89,20 +95,62 @@ ul {
 
 .button {
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 80px;
-	height: 40px;
+	width: fit-content;
+	height: fit-content;
 	font-size: 14px;
 	font-weight: bold;
-	text-align: center;
 	background: white;
 	border-radius: 5px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
 	cursor: pointer;
+}
 
+#modify{
+	position: relative;
+	left: 450px;
+	bottom: 150px;
+}
 
+#amigo{
+	position: relative;
+	left: 200px;
+	bottom: 22px;
+}
+#log{
+	position: relative;
+	top:20px;
+	
+}
+
+#quest{
+	position: relative;
+	left: 200px;
+	bottom: 22px;
+}
+.encabezado{
+	margin: 0.8em;
+	justify-content: center;
+	width:fit-content;
+	font-size: 25px;
+	font-family: 'Gill Sans', serif;
+	background-color: gainsboro;
+	border: 2px groove;
+	border-radius: 5px;
+}
+
+.campo{
+	border-radius: 5px;
+	background: whitesmoke;
+	margin-top: 20px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+
+}
+
+#other{
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /*Registro Form*/
@@ -128,10 +176,12 @@ div.caja_errores {
 	flex-direction: row;
 	justify-content: center;
 }
-.nombreUser{
-	font-size:30px;
+
+.nombreUser {
+	font-size: 30px;
 	text-shadow: 5px 5px 5px grey;
 }
+
 .foto {
 	flex-grow: 0;
 	width: auto;
@@ -154,4 +204,23 @@ div.caja_errores {
 }
 
 /*Preguntas*/
-.option {}
+.preguntaindiv {
+	font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+	color: black;
+	font-size: 18px;
+	font-weight: 400;
+	text-align: center;
+	background: burlywood;
+	margin: 0 0 25px;
+	overflow: hidden;
+	padding: 20px;
+	border-radius: 35px 0px 35px 0px;
+	-moz-border-radius: 35px 0px 35px 0px;
+	-webkit-border-radius: 35px 0px 35px 0px;
+	border: 2px solid tan;
+}
+.pregunta{
+	font-size:20px;
+	background: linear-gradient(#997f55, #ffe0b2, #997f55 );
+	border-radius: 5px;
+}

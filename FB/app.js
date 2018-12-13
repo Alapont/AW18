@@ -549,7 +549,7 @@ app.get("/perfil", (request, response) => {
 
 app.get("/imagen/:email", (request, response) => {
     if (request.session) {
-        if (request.session.img) {
+        
             DaoU.getImagen(request.params.email, (err, data) => {
                 if (err) {
                     response.status(300);
@@ -563,10 +563,7 @@ app.get("/imagen/:email", (request, response) => {
                     }
                 }
             });
-        } else {
-            response.status(200);
-            response.sendFile(path.join(__dirname, "public", "img", "usuario.jpg"));
-        }
+        
     }
 });
 
@@ -634,7 +631,22 @@ app.post("/save", multerFactory.single("imagenPerfil"), (request, response) => {
                 if (request.body.sexo) {
                     request.session.sexo = request.body.sexo;
                 }
-                response.redirect("/perfil");
+                
+                response.render("main", {
+                    persona: {
+                        userName: request.session.userName,
+                        edad: request.session.nacimiento == "" ? 0 : calcularEdad(request.session.nacimiento), //Aquí deberíamos calcularla :$
+                        sexo: request.session.sexo,
+                        puntos: request.session.puntos,
+                        email: request.session.email,
+                        img:request.session.img,
+                        edit: true
+                    },
+                    errores: null,
+                    config: {
+                        pageName: "perfil"
+                    }
+                });
             }
         });
 
