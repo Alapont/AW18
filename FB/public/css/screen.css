@@ -128,7 +128,10 @@ div.caja_errores {
 	flex-direction: row;
 	justify-content: center;
 }
-
+.nombreUser{
+	font-size:30px;
+	text-shadow: 5px 5px 5px grey;
+}
 .foto {
 	flex-grow: 0;
 	width: auto;
