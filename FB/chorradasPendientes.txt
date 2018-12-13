@@ -24,15 +24,6 @@ Punto 1:
 		/aceptar/id
 		/buscar
 		
-Punto 2:
-	Faltar enganchar todo
-		post	/responder envío de una respuestas
-		Arreglar dao preguntas
-	Hecho
-		get		/preguntas lista de preguntas
-		get		/responder/:idPregunta página de respuestas
-		post	/preguntar envío de una pregunta
-		get		/pregunta info de una pregunta {has contestado & respuesta, quienes han contestado}
 Punto 3:
 	pendiente
 	Montar DAO

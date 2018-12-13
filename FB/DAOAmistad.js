@@ -22,8 +22,10 @@ class DAOAmistad {
                             connection.query(sql, [estado,amigador,amigado], function (err, resultado){
                                 if (err) {
                                     callback(`Error de acceso a la base de datos`);
-                                } else 
+                                } else{
                                     callback(null, resultado);
+                                }
+                               
                             });
                         }
                         callback(null, resultado);

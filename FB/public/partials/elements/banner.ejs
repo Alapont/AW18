@@ -1,6 +1,6 @@
 <div class="banner">
     <div class="logo">
-        <img src="img/logoFace.png" alt="Logotipo FaceBluff">
+        <img src="img/logoFace.jpg" alt="Logotipo FaceBluff">
     </div>
     <div class="menu">
         <% if(typeof (persona) != 'undefined'){ //Miramos si estamos logueados %>
@@ -9,7 +9,7 @@
             <span class="menuOpt"><a href="/preguntas">Preguntas</a></span>
             <span class="menuOpt"><a href="/desconectar">Desconectar</a></span>
             <span class="menuOpt userBox">
-                <img src="../img/usuario.jpg" alt="foto de perfil de <%- persona.user %>">
+                <img src="/imagen/<%=persona.email%>" alt="foto de perfil de <%- persona.user %>">
                 <%- persona.puntos %>
             </span>
         <% }else { %>
