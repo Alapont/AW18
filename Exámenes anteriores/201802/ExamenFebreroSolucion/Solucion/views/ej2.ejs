@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculadora AW</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/calculadora.css">
+</head>
+
+<body>
+    <div class="content">
+        <h1>Calculadora</h1>
+        <form method="GET" action="/calc" class="operacion">
+            <input type="text" name="operand1">
+            <select name="operator">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </select>
+            <input type="text" name="operand2">
+            <input type="submit" value="=">
+            <span class="resultado">
+                <%= resultado %>
+            </span>
+        </form>
+        <h2>Historial</h2>
+        <ul class="historial">
+            <% historial.forEach((str, index) => { %>
+                <li>
+                    <span><%= str %></span>
+                    <form method="POST" action="/deleteHistory">
+                        <input type="hidden" name="index" value="<%= index %>">
+                        <input type="submit" value="Borrar">
+                    </form>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+</body>
+
+</html>

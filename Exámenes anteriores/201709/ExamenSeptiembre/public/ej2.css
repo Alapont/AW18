@@ -1,0 +1,11 @@
+p.visited {
+    text-align: center;
+    color: blue;
+    font-weight: bold;
+}
+
+p.error {
+    text-align: center;
+    color: red;
+    font-weight: bold;    
+}

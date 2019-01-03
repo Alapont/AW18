@@ -1,0 +1,26 @@
+{
+  "name": "examen-septiembre",
+  "version": "1.0.0",
+  "description": "Examen Septiembre 2017",
+  "main": "main.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "private": true,
+  "keywords": [
+    "examen",
+    "septiembre"
+  ],
+  "author": "Manuel Montenegro",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "express-validator": "^4.1.1",
+    "mysql": "^2.14.1",
+    "nodemon": "^1.12.0",
+    "underscore": "^1.8.3"
+  }
+}

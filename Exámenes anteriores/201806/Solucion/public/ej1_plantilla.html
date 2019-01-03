@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejercicio 1</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="ej1.css">
+</head>
+
+<body>
+    <h2>Reserva de mesa</h2>
+
+    <form action="reservar" method="POST" id="formReserva">
+        <div>
+            <label for="nombre">Nombre: </label>
+            <input type="text" id="nombre" name="nombre">
+        </div>
+        <div>
+            <label for="num_comensales">Número de comensales: </label>
+            <input type="text" id="num_comensales" name="num_comensales">
+        </div>
+        <div>
+            <input type="submit" value="Reservar">
+        </div>
+    </form>
+
+    <!-- Lo siguiente solo es aplicable para el apartado (e) -->
+    <!-- 
+    <div class="info">
+        Ya has reservado una mesa. Tienes asignada la mesa nº 9
+    </div>    
+    -->
+
+    <h2>Ocupación actual</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Núm. mesa</th>
+                <th>Posición</th>
+                <th>Reservada</th>
+                <th>Ocupación</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>1</td>
+                <td>Entrada izq.</td>
+                <td>NO</td>
+                <td>
+
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>2</td>
+                <td>Entrada dch.</td>
+                <td>NO</td>
+                <td>
+
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>3</td>
+                <td>Pasillo 1</td>
+                <td>SÍ</td>
+                <td>
+
+                    <div class="silla ocupada"></div>
+
+                    <div class="silla ocupada"></div>
+
+                    <div class="silla ocupada"></div>
+
+                    <div class="silla ocupada"></div>
+
+                    <div class="silla ocupada"></div>
+
+
+                    <div class="silla libre"></div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>4</td>
+                <td>Pasillo 1</td>
+                <td>NO</td>
+                <td>
+
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>5</td>
+                <td>Pasillo 1</td>
+                <td>NO</td>
+                <td>
+
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>6</td>
+                <td>Pasillo 2</td>
+                <td>SÍ</td>
+                <td>
+
+                    <div class="silla ocupada"></div>
+
+                    <div class="silla ocupada"></div>
+
+                    <div class="silla ocupada"></div>
+
+                    <div class="silla ocupada"></div>
+
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>7</td>
+                <td>Pasillo 2</td>
+                <td>NO</td>
+                <td>
+
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>8</td>
+                <td>Reservado</td>
+                <td>NO</td>
+                <td>
+
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>9</td>
+                <td>Ventana</td>
+                <td>NO</td>
+                <td>
+
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>10</td>
+                <td>Servicios</td>
+                <td>NO</td>
+                <td>
+
+
+                    <div class="silla libre"></div>
+
+                    <div class="silla libre"></div>
+
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejercicio 1</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="ej1.css">
+</head>
+
+<body>
+    <h2>Reserva de mesa</h2>
+
+    <% if (!reservada) { %>
+        <form action="reservar" method="POST" id="formReserva">
+            <div>
+                <label for="nombre">Nombre: </label>
+                <input type="text" id="nombre" name="nombre">
+            </div>
+            <div>
+                <label for="num_comensales">Número de comensales: </label>
+                <input type="text" id="num_comensales" name="num_comensales">
+            </div>
+            <div>
+                <input type="submit" value="Reservar">
+            </div>
+        </form>
+    <% } else { %> 
+        <div class="info">
+            Ya has reservado una mesa. Tienes asignada la mesa nº <%= reservada %>
+        </div>            
+    <% } %>
+    <!-- Lo siguiente solo es aplicable para el apartado (e) -->
+    <!-- 
+    <div class="info">
+        Ya has reservado una mesa. Tienes asignada la mesa nº 9
+    </div>    
+    -->
+
+    <h2>Ocupación actual</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Núm. mesa</th>
+                <th>Posición</th>
+                <th>Reservada</th>
+                <th>Ocupación</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <% mesas.forEach(mesa => { %>
+                <tr>
+                    <td><%= mesa.id %></td>
+                    <td><%= mesa.posicion %></td>
+                    <td><%= mesa.numOcupadas === 0 ? "NO" : "SÍ" %></td>
+                    <td>
+                        <% for(let i = 0; i < mesa.numOcupadas; i++) { %>
+                            <div class="silla ocupada"></div>
+                        <% } %>
+    
+                        <% for(let i = 0; i < mesa.numLibres; i++) { %>
+                            <div class="silla libre"></div>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }); %>
+
+
+        </tbody>
+    </table>
+</body>
+
+</html>

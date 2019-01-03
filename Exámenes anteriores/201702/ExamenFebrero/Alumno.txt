@@ -1,0 +1,7 @@
+
+-----------------------------------
+Apellidos y nombre:
+DNI (o NIF):
+Numero de puesto de laboratorio: 
+-----------------------------------
+

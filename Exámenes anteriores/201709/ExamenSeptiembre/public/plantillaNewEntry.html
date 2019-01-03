@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Insertar nueva entrada</title>
+    <meta charset="utf8">
+    <link rel="stylesheet" href="ej1.css">
+</head>
+
+<body>
+    <h1>Insertar nueva entrada</h1>
+    <div class="error">
+        Información incorrecta
+    </div>
+    <form action="/newEntry" method="POST">
+        <div class="formulario">
+            <div class="fila_formulario">
+                <div class="celda_enunciado">
+                    Título
+                </div>
+                <div class="cuadro_entrada">
+                    <input type="text" name="title">
+                </div>
+            </div>
+            <div class="fila_formulario">
+                <div class="celda_enunciado">
+                    Autor
+                </div>
+                <div class="cuadro_entrada">
+                    <input type="text" name="author">
+                </div>
+            </div>
+            <div class="fila_formulario">
+                <div class="celda_enunciado">
+                    Álbum
+                </div>
+                <div class="cuadro_entrada">
+                    <input type="text" name="album">
+                </div>
+            </div>
+            <div class="fila_formulario">
+                <div class="celda_enunciado">
+                    Año
+                </div>
+                <div class="cuadro_entrada">
+                    <input type="text" name="year">
+                </div>
+            </div>
+        </div>
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+
+</html>
