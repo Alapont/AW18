@@ -1,0 +1,36 @@
+<div class="content">
+        <div class="loginPannel content">
+          
+            <form class="registro" action="/register" method="POST">
+                <div>Email: <input class="write" type="email" name="user">
+                    <% if (errores.user) { %>
+                    <span class="rojo">
+                        <%= errores.user.msg %> </span>
+                    <% } %>
+                </div>
+                <div>Contraseña: <input class="write pass" type="password" name="password">
+                    <% if (errores.password) { %>
+                    <span class="rojo">
+                        <%= errores.password.msg %> </span>
+                    <% } %>
+                </div>
+                <div>Nombre usuario: <input class="write name" type="text" name="userName">
+                    <% if (errores.userName) { %>
+                    <span class="rojo">
+                        <%= errores.userName.msg %> </span>
+                    <%}%>
+                </div>
+                Sexo
+                <input class="write gender" type="radio" name="gender" value="male" checked> Male
+                <input type="radio" name="gender" value="female"> Female
+                <input type="radio" name="gender" value="other"> Other<br>
+                Fecha de nacimiento <input class="write date" type="date" name="birth" max="2000-12-31"><br>
+                Imagen de perfil<input class="write picture" type="file" name="img"><br>
+                <input type="submit" name="login">
+            </form>
+        </div>
+    </div>
+    <% if(config.error!=null) %>
+    <span class="error">
+        <%- config.error %></span>
+    </div>
