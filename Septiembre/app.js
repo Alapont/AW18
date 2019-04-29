@@ -4,6 +4,7 @@ const config = require("./config");
 const path = require("path");
 const mysql = require("mysql");
 const express = require("express");
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 
@@ -15,6 +16,8 @@ const pool = mysql.createPool({
     password: config.mysqlConfig.password,
     database: config.mysqlConfig.database
 });
+
+
 
 const DUser = new DAOUser(pool);
 
@@ -41,6 +44,15 @@ function error(request, response, next) {
 
 //AQUI VAN LOS MIDDLEWARE
 //app.use...
+
+const middlewareSession = session({
+    saveUninitialized: false,
+    secret: "foobar34",
+    resave: false
+});
+
+app.use(middlewareSession);
+
 function logger(request, response, next) {
     console.log(`Recibida petición ${request.method} ` +
         `en ${request.url} de ${request.ip}`);
@@ -48,8 +60,19 @@ function logger(request, response, next) {
     // Saltar al siguiente middleware   
     next();
 }
-
 app.use(logger);
+
+app.use((request, response, next)=>{
+
+    if(request.session.email != undefined && request.url != "./login"){
+        //si ya hay un usuario logueado, cojo sus datos
+        response.usuario = DAOU.getUser(request.session.email);
+    }
+
+    next();
+});
+
+
 
 //AQUI VAN LOS HANDLER
 
@@ -78,7 +101,7 @@ app.post("/login",[
     request.getValidationResult().then(function (result) {
 
         DUser.isUserCorrect(request.body.user, request.body.password, (err, data) => {
-            if (err) {
+            if (err || data==null) {
                 response.cookie("error", err);
                 response.status(500);
                 response.render("main", {
@@ -87,21 +110,15 @@ app.post("/login",[
                     }
                 });
             } else {
-                if (data != null) {
-                    DUser.getUser(request.body.user, (err, data) => {
-                        //GUARDAR USER
-                        response.redirect("/login");
-                    });
-                } else {
-                    // request.session.error = ("Error de búsqueda de usuario");
-                    response.redirect("/login");
-                }
+                response.redirect("./perfil");
             }
         });
 
     });
 
 });
+
+
 
 app.get('/', (request, response) => {
     response.status(300);
