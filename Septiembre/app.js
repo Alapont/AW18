@@ -83,8 +83,29 @@ const multerFactory = multer({
 
 //AQUI VAN LOS HANDLER
 
+
+app.get("/imagen/:email", (request, response) => {
+    if (request.session) {
+        
+            DaoU.getImagen(request.params.email, (err, data) => {
+                if (err) {
+                    response.status(300);
+                    response.redirect("/perfil");
+                } else {
+                    response.status(200);
+                    if (data == null) {
+                        response.sendFile(path.join(__dirname, "public", "img", "usuario.jpg"));
+                    } else {
+                        response.end(data);
+                    }
+                }
+            });
+        
+    }
+});
+
 //LOGIN AZUL
-app.get(/login(.html)?/, (request, response) => {
+app.get(/login(.html)?$/, (request, response) => {
 
     response.status(200);
     response.type("text/html")
@@ -128,7 +149,7 @@ app.post("/login", [
 });
 
 //REGISTRO AZUL
-app.get(/register(.html)?/, (request, response) => {
+app.get(/register(.html)?$/, (request, response) => {
 
     response.status(200);
     response.type("text/html")
