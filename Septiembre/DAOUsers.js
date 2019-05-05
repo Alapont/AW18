@@ -10,7 +10,7 @@ class DAOUsers{
            if(err){
             callback('Error de conexion a la base de datos');
            }else{
-            const sql = 'SELECT userName FROM users WHERE email = ? AND password = ?';
+            const sql = 'SELECT ID FROM users WHERE email = ? AND password = ?';
             connection.query(sql, [email, password], function(err, resultado){
                 if(err || resultado.length==0){
                     callback(err?`Error de acceso a la base de datos`:"usuario no encontrado");

@@ -70,14 +70,14 @@ app.use(logger);
 
 app.use(function checkSession(request, response, next){
 
-    if (request.session.email != undefined && request.url != "./login" && request.url != "./register") {
+    if (request.session.id != undefined && request.url != "./login" && request.url != "./register") {
         //si ya hay un usuario logueado, cojo sus datos
-        response.usuario = DAOU.getUser(request.session.email);
-        response.userName = response.usuario.userName,
-        response.usuarioedad= response.usuario.birth,
-        response.usuariosexo= response.usuario.gender,
-        response.usuariopuntos= response.usuario.puntos,
-        response.usuarioemail= response.usuario.email
+        response.usuario = DUser.getUser(request.session.email);
+        // response.userName = response.usuario.userName,
+        // response.usuarioedad= response.usuario.birth,
+        // response.usuariosexo= response.usuario.gender,
+        // response.usuariopuntos= response.usuario.puntos,
+        // response.usuarioemail= response.usuario.email
     }
 
     next();
@@ -147,7 +147,7 @@ app.post("/login",[
                 } else {
                     response.status(200);
                     response.type("text/html");
-                    //Generar la sesion
+                    request.session.id=data.id;
                     response.redirect("./perfil");
                 }
             });
