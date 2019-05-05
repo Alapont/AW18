@@ -13,6 +13,7 @@ const DAOUser = require("./DAOUsers");
 
 const pool = mysql.createPool({
     host: config.mysqlConfig.host,
+    port: config.mysqlConfig.port,
     user: config.mysqlConfig.user,
     password: config.mysqlConfig.password,
     database: config.mysqlConfig.database
@@ -73,10 +74,10 @@ app.use(function checkSession(request, response, next){
         //si ya hay un usuario logueado, cojo sus datos
         response.usuario = DAOU.getUser(request.session.email);
         response.userName = response.usuario.userName,
-        edad: response.usuario.birth,
-        sexo: response.usuario.gender,
-        puntos: response.usuario.puntos,
-        email: response.usuario.email
+        response.usuarioedad= response.usuario.birth,
+        response.usuariosexo= response.usuario.gender,
+        response.usuariopuntos= response.usuario.puntos,
+        response.usuarioemail= response.usuario.email
     }
 
     next();
@@ -123,31 +124,36 @@ app.get(/login(.html)?$/, (request, response) => {
 
 });
 
-app.post("/login", [
+app.post("/login",[
     check('user').isEmail(),
     check('password').isLength({
         min: 1
     })
-], (request, response) => {
+], 
+(request, response) => {
 
-    response.status(200);
-    response.type("text/html");
 
     request.getValidationResult().then(function (result) {
-
-        DUser.isUserCorrect(request.body.user, request.body.password, (err, data) => {
-            if (err || data == null) {
-                response.cookie("error", err);
-                response.status(500);
-                response.render("main", {
-                    config: {
-                        pageName: "login"
-                    }
-                });
-            } else {
-                response.redirect("./perfil");
-            }
-        });
+        if(result.isEmpty()){
+            DUser.isUserCorrect(request.body.user, request.body.password, (err, data) => {
+                if (err || data == null) {
+                    response.cookie("error", err);
+                    response.status(500);
+                    response.render("main", {
+                        config: {
+                            pageName: "login"
+                        }
+                    });
+                } else {
+                    response.status(200);
+                    response.type("text/html");
+                    //Generar la sesion
+                    response.redirect("./perfil");
+                }
+            });
+        }else{
+            //Lo que hacemos si no ha puesto un correo o una contraseña
+        }
 
     });
 
