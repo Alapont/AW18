@@ -50,7 +50,7 @@ class DAOUsers{
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= "INSERT INTO users (email, password,img, userName, sexo, nacimiento ) VALUES (?,?,?,?,?,?);";
+                const sql= "INSERT INTO Users (email, password,img, UserName, gender, birth ) VALUES (?,?,?,?,?,?);";
                 connection.query(sql, [email,password,img,userName,sexo,nacimiento],function (err,resultado){
                     if(err){
                         callback(`No se ha podido insertar el usuario`);

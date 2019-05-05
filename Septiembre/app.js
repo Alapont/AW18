@@ -7,6 +7,7 @@ const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
+const multer = require("multer");
 
 const DAOUser = require("./DAOUsers");
 
@@ -76,7 +77,9 @@ app.use((request, response, next) => {
     next();
 });
 
-
+const multerFactory = multer({
+    storage: multer.memoryStorage()
+});
 
 //AQUI VAN LOS HANDLER
 
@@ -145,9 +148,9 @@ app.post(/register(.html)?/, (request, response) => {
 
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
+            let nombreFichero =null;
             multerFactory.single("imagenPerfil"),
                 function (request, response) {
-                    
                     if (request.file) {
                         nombreFichero = request.file.filename;
                     }
@@ -163,7 +166,7 @@ app.post(/register(.html)?/, (request, response) => {
                     }
                 });
         } else {
-            response.setFlash(result.array());
+            //response.setFlash(result.array());
             response.redirect("/register");
         }
     });
