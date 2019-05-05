@@ -67,11 +67,16 @@ function logger(request, response, next) {
 }
 app.use(logger);
 
-app.use((request, response, next) => {
+app.use(function checkSession(request, response, next){
 
     if (request.session.email != undefined && request.url != "./login" && request.url != "./register") {
         //si ya hay un usuario logueado, cojo sus datos
         response.usuario = DAOU.getUser(request.session.email);
+        response.userName = response.usuario.userName,
+        edad: response.usuario.birth,
+        sexo: response.usuario.gender,
+        puntos: response.usuario.puntos,
+        email: response.usuario.email
     }
 
     next();
@@ -172,6 +177,23 @@ app.post(/register(.html)?/, (request, response) => {
     });
 });
 
+//PERFIL AZUL
+app.get("/perfil", (request, response) => {
+    if (request.session.userName) {
+        response.status(200);
+        response.type("text/html");
+        response.render("main", {
+            usuario: {
+
+            },
+            config: {
+                pageName: "perfil"
+            }
+        });
+    } else {
+        response.redirect("/login");
+    }
+});
 
 app.get('/', (request, response) => {
     response.status(300);
