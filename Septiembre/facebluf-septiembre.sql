@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-05-2019 a las 17:35:19
+-- Tiempo de generación: 05-05-2019 a las 17:38:13
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.4
 
@@ -34,8 +34,8 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `img` blob,
-  `points` int(9) DEFAULT NULL,
-  `activo` tinyint(1) DEFAULT NULL,
+  `points` int(9) DEFAULT '0',
+  `activo` tinyint(1) DEFAULT '1',
   `gender` varchar(3) DEFAULT NULL,
   `birth` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
