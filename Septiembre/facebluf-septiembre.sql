@@ -46,8 +46,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`ID`, `UserName`, `email`, `password`, `img`, `points`, `activo`, `gender`, `birth`) VALUES
 (1, 'pont', 'pont@ascii.es', 'patata', NULL, 10, 1, 'M', '1990-02-15'),
-(2, 'nekuchan', 'neku@ascii.es', 'kk', NULL, 3, 1, 'F', '1997-06-24'),
-(3, 'pont', 'pablo@ascii.es', 'patata', NULL, NULL, NULL, 'mal', NULL);
+(2, 'nekuchan', 'neku@ascii.es', 'kk', NULL, 3, 1, 'F', '1997-06-24');
 
 --
 -- Índices para tablas volcadas
