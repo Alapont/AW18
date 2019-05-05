@@ -1,1 +1,0 @@
-CREATE TABLE `facebluff`.`Users` ( `ID` INT(9) NOT NULL AUTO_INCREMENT , `UserName` VARCHAR(30) NOT NULL , `email` VARCHAR(50) NOT NULL , `password` VARCHAR(50) NOT NULL , `img` BLOB NULL , `points` INT(9) NULL , `activo` BOOLEAN NULL , `gender` VARCHAR(3) NULL , `birth` DATE NULL , PRIMARY KEY (`ID`)) ENGINE = InnoDB;
