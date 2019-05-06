@@ -59,6 +59,11 @@ const middlewareSession = session({
 
 app.use(middlewareSession);
 
+app.use((request,response,next)=>{
+    response.info={};
+    next();
+});
+
 function logger(request, response, next) {
     console.log(`Recibida petición ${request.method} ` +
         `en ${request.url} de ${request.ip}`);
@@ -70,14 +75,9 @@ app.use(logger);
 
 app.use(function checkSession(request, response, next){
 
-    if (request.session.id != undefined && request.url != "./login" && request.url != "./register") {
+    if (request.session.idUser != undefined && request.session.idUser != null && request.url != "/login" && request.url != "/register") {
         //si ya hay un usuario logueado, cojo sus datos
-        response.usuario = DUser.getUser(request.session.email);
-        // response.userName = response.usuario.userName,
-        // response.usuarioedad= response.usuario.birth,
-        // response.usuariosexo= response.usuario.gender,
-        // response.usuariopuntos= response.usuario.puntos,
-        // response.usuarioemail= response.usuario.email
+        response.info.usuario = DUser.getUser(request.session.email);
     }
 
     next();
@@ -115,11 +115,10 @@ app.get(/login(.html)?$/, (request, response) => {
 
     response.status(200);
     response.type("text/html")
-    response.render("main", {
-        config: {
-            pageName: "login"
-        }
-    });
+    response.info.config={
+        pagename: "login"
+    };
+    response.render("main", response.info);
 
 
 });
@@ -147,7 +146,7 @@ app.post("/login",[
                 } else {
                     response.status(200);
                     response.type("text/html");
-                    request.session.id=data.id;
+                    request.session.idUser=data.id;
                     response.redirect("./perfil");
                 }
             });
@@ -206,20 +205,16 @@ app.post(/register(.html)?/, (request, response) => {
 
 //PERFIL AZUL
 app.get("/perfil", (request, response) => {
-    if (request.session.userName) {
-        response.status(200);
-        response.type("text/html");
-        response.render("main", {
-            usuario: {
 
-            },
-            config: {
-                pageName: "perfil"
-            }
-        });
-    } else {
-        response.redirect("/login");
-    }
+    response.status(200);
+    response.type("text/html");
+    // DUser.getUser(response.info.usuario.email, (err, data)=>{
+    //     if(!err){
+    //         response.info.perfil = data;
+    //     }
+    // });
+    response.render("main", response.info);
+
 });
 
 app.get('/', (request, response) => {

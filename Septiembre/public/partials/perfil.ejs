@@ -1,0 +1,19 @@
+<div class="content">
+    <h2 class=encabezado>
+        Tu perfil
+    </h2>
+    <div class="perfilPannel pannel">
+        <div class="foto">
+            <img src="/imagen/<%=info.usuario.email%>" height="50" alt="foto de perfil de <%- info.usuario.userName %>">
+        </div>
+        <span class="datos">
+            <h3 class="nombreUser">
+                <%- info.usuario.userName %>
+            </h3>
+            <%- info.usuario.edad %> años<br>
+            <%- info.usuario.sexo %> <br>
+            <%- info.usuario.puntos %> puntos<br>
+        </span>
+    </div>
+    <a href="/edit" class="button" id="modify">Modificar Perfil</a>
+</div>
