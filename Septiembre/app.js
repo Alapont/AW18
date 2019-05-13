@@ -60,7 +60,7 @@ const middlewareSession = session({
 app.use(middlewareSession);
 
 app.use((request,response,next)=>{
-    response.info={};
+    response.locals={};
     next();
 });
 
@@ -77,7 +77,7 @@ app.use(function checkSession(request, response, next){
 
     if (request.session.idUser != undefined && request.session.idUser != null && request.url != "/login" && request.url != "/register") {
         //si ya hay un usuario logueado, cojo sus datos
-        response.info.usuario = DUser.getUser(request.session.email);
+        response.locals.usuario = DUser.getUser(request.session.email);
     }
 
     next();
@@ -115,10 +115,10 @@ app.get(/login(.html)?$/, (request, response) => {
 
     response.status(200);
     response.type("text/html")
-    response.info.config={
-        pagename: "login"
+    response.locals.config={
+        pageName: "login"
     };
-    response.render("main", response.info);
+    response.render("main");
 
 
 });
@@ -147,6 +147,7 @@ app.post("/login",[
                     response.status(200);
                     response.type("text/html");
                     request.session.idUser=data.id;
+                    //fucsia hacer el getUser con id en vez con email
                     response.redirect("./perfil");
                 }
             });
@@ -208,12 +209,17 @@ app.get("/perfil", (request, response) => {
 
     response.status(200);
     response.type("text/html");
-    // DUser.getUser(response.info.usuario.email, (err, data)=>{
-    //     if(!err){
-    //         response.info.perfil = data;
-    //     }
-    // });
-    response.render("main", response.info);
+    DUser.getUser(request.session.email, (err, data)=>{
+        if(!err){
+            response.locals.perfil = data;
+            response.locals.config={
+                pageName: perfil
+            }
+            response.render("main", response.locals);
+        }
+        
+    });
+    
 
 });
 
