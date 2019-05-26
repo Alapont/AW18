@@ -47,7 +47,7 @@ function error(request, response, next) {
         }
     });
 };
-
+const externalUrl=["/login","/register"];
 //AQUI VAN LOS MIDDLEWARE
 //app.use...
 
@@ -75,11 +75,19 @@ app.use(logger);
 
 app.use(function checkSession(request, response, next){
 
-    if (request.session.idUser != undefined && request.session.idUser != null && request.url != "/login" && request.url != "/register") {
+    if (request.session.idUser == undefined && !request.path.includes(request.url)) {
         //si ya hay un usuario logueado, cojo sus datos
-        response.locals.usuario = DUser.getUser(request.session.email);
+        DUser.getUser(request.body.user,(err, data)=>{
+            response.session.idUser=dataID;
+            response.session.UserName=data.UserName;
+            response.session.email=data.email;
+            response.session.points=data.points;
+            response.session.activo=data.activo==1;
+            response.session.gender=data.gender;
+            response.session.birth=data.birth;
+            next();
+        });
     }
-
     next();
 });
 
@@ -130,8 +138,6 @@ app.post("/login",[
     })
 ], 
 (request, response) => {
-
-
     request.getValidationResult().then(function (result) {
         if(request.body!=undefined){
             DUser.isUserCorrect(request.body.user, request.body.password, (err, data) => {
@@ -206,7 +212,6 @@ app.post(/register(.html)?/, (request, response) => {
 
 //PERFIL AZUL
 app.get("/perfil", (request, response) => {
-
     response.status(200);
     response.type("text/html");
     DUser.getUser(request.session.email, (err, data)=>{
@@ -216,6 +221,8 @@ app.get("/perfil", (request, response) => {
                 pageName: perfil
             }
             response.render("main", response.locals);
+        }else{
+            //error
         }
         
     });

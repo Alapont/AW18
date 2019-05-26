@@ -16,7 +16,7 @@ class DAOUsers{
                     callback(err?`Error de acceso a la base de datos`:"usuario no encontrado");
                 }else{
                     // Ponemos .shift para que no haya espacios al final
-                    callback(null,resultado.shift());
+                    callback(null,resultado);
                 }
             });
            }
