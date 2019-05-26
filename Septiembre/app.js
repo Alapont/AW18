@@ -78,13 +78,15 @@ app.use(function checkSession(request, response, next){
     if (request.session.idUser == undefined && !externalUrl.includes(request.url)) {
         //si ya hay un usuario logueado, cojo sus datos
         DUser.getUser(request.body.user,(err, data)=>{
-            request.session.idUser=data.ID;
-            request.session.UserName=data.UserName;
-            request.session.email=data.email;
-            request.session.points=data.points;
-            request.session.activo=data.activo==1;
-            request.session.gender=data.gender;
-            request.session.birth=data.birth;
+            if(!err){
+                request.session.idUser=data.ID;
+                request.session.UserName=data.UserName;
+                request.session.email=data.email;
+                request.session.points=data.points;
+                request.session.activo=data.activo==1;
+                request.session.gender=data.gender;
+                request.session.birth=data.birth;
+            }
             next();
         });
     }
@@ -215,9 +217,6 @@ app.get("/perfil", (request, response) => {
     response.status(200);
     response.type("text/html");
     response.render("main", response.locals);
-
-    
-
 });
 
 app.get('/', (request, response) => {
