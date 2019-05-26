@@ -133,7 +133,7 @@ app.post("/login",[
 
 
     request.getValidationResult().then(function (result) {
-        if(result.isEmpty()){
+        if(request.body!=undefined){
             DUser.isUserCorrect(request.body.user, request.body.password, (err, data) => {
                 if (err || data == null) {
                     response.cookie("error", err);
