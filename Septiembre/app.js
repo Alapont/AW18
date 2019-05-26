@@ -73,24 +73,33 @@ function logger(request, response, next) {
 }
 app.use(logger);
 
-app.use(function checkSession(request, response, next){
-
-    if (request.session.idUser == undefined && !externalUrl.includes(request.url)) {
+app.use(async function  checkSession(request, response, next){
+    console.log("checking session");
+    if (!externalUrl.includes(request.url)) {
+        console.log("getting data");
         //si ya hay un usuario logueado, cojo sus datos
-        DUser.getUser(request.body.user,(err, data)=>{
+        await DUser.getUser(request.session.idUser,(err, data)=>{
+            response.locals.usuario=null;
             if(!err){
-                request.session.idUser=data.ID;
-                request.session.UserName=data.UserName;
-                request.session.email=data.email;
-                request.session.points=data.points;
-                request.session.activo=data.activo==1;
-                request.session.gender=data.gender;
-                request.session.birth=data.birth;
+                let usuario={
+                    idUser:data.ID,
+                    userName:data.UserName,
+                    email:data.email,
+                    points:data.points,
+                    activo:data.activo==1,
+                    gender:data.gender,
+                    birth:data.birth
+                }
+                response.locals.usuario=usuario;
+            }else{
+                response.redirect("/login");
             }
+            console.log(`checked session with data ${request.body.user}`);
             next();
         });
+        // next();
     }
-    else{next()}
+    else{next();}
 });
 
 const multerFactory = multer({
@@ -128,7 +137,7 @@ app.get(/login(.html)?$/, (request, response) => {
     response.locals.config={
         pageName: "login"
     };
-    response.render("main");
+    response.render("main",response.locals);
 
 
 });
@@ -140,21 +149,15 @@ app.post("/login",[
     })
 ], 
 (request, response) => {
+    console.log("post loging")
     request.getValidationResult().then(function (result) {
         if(request.body!=undefined){
             DUser.isUserCorrect(request.body.user, request.body.password, (err, data) => {
                 if (err || data == null) {
                     response.cookie("error", err);
                     response.status(500);
-                    response.render("main", {
-                        config: {
-                            pageName: "login"
-                        }
-                    });
                 } else {
-                    response.status(200);
-                    response.type("text/html");
-                    request.session.idUser=data.id;
+                    request.session.idUser=data[0].ID;
                     //fucsia hacer el getUser con id en vez con email
                     response.redirect("./perfil");
                 }
@@ -214,8 +217,12 @@ app.post(/register(.html)?/, (request, response) => {
 
 //PERFIL AZUL
 app.get("/perfil", (request, response) => {
+    console.log("get perfil");
     response.status(200);
-    response.type("text/html");
+    //response.type("text/html");
+    response.locals.config={
+        pageName: "perfil"
+    };
     response.render("main", response.locals);
 });
 
