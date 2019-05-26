@@ -75,20 +75,20 @@ app.use(logger);
 
 app.use(function checkSession(request, response, next){
 
-    if (request.session.idUser == undefined && !request.path.includes(request.url)) {
+    if (request.session.idUser == undefined && !externalUrl.includes(request.url)) {
         //si ya hay un usuario logueado, cojo sus datos
         DUser.getUser(request.body.user,(err, data)=>{
-            response.session.idUser=dataID;
-            response.session.UserName=data.UserName;
-            response.session.email=data.email;
-            response.session.points=data.points;
-            response.session.activo=data.activo==1;
-            response.session.gender=data.gender;
-            response.session.birth=data.birth;
+            request.session.idUser=data.ID;
+            request.session.UserName=data.UserName;
+            request.session.email=data.email;
+            request.session.points=data.points;
+            request.session.activo=data.activo==1;
+            request.session.gender=data.gender;
+            request.session.birth=data.birth;
             next();
         });
     }
-    next();
+    else{next()}
 });
 
 const multerFactory = multer({
@@ -214,18 +214,8 @@ app.post(/register(.html)?/, (request, response) => {
 app.get("/perfil", (request, response) => {
     response.status(200);
     response.type("text/html");
-    DUser.getUser(request.session.email, (err, data)=>{
-        if(!err){
-            response.locals.perfil = data;
-            response.locals.config={
-                pageName: perfil
-            }
-            response.render("main", response.locals);
-        }else{
-            //error
-        }
-        
-    });
+    response.render("main", response.locals);
+
     
 
 });
