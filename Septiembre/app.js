@@ -18,6 +18,7 @@ const expressValidator = require("express-validator");
 const multer = require("multer");
 
 const DAOUser = require("./DAOUsers");
+const DAOAmistad = require("./DAOAmistad");
 
 const pool = mysql.createPool({
     host: config.mysqlConfig.host,
@@ -30,6 +31,7 @@ const pool = mysql.createPool({
 
 
 const DUser = new DAOUser(pool);
+const DAmistad = new DAOAmistad(pool);
 
 // Crear un servidor Express.js
 const app = express();
@@ -97,14 +99,13 @@ app.use( function  checkSession(request, response, next){
                     gender:data.gender,
                     birth:data.birth,
                     img:data.img==null?config.defaultImg:data.img,
-                    badImg:request.host+(data.img==null?config.defaultImg:data.img),
                     age:Math.floor((Date.now()-data.birth)/(1000*60*60*24*365.242190402 ))//año trópico
                 }
                 response.locals.usuario=usuario;
             }else{
                 response.redirect("/login");
             }
-            console.log(`checked session with data ${response.locals.usuario}`);
+            // console.log(`checked session with data ${response.locals.usuario}`);
             next();
         });
         // next();
@@ -232,7 +233,6 @@ app.post(/register(.html)?/, (request, response) => {
 
 //PERFIL AZUL
 app.get("/perfil", (request, response) => {
-    console.log("get perfil");
     response.status(200);
     //response.type("text/html");
     response.locals.config={
@@ -242,17 +242,61 @@ app.get("/perfil", (request, response) => {
     response.render("main", response.locals);
 });
 
-app.get('/', (request, response) => {
-    response.status(300);
-    response.redirect("/login");
+//Editar perfil Azul
+app.get('/editPerfil',(request,response)=>{
+    response.status(200);
+    response.locals.config={
+        pageName: "editPerfil"
+    };
+    response.render("main", response.locals);
 });
+
+app.post('/editPerfil',(request,response)=>{
+    request.getValidationResult().then(function (result) {
+        if (result.isEmpty()) {
+            let nombreFichero =null;
+            multerFactory.single("imagenPerfil"),
+                function (request, response) {
+                    if (request.file) {
+                        nombreFichero = request.file.filename;
+                    }
+                }
+                DUser.updateUser(
+                    request.body.password,
+                    request.body.img,
+                    request.body.userName,
+                    request.body.gender,
+                    request.body.fechaNac,
+                    request.body.email,
+                    request.session.idUser,
+                    (err, data) => {
+                    if (err) {
+                        response.status(300);
+                        response.redirect("/editPerfil");
+                    } else {
+                        response.redirect("/perfil");
+                    }
+                });
+        } else {
+            //response.setFlash(result.array());
+            response.redirect("/editPerfil");
+        }
+    });
+});
+
 //Desconectar azul
 app.get('/desconectar',(request,response)=>{
     request.session.idUser=null;
     response.status(300);
     response.redirect("/login");
 });
+
+
 //Error y default azul
+app.get('/', (request, response) => {
+    response.status(300);
+    response.redirect("/login");
+});
 app.use(error);
 // Arrancar el servidor
 app.listen(config.port, function (err) {

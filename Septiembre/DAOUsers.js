@@ -85,7 +85,7 @@ class DAOUsers{
         });
     }
 
-    updateUser(password,img,userName,sexo,nacimiento,email,callback){
+    updateUser(password,img,userName,sexo,nacimiento,email,idUser,callback){
         this._pool.getConnection(function(err,connection){
             let llamada=[];
             let firstElement=true;
@@ -105,7 +105,7 @@ class DAOUsers{
                     if(!firstElement){
                         sql+=`,`;
                     }
-                    sql+=`userName=?`;
+                    sql+=`UserName=?`;
                     firstElement=false;
                     llamada.push(userName);
                 }
@@ -113,7 +113,7 @@ class DAOUsers{
                     if(!firstElement){
                         sql+=`,`;
                     }
-                    sql+=`sexo=?`;
+                    sql+=`gender=?`;
                     firstElement=false;
                     llamada.push(sexo);
                 }
@@ -122,7 +122,7 @@ class DAOUsers{
                         sql+=`,`;
                     }
                     firstElement=false;
-                    sql+=`nacimiento=?`;
+                    sql+=`birth=?`;
                     llamada.push(nacimiento);
                 }
                 if(password!=null && password!=""){
@@ -133,8 +133,16 @@ class DAOUsers{
                     sql+=`password=?`;
                     llamada.push(password);
                 }
-                sql+= ` WHERE email =?;`;
-                llamada.push(email);
+                if(email!=null && email!=""){
+                    if(!firstElement){
+                        sql+=`,`;
+                    }
+                    firstElement=false;
+                    sql+=`emal=?`;
+                    llamada.push(email);
+                }
+                sql+= ` WHERE id =?;`;
+                llamada.push(idUser);
                 connection.query(sql, llamada, function (err, resultado){
                     if(err){
                         callback(`No se ha podido modificar el usuario`);
@@ -146,27 +154,27 @@ class DAOUsers{
             connection.release();
         });
     }
-    // getImagen(id,callback){
-    //     this._pool.getConnection(function(err,connection){
-    //         if(err){
-    //             callback(`Error de conexion a la base de datos`);
-    //         }else{
-    //             const sql= `SELECT IMG FROM users WHERE ID=?`;
-    //             connection.query(sql, [id], function(err,resultado){
-    //                 if(err){
-    //                     callback(`Error de acceso a la base de datos`);
-    //                 }else{
-    //                     if(resultado.length!=1){
-    //                         callback(`No existe el usuario`);
-    //                     }else{
-    //                         callback(null,resultado[0]);
-    //                     } 
-    //                 }
-    //             })
-    //         }
-    //         connection.release();
-    //     });
-    // };
+    getImagen(id,callback){
+        this._pool.getConnection(function(err,connection){
+            if(err){
+                callback(`Error de conexion a la base de datos`);
+            }else{
+                const sql= `SELECT IMG FROM users WHERE ID=?`;
+                connection.query(sql, [id], function(err,resultado){
+                    if(err){
+                        callback(`Error de acceso a la base de datos`);
+                    }else{
+                        if(resultado.length!=1){
+                            callback(`No existe el usuario`);
+                        }else{
+                            callback(null,resultado[0]);
+                        } 
+                    }
+                })
+            }
+            connection.release();
+        });
+    };
     
 }
 
