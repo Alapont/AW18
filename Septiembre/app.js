@@ -88,7 +88,7 @@ app.use( function  checkSession(request, response, next){
                     activo:data.activo==1,
                     gender:data.gender,
                     birth:data.birth,
-                    age:Math.floor((Date.now()-data.birth)/(1000*60*60*24*365.25))
+                    age:Math.floor((Date.now()-data.birth)/(1000*60*60*24*365,242190402 ))//año trópico
                 }
                 response.locals.usuario=usuario;
             }else{
