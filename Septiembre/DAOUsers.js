@@ -146,27 +146,27 @@ class DAOUsers{
             connection.release();
         });
     }
-    getImagen(id,callback){
-        this._pool.getConnection(function(err,connection){
-            if(err){
-                callback(`Error de conexion a la base de datos`);
-            }else{
-                const sql= `SELECT IMG FROM users WHERE ID=?`;
-                connection.query(sql, [id], function(err,resultado){
-                    if(err){
-                        callback(`Error de acceso a la base de datos`);
-                    }else{
-                        if(resultado.length!=1){
-                            callback(`No existe el usuario`);
-                        }else{
-                            callback(null,resultado[0]);
-                        } 
-                    }
-                })
-            }
-            connection.release();
-        });
-    };
+    // getImagen(id,callback){
+    //     this._pool.getConnection(function(err,connection){
+    //         if(err){
+    //             callback(`Error de conexion a la base de datos`);
+    //         }else{
+    //             const sql= `SELECT IMG FROM users WHERE ID=?`;
+    //             connection.query(sql, [id], function(err,resultado){
+    //                 if(err){
+    //                     callback(`Error de acceso a la base de datos`);
+    //                 }else{
+    //                     if(resultado.length!=1){
+    //                         callback(`No existe el usuario`);
+    //                     }else{
+    //                         callback(null,resultado[0]);
+    //                     } 
+    //                 }
+    //             })
+    //         }
+    //         connection.release();
+    //     });
+    // };
     
 }
 

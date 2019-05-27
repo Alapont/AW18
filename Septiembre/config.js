@@ -9,4 +9,5 @@ module.exports = {
                 database: "facebluff" // Nombre de la base de datos
         },
         port: 3000, // Puerto en el que escucha el servidor
+        defaultImg:"/img/usuario.jpg"
 }
