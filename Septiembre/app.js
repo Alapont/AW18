@@ -113,7 +113,7 @@ const multerFactory = multer({
 
 app.get("/imagen/:email", (request, response) => {
     if (request.session) {
-        DUser.getImagen(response.locals.usuario.email, (err, data) => {
+        DUser.getImagen(response.locals.usuario.idUser, (err, data) => {
             if (err) {
                 response.status(300);
                 response.redirect("/perfil");
