@@ -87,7 +87,8 @@ app.use( function  checkSession(request, response, next){
                     points:data.points,
                     activo:data.activo==1,
                     gender:data.gender,
-                    birth:data.birth
+                    birth:data.birth,
+                    age:Math.floor((Date.now()-data.birth)/(1000*60*60*24*365.25))
                 }
                 response.locals.usuario=usuario;
             }else{
