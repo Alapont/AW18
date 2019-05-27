@@ -239,6 +239,7 @@ app.get("/perfil", (request, response) => {
         pageName: "perfil"
     };
     if (response.locals.usuario == undefined) console.log("usuario no definido");
+    response.locals.perfil=response.locals.usuario;
     response.render("main", response.locals);
 });
 
