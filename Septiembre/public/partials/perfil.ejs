@@ -15,5 +15,7 @@
             <%= locals.perfil.points %> puntos<br>
         </span>
     </div>
+    <% if(locals.perfil.edit){ %>
     <a href="/editPerfil" class="button" id="modify">Modificar Perfil</a>
+    <%}%>
 </div>

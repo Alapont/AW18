@@ -240,7 +240,38 @@ app.get("/perfil", (request, response) => {
     };
     if (response.locals.usuario == undefined) console.log("usuario no definido");
     response.locals.perfil=response.locals.usuario;
+    response.locals.perfil.edit=true;
     response.render("main", response.locals);
+});
+app.get("/perfil/:id", (request, response) => {
+    
+    if (response.locals.usuario == undefined) console.log("usuario no definido");
+    DUser.getUser(request.params.id,(err,data)=>{
+        if(err){
+            response.status(300);
+            response.redirect("/perfil");
+        }
+        else{
+            response.status(200);
+            //response.type("text/html");
+            response.locals.config = {
+                pageName: "perfil"
+            };
+            response.locals.perfil = {
+                idUser: data.ID,
+                userName: data.UserName,
+                email: data.email,
+                points: data.points,
+                activo: data.activo == 1,
+                gender: data.gender,
+                birth: data.birth,
+                img: data.img == null ? config.defaultImg : data.img,
+                age: Math.floor((Date.now() - data.birth) / (1000 * 60 * 60 * 24 * 365.242190402)), //año trópico,
+                edit:false
+            }
+            response.render("main", response.locals);
+        }
+    });
 });
 
 //Editar perfil Azul
