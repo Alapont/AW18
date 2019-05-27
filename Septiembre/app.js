@@ -5,6 +5,14 @@ const path = require("path");
 const mysql = require("mysql");
 const express = require("express");
 const session = require("express-session");
+const mysqlSession = require("express-mysql-session");
+const MySQLStore = mysqlSession(session);
+const sessionStore = new MySQLStore({
+    host: config.mysqlConfig.hostº,
+    user: config.mysqlConfig.user,
+    password: config.mysqlConfig.password,
+    database: config.mysqlConfig.database
+});
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const multer = require("multer");
@@ -54,9 +62,9 @@ const externalUrl=["/login","/register"];
 const middlewareSession = session({
     saveUninitialized: false,
     secret: "foobar34",
-    resave: false
+    resave: false,
+    store:sessionStore
 });
-
 app.use(middlewareSession);
 
 app.use((request,response,next)=>{
@@ -102,6 +110,8 @@ app.use( function  checkSession(request, response, next){
         // next();
     }
     else{
+        if(request.session.idUser!=null)
+            response.redirect("/perfil");
         console.log(`external url: ${request.url}`);
         next();}
 });
@@ -236,7 +246,13 @@ app.get('/', (request, response) => {
     response.status(300);
     response.redirect("/login");
 });
-
+//Desconectar azul
+app.get('/desconectar',(request,response)=>{
+    request.session.idUser=null;
+    response.status(300);
+    response.redirect("/login");
+});
+//Error y default azul
 app.use(error);
 // Arrancar el servidor
 app.listen(config.port, function (err) {
