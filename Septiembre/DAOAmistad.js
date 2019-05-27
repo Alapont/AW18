@@ -104,17 +104,22 @@ class DAOAmistad {
                 callback(`Error de conexion a la base de datos`);
             } else {
                 const sql = 
-                `SELECT U1.ID, U1.UserName,U1.points,U1.img
-                FROM amistad A1 JOIN users U1 ON A1.IdOrigen=U1.ID 
-                WHERE A1.IdDestino=? AND A1.estado = 'aceptado' AND U1.activo=1`
-                connection.query(sql, [user, user], function (err, resultado) {
+                `SELECT U.ID, U.UserName,U.points,U.img
+                FROM amistad A JOIN users U ON A.IdOrigen=U.ID 
+                WHERE A.IdDestino=? AND A.estado = 'pendiente' AND U.activo=1`;
+                connection.query(sql, [user], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        callback(null, resultado);
+                        callback(null, 
+                            resultado.map((amigo)=>{
+                                amigo.img=(amigo.img == null)? config.defaultImg : amigo.img;
+                                return amigo;
+                            })
+                        );
                     }
                     connection.release();
-                });  
+                });
             }
         });
     }

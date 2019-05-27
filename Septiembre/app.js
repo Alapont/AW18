@@ -289,18 +289,26 @@ app.post('/editPerfil',
 //Amigos azul
 app.get('/amigos', (request, response) => {
     DAmistad.getAmistades(request.session.idUser,
-        (err, data) => {
+        (err, amigos) => {
             if (err) {
                 response.status(300);
                 response.redirect()
             } else {
-                response.status(200);
-                response.locals.config = {
-                    pageName: "amigos"
-                };
-                response.locals.amigos = data;
-                response.locals.solicitudes=null;
-                response.render("main", response.locals);
+                DAmistad.getSolicitudes(request.session.idUser,
+                    (err,solicitudes)=>{
+                        if (err) {
+                            response.status(300);
+                            response.redirect()
+                        } else {
+                            response.status(200);
+                            response.locals.config = {
+                                pageName: "amigos"
+                            };
+                            response.locals.amigos = amigos;
+                            response.locals.solicitudes=solicitudes;
+                            response.render("main", response.locals);
+                        }
+                    });
             }
         }
     );

@@ -1,14 +1,13 @@
-
 <div class="amigos solicitudes">
     <% if(solicitudes != undefined && solicitudes != null && solicitudes.length>0){ %>
-        <% amigos.forEach((amigo)=>{%>
+        <% solicitudes.forEach((amigo)=>{%>
         <span>
             <a href="/perfil/<%=amigo.ID%>">
                 <img src="<%= amigo.img %>" height="50" alt="foto de perfil de <%- amigo.userName %>">
                 <%= amigo.UserName %>
             </a>
-            <a href="/aceptar/<%=amigo.ID%>">Aceptar</a>
-            <a href="/rechazar/<%=amigo.ID%>">Rechazar</a>
+            <a href="/amigos/aceptar/<%=amigo.ID%>">Aceptar</a>
+            <a href="/amigos/rechazar/<%=amigo.ID%>">Rechazar</a>
         </span>
         <br>
         <%});%>
