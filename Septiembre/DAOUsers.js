@@ -24,13 +24,13 @@ class DAOUsers{
         });
     }
 
-    getUser(email,callback){
+    getUser(id,callback){
         this._pool.getConnection(function(err,connection){
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `SELECT * FROM users WHERE email=?`;
-                connection.query(sql, [email], function(err,resultado){
+                const sql= `SELECT * FROM users WHERE ID=?`;
+                connection.query(sql, [id], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else{
@@ -146,7 +146,7 @@ class DAOUsers{
             connection.release();
         });
     }
-
+    
     
 }
 

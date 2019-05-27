@@ -68,17 +68,16 @@ function logger(request, response, next) {
     console.log(`Recibida petición ${request.method} ` +
         `en ${request.url} de ${request.ip}`);
 
-    // Saltar al siguiente middleware   
     next();
 }
 app.use(logger);
 
-app.use(async function  checkSession(request, response, next){
+app.use( function  checkSession(request, response, next){
     console.log("checking session");
     if (!externalUrl.includes(request.url)) {
         console.log("getting data");
         //si ya hay un usuario logueado, cojo sus datos
-        await DUser.getUser(request.session.idUser,(err, data)=>{
+        DUser.getUser(request.session.idUser,(err, data)=>{
             response.locals.usuario=null;
             if(!err){
                 let usuario={
@@ -94,12 +93,14 @@ app.use(async function  checkSession(request, response, next){
             }else{
                 response.redirect("/login");
             }
-            console.log(`checked session with data ${request.body.user}`);
+            console.log(`checked session with data ${response.locals.usuario}`);
             next();
         });
         // next();
     }
-    else{next();}
+    else{
+        console.log(`external url: ${request.url}`);
+        next();}
 });
 
 const multerFactory = multer({
@@ -111,21 +112,19 @@ const multerFactory = multer({
 
 app.get("/imagen/:email", (request, response) => {
     if (request.session) {
-        
-            DaoU.getImagen(request.params.email, (err, data) => {
-                if (err) {
-                    response.status(300);
-                    response.redirect("/perfil");
+        DUser.getImagen(response.locals.usuario.email, (err, data) => {
+            if (err) {
+                response.status(300);
+                response.redirect("/perfil");
+            } else {
+                response.status(200);
+                if (data == null) {
+                    response.sendFile(path.join(__dirname, "public", "img", "usuario.jpg"));
                 } else {
-                    response.status(200);
-                    if (data == null) {
-                        response.sendFile(path.join(__dirname, "public", "img", "usuario.jpg"));
-                    } else {
-                        response.end(data);
-                    }
+                    response.end(data);
                 }
-            });
-        
+            }
+        });
     }
 });
 
@@ -172,7 +171,6 @@ app.post("/login",[
 
 //REGISTRO AZUL
 app.get(/register(.html)?$/, (request, response) => {
-
     response.status(200);
     response.type("text/html")
     response.render("main", {
@@ -223,6 +221,7 @@ app.get("/perfil", (request, response) => {
     response.locals.config={
         pageName: "perfil"
     };
+    if(response.locals.usuario==undefined) console.log("usuario no definido");
     response.render("main", response.locals);
 });
 
