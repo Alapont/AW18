@@ -13,6 +13,12 @@
                     <%= errores.userName.msg %> </span>
                 <%}%>
             </div>
+            <div>Email: <input class="write name" type="text" name="email">
+                <% if (config.error!=null &&  errores.userName) { %>
+                <span class="rojo">
+                    <%= errores.userName.msg %> </span>
+                <%}%>
+            </div>
             Sexo
             <input class="write gender" type="radio" name="gender" value="male" checked> Male
             <input type="radio" name="gender" value="female"> Female

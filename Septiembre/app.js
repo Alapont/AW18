@@ -57,7 +57,7 @@ function error(request, response, next) {
         }
     });
 };
-const externalUrl=["/login","/register"];
+const externalUrl = ["/login", "/register"];
 //AQUI VAN LOS MIDDLEWARE
 //app.use...
 
@@ -65,12 +65,12 @@ const middlewareSession = session({
     saveUninitialized: false,
     secret: "foobar34",
     resave: false,
-    store:sessionStore
+    store: sessionStore
 });
 app.use(middlewareSession);
 
-app.use((request,response,next)=>{
-    response.locals={};
+app.use((request, response, next) => {
+    response.locals = {};
     next();
 });
 
@@ -82,39 +82,39 @@ function logger(request, response, next) {
 }
 app.use(logger);
 
-app.use( function  checkSession(request, response, next){
+app.use(function checkSession(request, response, next) {
     console.log("checking session");
     if (!externalUrl.includes(request.url)) {
         console.log("getting data");
         //si ya hay un usuario logueado, cojo sus datos
-        DUser.getUser(request.session.idUser,(err, data)=>{
-            response.locals.usuario=null;
-            if(!err){
-                let usuario={
-                    idUser:data.ID,
-                    userName:data.UserName,
-                    email:data.email,
-                    points:data.points,
-                    activo:data.activo==1,
-                    gender:data.gender,
-                    birth:data.birth,
-                    img:data.img==null?config.defaultImg:data.img,
-                    age:Math.floor((Date.now()-data.birth)/(1000*60*60*24*365.242190402 ))//año trópico
+        DUser.getUser(request.session.idUser, (err, data) => {
+            response.locals.usuario = null;
+            if (!err) {
+                let usuario = {
+                    idUser: data.ID,
+                    userName: data.UserName,
+                    email: data.email,
+                    points: data.points,
+                    activo: data.activo == 1,
+                    gender: data.gender,
+                    birth: data.birth,
+                    img: data.img == null ? config.defaultImg : data.img,
+                    age: Math.floor((Date.now() - data.birth) / (1000 * 60 * 60 * 24 * 365.242190402)) //año trópico
                 }
-                response.locals.usuario=usuario;
-            }else{
+                response.locals.usuario = usuario;
+            } else {
                 response.redirect("/login");
             }
             // console.log(`checked session with data ${response.locals.usuario}`);
             next();
         });
         // next();
-    }
-    else{
-        if(request.session.idUser!=null)
+    } else {
+        if (request.session.idUser != null)
             response.redirect("/perfil");
         console.log(`external url: ${request.url}`);
-        next();}
+        next();
+    }
 });
 
 const ficherosEstaticos = path.join(__dirname, "public");
@@ -151,41 +151,41 @@ app.get(/login(.html)?$/, (request, response) => {
 
     response.status(200);
     response.type("text/html")
-    response.locals.config={
+    response.locals.config = {
         pageName: "login"
     };
-    response.render("main",response.locals);
+    response.render("main", response.locals);
 
 
 });
 
-app.post("/login",[
-    check('user').isEmail(),
-    check('password').isLength({
-        min: 1
-    })
-], 
-(request, response) => {
-    console.log("post loging")
-    request.getValidationResult().then(function (result) {
-        if(request.body!=undefined){
-            DUser.isUserCorrect(request.body.user, request.body.password, (err, data) => {
-                if (err || data == null) {
-                    response.cookie("error", err);
-                    response.status(500);
-                } else {
-                    request.session.idUser=data[0].ID;
-                    //fucsia hacer el getUser con id en vez con email
-                    response.redirect("./perfil");
-                }
-            });
-        }else{
-            //Lo que hacemos si no ha puesto un correo o una contraseña
-        }
+app.post("/login", [
+        check('user').isEmail(),
+        check('password').isLength({
+            min: 1
+        })
+    ],
+    (request, response) => {
+        console.log("post loging")
+        request.getValidationResult().then(function (result) {
+            if (request.body != undefined) {
+                DUser.isUserCorrect(request.body.user, request.body.password, (err, data) => {
+                    if (err || data == null) {
+                        response.cookie("error", err);
+                        response.status(500);
+                    } else {
+                        request.session.idUser = data[0].ID;
+                        //fucsia hacer el getUser con id en vez con email
+                        response.redirect("./perfil");
+                    }
+                });
+            } else {
+                //Lo que hacemos si no ha puesto un correo o una contraseña
+            }
+
+        });
 
     });
-
-});
 
 //REGISTRO AZUL
 app.get(/register(.html)?$/, (request, response) => {
@@ -207,7 +207,7 @@ app.post(/register(.html)?/, (request, response) => {
 
     request.getValidationResult().then(function (result) {
         if (result.isEmpty()) {
-            let nombreFichero =null;
+            let nombreFichero = null;
             multerFactory.single("imagenPerfil"),
                 function (request, response) {
                     if (request.file) {
@@ -235,32 +235,34 @@ app.post(/register(.html)?/, (request, response) => {
 app.get("/perfil", (request, response) => {
     response.status(200);
     //response.type("text/html");
-    response.locals.config={
+    response.locals.config = {
         pageName: "perfil"
     };
-    if(response.locals.usuario==undefined) console.log("usuario no definido");
+    if (response.locals.usuario == undefined) console.log("usuario no definido");
     response.render("main", response.locals);
 });
 
 //Editar perfil Azul
-app.get('/editPerfil',(request,response)=>{
+app.get('/editPerfil', (request, response) => {
     response.status(200);
-    response.locals.config={
+    response.locals.config = {
         pageName: "editPerfil"
     };
     response.render("main", response.locals);
 });
 
-app.post('/editPerfil',(request,response)=>{
-    request.getValidationResult().then(function (result) {
-        if (result.isEmpty()) {
-            let nombreFichero =null;
-            multerFactory.single("imagenPerfil"),
-                function (request, response) {
-                    if (request.file) {
-                        nombreFichero = request.file.filename;
+app.post('/editPerfil',
+    [check('email').isEmail()],
+    (request, response) => {
+        request.getValidationResult().then(function (result) {
+            if (result.isEmpty()) {
+                let nombreFichero = null;
+                multerFactory.single("imagenPerfil"),
+                    function (request, response) {
+                        if (request.file) {
+                            nombreFichero = request.file.filename;
+                        }
                     }
-                }
                 DUser.updateUser(
                     request.body.password,
                     request.body.img,
@@ -270,23 +272,43 @@ app.post('/editPerfil',(request,response)=>{
                     request.body.email,
                     request.session.idUser,
                     (err, data) => {
-                    if (err) {
-                        response.status(300);
-                        response.redirect("/editPerfil");
-                    } else {
-                        response.redirect("/perfil");
-                    }
-                });
-        } else {
-            //response.setFlash(result.array());
-            response.redirect("/editPerfil");
-        }
+                        if (err) {
+                            response.status(300);
+                            response.redirect("/editPerfil");
+                        } else {
+                            response.redirect("/perfil");
+                        }
+                    });
+            } else {
+                //response.setFlash(result.array());
+                response.redirect("/editPerfil");
+            }
+        });
     });
+
+//Amigos azul
+app.get('/amigos', (request, response) => {
+    DAmistad.getAmistades(request.session.idUser,
+        (err, data) => {
+            if (err) {
+                response.status(300);
+                response.redirect()
+            } else {
+                response.status(200);
+                response.locals.config = {
+                    pageName: "amigos"
+                };
+                response.locals.amigos = data;
+                response.locals.solicitudes=null;
+                response.render("main", response.locals);
+            }
+        }
+    );
 });
 
 //Desconectar azul
-app.get('/desconectar',(request,response)=>{
-    request.session.idUser=null;
+app.get('/desconectar', (request, response) => {
+    request.session.idUser = null;
     response.status(300);
     response.redirect("/login");
 });
