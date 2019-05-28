@@ -244,7 +244,6 @@ app.get("/perfil", (request, response) => {
     response.render("main", response.locals);
 });
 app.get("/perfil/:id", (request, response) => {
-    
     if (response.locals.usuario == undefined) console.log("usuario no definido");
     DUser.getUser(request.params.id,(err,data)=>{
         if(err){
@@ -273,7 +272,30 @@ app.get("/perfil/:id", (request, response) => {
         }
     });
 });
-
+//Busqueda azul
+app.post("/busca",(request,response)=>{
+    DUser.findUser(request.body.busqueda,response.locals.usuario.idUser,
+        (err,data)=>{
+            if(err)
+                response.redirect("/amigos");
+            else{
+                response.locals.query=request.body.busqueda;
+                response.locals.busqueda=data;
+                response.status(200);
+                response.locals.config = {
+                    pageName: "busqueda"
+                };
+                response.render("main",response.locals);
+            }
+        });
+})
+app.get('/busca',(request,response)=>{
+    response.status(200);
+    response.locals.config = {
+        pageName: "busqueda"
+    };
+    response.render("main",response.locals);
+});
 //Editar perfil Azul
 app.get('/editPerfil', (request, response) => {
     response.status(200);
@@ -308,11 +330,13 @@ app.post('/editPerfil',
                             response.status(300);
                             response.redirect("/editPerfil");
                         } else {
+                            response.status(300);
                             response.redirect("/perfil");
                         }
                     });
             } else {
                 //response.setFlash(result.array());
+                response.status(300);
                 response.redirect("/editPerfil");
             }
         });

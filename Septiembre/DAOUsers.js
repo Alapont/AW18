@@ -1,5 +1,7 @@
 'use strict';
 
+const config = require("./config");
+
 class DAOUsers{
     constructor(pool){
         this._pool=pool;
@@ -62,22 +64,29 @@ class DAOUsers{
             connection.release();
         });
     }
-
-    findUser(nombre,email,callback){
+    findUser(nombre,user,callback){
         //Busca a un usuario por subcadenas
         this._pool.getConnection(function(err,connection){
             if(err){
                 callback(`Error de conexion a la base de datos`);
             }else{
-                const sql= `SELECT * FROM users WHERE users.email NOT IN(SELECT amistad.amigador FROM amistad where amistad.amigado =? AND estado<>"rechazado")
-                AND users.email NOT IN(SELECT amistad.amigado FROM amistad where amistad.amigador=? AND estado<>"rechazado") AND users.userName LIKE ?`
-                connection.query(sql, [email, email,("%"+nombre+"%")], function(err,resultado){
-                    
+                const sql= 
+                `SELECT C.ID, C.userName, c.img
+                FROM(SELECT * 
+                    FROM USERS U 
+                    WHERE U.UserName LIKE '%f%'
+                    AND U.ID != 10) C 
+                    JOIN amistad A ON (C.ID = A.IdOrigen OR C.ID=A.IdDestino)
+                WHERE A.IdOrigen!=10 AND A.IdDestino!=10
+                GROUP BY C.ID, C.userName, c.img`;
+                connection.query(sql, [("%"+nombre+"%")], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else
-                        //console.log(resultado[0]);
-                        callback(null,resultado); 
+                        callback(null,resultado.map((amigo)=>{
+                            amigo.img=(amigo.img == null)? config.defaultImg : amigo.img;
+                            return amigo;
+                        })); 
                 })
                 
             }
