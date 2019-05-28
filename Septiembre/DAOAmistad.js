@@ -123,6 +123,25 @@ class DAOAmistad {
             }
         });
     }
+    solicitarAmistad(origen,destino,callback=test){
+        this._pool.getConnection((err, connection)=>{
+            if (err) {
+                callback(`Error de conexion a la base de datos`);
+            } else {
+                const sql = 
+                `INSERT INTO amistad(IdOrigen,IdDestino,estado) 
+                VALUES ?,?,'pendiente';`
+                connection.query(sql, [origen,destino], function (err, resultado) {
+                    if (err) {
+                        callback(`Error de acceso a la base de datos`);
+                    } else {
+                        callback(null,resultado);
+                    }
+                    connection.release();
+                });
+            }
+        });
+    }
 }
 function test(err, data) {
     console.log((err) ? "error: " + err : "No error");

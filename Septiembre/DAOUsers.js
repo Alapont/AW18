@@ -77,9 +77,9 @@ class DAOUsers{
                     WHERE U.UserName LIKE '%f%'
                     AND U.ID != 10) C 
                     JOIN amistad A ON (C.ID = A.IdOrigen OR C.ID=A.IdDestino)
-                WHERE A.IdOrigen!=10 AND A.IdDestino!=10
+                WHERE A.IdOrigen!=? AND A.IdDestino!=?
                 GROUP BY C.ID, C.userName, c.img`;
-                connection.query(sql, [("%"+nombre+"%")], function(err,resultado){
+                connection.query(sql, [("%"+nombre+"%"),user,user], function(err,resultado){
                     if(err){
                         callback(`Error de acceso a la base de datos`);
                     }else

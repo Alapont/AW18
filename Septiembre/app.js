@@ -83,9 +83,7 @@ function logger(request, response, next) {
 app.use(logger);
 
 app.use(function checkSession(request, response, next) {
-    console.log("checking session");
     if (!externalUrl.includes(request.url)) {
-        console.log("getting data");
         //si ya hay un usuario logueado, cojo sus datos
         DUser.getUser(request.session.idUser, (err, data) => {
             response.locals.usuario = null;
@@ -369,7 +367,13 @@ app.get('/amigos', (request, response) => {
         }
     );
 });
-
+app.get('/amigos/solicitar/:id',(request,response)=>{
+    request.params.id;
+    DAmistad.solicitarAmistad(response.locals.usuario.idUser,request.params.id,
+        (err,data)=>{
+            response.redirect("/amigos");
+        });
+});
 //Desconectar azul
 app.get('/desconectar', (request, response) => {
     request.session.idUser = null;
