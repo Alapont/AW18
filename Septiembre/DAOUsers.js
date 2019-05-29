@@ -147,7 +147,7 @@ class DAOUsers{
                         sql+=`,`;
                     }
                     firstElement=false;
-                    sql+=`emal=?`;
+                    sql+=`email=?`;
                     llamada.push(email);
                 }
                 sql+= ` WHERE id =?;`;

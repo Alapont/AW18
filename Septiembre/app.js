@@ -316,12 +316,12 @@ app.post('/editPerfil',
                         }
                     }
                 DUser.updateUser(
-                    request.body.password,
+                    request.body.password!=""?request.body.password:null,
                     request.body.img,
-                    request.body.userName,
+                    request.body.userName!=""?request.body.userName:null,
                     request.body.gender,
-                    request.body.fechaNac,
-                    request.body.email,
+                    request.body.fechaNac!=""?request.body.fechaNac:null,
+                    request.body.email!=""?request.body.email:null,
                     request.session.idUser,
                     (err, data) => {
                         if (err) {
