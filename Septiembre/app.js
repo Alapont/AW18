@@ -169,8 +169,13 @@ app.post("/login", [
             if (request.body != undefined) {
                 DUser.isUserCorrect(request.body.user, request.body.password, (err, data) => {
                     if (err || data == null) {
-                        response.cookie("error", err);
                         response.status(500);
+                        response.type("text/html")
+                        response.locals.config = {
+                            pageName: "login",
+                            error:err
+                        };
+                        response.render("main", response.locals);
                     } else {
                         request.session.idUser = data[0].ID;
                         //fucsia hacer el getUser con id en vez con email
@@ -212,9 +217,14 @@ app.post(/register(.html)?/, (request, response) => {
                         nombreFichero = request.file.filename;
                     }
                 }
-            DUser.addUser(request.body.user, request.body.password,
-                nombreFichero, request.body.userName,
-                request.body.gender, request.body.birth, (err, data) => {
+            DUser.addUser(
+                request.body.user,
+                request.body.password,
+                nombreFichero,
+                request.body.userName,
+                request.body.gender,
+                request.body.birth!=""?request.body.birth:null,
+                (err, data) => {
                     if (err) {
                         response.status(300);
                         response.redirect("/register");
@@ -270,6 +280,7 @@ app.get("/perfil/:id", (request, response) => {
         }
     });
 });
+
 //Busqueda azul
 app.post("/busca",(request,response)=>{
     DUser.findUser(request.body.busqueda,response.locals.usuario.idUser,
@@ -294,6 +305,7 @@ app.get('/busca',(request,response)=>{
     };
     response.render("main",response.locals);
 });
+
 //Editar perfil Azul
 app.get('/editPerfil', (request, response) => {
     response.status(200);
@@ -320,7 +332,7 @@ app.post('/editPerfil',
                     request.body.img,
                     request.body.userName!=""?request.body.userName:null,
                     request.body.gender,
-                    request.body.fechaNac!=""?request.body.fechaNac:null,
+                    request.body.fechaNac!="0000-00-00"?request.body.fechaNac:null,
                     request.body.email!=""?request.body.email:null,
                     request.session.idUser,
                     (err, data) => {
@@ -374,6 +386,7 @@ app.get('/amigos/solicitar/:id',(request,response)=>{
             response.redirect("/amigos");
         });
 });
+
 //Desconectar azul
 app.get('/desconectar', (request, response) => {
     request.session.idUser = null;

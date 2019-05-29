@@ -1,0 +1,35 @@
+Funcionalidad básica: usuarios y amigos
+	Identificación en la red social
+		-La página principal del sitio web debe contener un formulario que permita a un usuario acceder a Facebluff mediante la introducción de su dirección de correo y su contraseña.
+		Si los datos son incorrectos, el sistema volverá a la página de identificación mostrando un mensaje de error. 
+		-Si los datos son correctos, el sistema redirigirá a la página de perfil del usuario.
+	Creación de usuarios
+		La información guardada para cada usuario consiste en: 
+			-su dirección de correo (que lo identifica unívocamente), 
+			-una contraseña, 
+			-su nombre completo y 
+			-su género. 
+			Opcionalmente, puede incluirse una imagen de perfil (avatar) y 
+			-su fecha de nacimiento.
+	-Página de perfil de usuario
+		-A esta página se accede tras la identificación, o cada vez que se pulsa el enlace [Perfil] de la barra de navegación. 
+		-Aquí se debe mostrar el nombre del usuario, su edad, su género, su puntuación y su imagen de perfil (si la tiene).
+		-También existe un botón [Modificar perfil] para actualizar los datos del perfil
+	Modificación de perfil
+		-Al acceder a esta página, aparecerá un formulario similar a la de creación de usuarios, permitiendo modificar la información del usuario actualmente identificado.
+		Ver multipart/form-data con multer para recibir el formulario
+	Vista de amigos
+		Pulsando en el enlace [Amigos] del menú de navegación se accede a una página como la mostrada en la figura 4. Esta página contiene:
+			Una lista con las solicitudes de amistad pendientes. 
+				En esta lista se encuentran aquellas personas que han solicitado ser amigos del usuario actualmente identificado. 
+					Este último podrá aceptar o rechazar cada solicitud haciendo clic en los botones correspondientes. 
+					-Por otra parte, al hacer clic en el nombre de cada usuario se accederá a la página con su información de perfil, similar a la de la figura 3, pero sin el botón de [Modificar perfil].
+			Un cuadro de texto para realizar búsquedas de usuarios en la red social a partir de su nombre.
+			-Un listado con aquellos usuarios que están registrados como amigos del usuario actual. 
+				-Al igual que en la lista de solicitudes de amistad, al hacer clic sobre el nombre del usuario debe mostrarse su información de perfil
+	Búsqueda de usuarios por nombre
+		En la vista de [Amigos] (figura 4), al rellenar el cuadro de texto de búsqueda por nombre y hacer clic en el botón [Buscar], deberá aparecer un listado de aquellos usuarios cuyo nombre contenga la cadena introducida en el formulario (figura 5). 
+		Al lado de cada uno de estos usuarios debe existir un botón [Solicitar amistad] que permita al usuario actualmente identificado enviar una solicitud de amistad al usuario seleccionado
+	-Desconexión (logout)
+		Al pulsar sobre el enlace [Desconectar] del menú de navegación, se volverá a la página inicial de identi1cación del usuario 
+		(ver figura 1).

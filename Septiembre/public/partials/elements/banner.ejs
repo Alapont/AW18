@@ -3,7 +3,7 @@
         <img src="img/logoFace.png" alt="Logotipo FaceBluff">
     </div>
     <div class="menu">
-        <% if(typeof (usuario) != 'undefined'){ //Miramos si estamos logueados %>
+        <% if(typeof (usuario) != 'undefined'){ %>
             <span class="menuOpt"><a href="/perfil">Perfil</a></span>
             <span class="menuOpt"><a href="/amigos">Amigos</a></span>
             <span class="menuOpt"><a href="/preguntas">Preguntas</a></span>
@@ -17,6 +17,13 @@
             <span class="menuOpt"><a href="/login">Entrar</a></span>
             <span class="menuOpt"><a href="/register">Nuevo Usuario</a></span>
 
+        <% } %>
+
+        <% if(typeof(locals.error != 'undefined')&& locals.error!=null){ %>
+            <div class="caja_errores"> 
+                <h2>Error</h2>
+                <%= locals.error %>
+            </div>
         <% } %>
     </div>
 </div>
