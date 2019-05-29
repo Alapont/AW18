@@ -6,21 +6,21 @@ class DAOAmistad {
         this._pool = pool;
         if (debug)
             console.log(pool);
-        this._estados = ["pendiente","aceptado","rechazado"];
+        this._estados = ["pendiente", "aceptado", "rechazado"];
     }
-    peticion(origen,destino,callback=test){
+    peticion(origen, destino, callback = test) {
         this._pool.getConnection(function (err, connection) {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
                 const sql = `INSERT INTO amistad (idOrigen, idDestino,estado) VALUES (?,?,?);`
-                connection.query(sql, [origen,destino,"pendiente"], function (err, resultado) {
+                connection.query(sql, [origen, destino, "pendiente"], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        
-                         callback(null, resultado);
-                         
+
+                        callback(null, resultado);
+
                     }
                 });
             }
@@ -28,19 +28,17 @@ class DAOAmistad {
         });
     }
 
-    setAmistad(amigado, amigador,estado, callback = test) {
+    setAmistad(amigado, amigador, estado, callback = test) {
         this._pool.getConnection(function (err, connection) {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
                 const sql = `INSERT INTO amistad (estado, amigado,amigador) VALUES (?,?,?);`
-                connection.query(sql, [estado, amigado,amigador], function (err, resultado) {
+                connection.query(sql, [estado, amigado, amigador], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        
-                         callback(null, resultado);
-                         
+                        callback(null, resultado);
                     }
                 });
             }
@@ -48,34 +46,34 @@ class DAOAmistad {
         });
     }
 
-    editAmistad(amigado, amigador,estado, callback = test) {
-        
-            this._pool.getConnection(function (err, connection) {
-                if (err) {
-                    callback(`Error de conexion a la base de datos`);
-                } else {
-                    const sql = `UPDATE amistad SET estado=? WHERE (amigado=? AND amigador=?) OR (amigado=? AND amigador=?)`;
-                    connection.query(sql, [estado, amigado,amigador, amigador, amigado], function (err, resultado) {
-                        if (err) {
-                            callback(`Error de acceso a la base de datos`);
-                        } else {
-                            
-                             callback(null, resultado);
-                             
-                        }
-                    });
-                }
-                connection.release();
-            });
-    }
-    
-    getAmistades(user,callback=test){
-        this._pool.getConnection((err, connection)=>{
+    editAmistad(amigado, amigador, estado, callback = test) {
+
+        this._pool.getConnection(function (err, connection) {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql = 
-                `SELECT U1.ID, U1.UserName,U1.points,U1.img
+                const sql = `UPDATE amistad SET estado=? WHERE (amigado=? AND amigador=?) OR (amigado=? AND amigador=?)`;
+                connection.query(sql, [estado, amigado, amigador, amigador, amigado], function (err, resultado) {
+                    if (err) {
+                        callback(`Error de acceso a la base de datos`);
+                    } else {
+
+                        callback(null, resultado);
+
+                    }
+                });
+            }
+            connection.release();
+        });
+    }
+
+    getAmistades(user, callback = test) {
+        this._pool.getConnection((err, connection) => {
+            if (err) {
+                callback(`Error de conexion a la base de datos`);
+            } else {
+                const sql =
+                    `SELECT U1.ID, U1.UserName,U1.points,U1.img
                 FROM amistad A1 JOIN users U1 ON A1.IdOrigen=U1.ID 
                 WHERE A1.IdDestino=? AND A1.estado = 'aceptado' AND U1.activo=1
                 UNION 
@@ -86,9 +84,9 @@ class DAOAmistad {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        callback(null, 
-                            resultado.map((amigo)=>{
-                                amigo.img=(amigo.img == null)? config.defaultImg : amigo.img;
+                        callback(null,
+                            resultado.map((amigo) => {
+                                amigo.img = (amigo.img == null) ? config.defaultImg : amigo.img;
                                 return amigo;
                             })
                         );
@@ -98,22 +96,22 @@ class DAOAmistad {
             }
         });
     }
-    getSolicitudes(user, callback=test){
-        this._pool.getConnection((err, connection)=>{
+    getSolicitudes(user, callback = test) {
+        this._pool.getConnection((err, connection) => {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql = 
-                `SELECT U.ID, U.UserName,U.points,U.img
+                const sql =
+                    `SELECT U.ID, U.UserName,U.points,U.img
                 FROM amistad A JOIN users U ON A.IdOrigen=U.ID 
                 WHERE A.IdDestino=? AND A.estado = 'pendiente' AND U.activo=1`;
                 connection.query(sql, [user], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        callback(null, 
-                            resultado.map((amigo)=>{
-                                amigo.img=(amigo.img == null)? config.defaultImg : amigo.img;
+                        callback(null,
+                            resultado.map((amigo) => {
+                                amigo.img = (amigo.img == null) ? config.defaultImg : amigo.img;
                                 return amigo;
                             })
                         );
@@ -123,19 +121,19 @@ class DAOAmistad {
             }
         });
     }
-    solicitarAmistad(origen,destino,callback=test){
-        this._pool.getConnection((err, connection)=>{
+    solicitarAmistad(origen, destino, callback = test) {
+        this._pool.getConnection((err, connection) => {
             if (err) {
                 callback(`Error de conexion a la base de datos`);
             } else {
-                const sql = 
-                `INSERT INTO amistad(IdOrigen,IdDestino,estado) 
+                const sql =
+                    `INSERT INTO amistad(IdOrigen,IdDestino,estado) 
                 VALUES ?,?,'pendiente';`
-                connection.query(sql, [origen,destino], function (err, resultado) {
+                connection.query(sql, [origen, destino], function (err, resultado) {
                     if (err) {
                         callback(`Error de acceso a la base de datos`);
                     } else {
-                        callback(null,resultado);
+                        callback(null, resultado);
                     }
                     connection.release();
                 });
@@ -143,6 +141,7 @@ class DAOAmistad {
         });
     }
 }
+
 function test(err, data) {
     console.log((err) ? "error: " + err : "No error");
     console.log(data);

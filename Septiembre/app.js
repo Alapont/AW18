@@ -214,7 +214,7 @@ app.post(/register(.html)?/, (request, response) => {
                 }
             DUser.addUser(request.body.user, request.body.password,
                 nombreFichero, request.body.userName,
-                request.body.gender, request.body.fechaNac, (err, data) => {
+                request.body.gender, request.body.birth, (err, data) => {
                     if (err) {
                         response.status(300);
                         response.redirect("/register");
