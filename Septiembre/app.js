@@ -146,12 +146,11 @@ app.get("/imagen/:email", (request, response) => {
 
 //LOGIN AZUL
 app.get(/login(.html)?$/, (request, response) => {
-
-    response.status(200);
-    response.type("text/html")
     response.locals.config = {
         pageName: "login"
     };
+    response.type("text/html")
+    response.status(200);
     response.render("main", response.locals);
 
 

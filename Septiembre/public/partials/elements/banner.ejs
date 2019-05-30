@@ -19,10 +19,10 @@
 
         <% } %>
 
-        <% if(typeof(locals.error != 'undefined')&& locals.error!=null){ %>
+        <% if(typeof(locals.config.error) != 'undefined' && locals.config.error!=null){ %>
             <div class="caja_errores"> 
                 <h2>Error</h2>
-                <%= locals.error %>
+                <%= locals.config.error %>
             </div>
         <% } %>
     </div>
