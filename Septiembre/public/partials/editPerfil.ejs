@@ -4,24 +4,10 @@
             <div>
                 Contraseña: 
                 <input class="write pass" type="password" name="password" placeholder="***">
-                <% if (config.error!=null && errores.password) { %>
-                <span class="rojo">
-                    <%= errores.password.msg %> </span>
-                <% } %>
             </div>
             <div>
                 Nombre usuario: 
                 <input class="write name" type="text" name="userName" placeholder="<%=(locals.usuario.userName)%>">
-                <% if (config.error!=null &&  errores.userName) { %>
-                <span class="rojo">
-                    <%= errores.userName.msg %> </span>
-                <%}%>
-            </div>
-            <div>Email: <input class="write name" type="text" name="email" placeholder="<%=(locals.usuario.email)%>">
-                <% if (config.error!=null &&  errores.userName) { %>
-                <span class="rojo">
-                    <%= errores.userName.msg %> </span>
-                <%}%>
             </div>
             Sexo
             <input class="write gender" type="radio" name="gender" value="male" <%=(locals.usuario.gender=="mal")?"checked":"";%> >Male 

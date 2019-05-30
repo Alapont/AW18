@@ -100,6 +100,8 @@ app.use(function checkSession(request, response, next) {
                     age: Math.floor((Date.now() - data.birth) / (1000 * 60 * 60 * 24 * 365.242190402)) //año trópico
                 }
                 response.locals.usuario = usuario;
+                response.locals.amigos = [];
+                response.locals.solicitudes=[];
             } else {
                 response.redirect("/login");
             }
@@ -162,7 +164,7 @@ app.post("/login", [
             min: 1
         })
     ],
-    (request, response) => {
+    (request, response,next) => {
         console.log("post loging")
         request.getValidationResult().then(function (result) {
             if (request.body != undefined) {
@@ -171,10 +173,9 @@ app.post("/login", [
                         response.status(500);
                         response.type("text/html")
                         response.locals.config = {
-                            pageName: "login",
-                            error:err
+                            pageName: "login"
                         };
-                        response.render("main", response.locals);
+                        next(err)
                     } else {
                         request.session.idUser = data[0].ID;
                         //fucsia hacer el getUser con id en vez con email
@@ -226,13 +227,19 @@ app.post(/register(.html)?/, (request, response) => {
                 (err, data) => {
                     if (err) {
                         response.status(300);
-                        response.redirect("/register");
+                        response.locals.config = {
+                            pageName: "register"
+                        };
+                        next(err)
                     } else {
                         response.redirect("/login");
                     }
                 });
         } else {
-            //response.setFlash(result.array());
+            response.locals.config = {
+                pageName: "login"
+            };
+            next("usuario no encontrado")
             response.redirect("/register");
         }
     });
@@ -281,12 +288,25 @@ app.get("/perfil/:id", (request, response) => {
 });
 
 //Busqueda azul
+app.get('/busca',(request,response)=>{
+    response.status(200);
+    response.locals.config = {
+        pageName: "busqueda"
+    };
+    response.render("main",response.locals);
+});
 app.post("/busca",(request,response)=>{
     DUser.findUser(request.body.busqueda,response.locals.usuario.idUser,
         (err,data)=>{
-            if(err)
-                response.redirect("/amigos");
-            else{
+            if(err){
+                app.get('/busca',(request,response)=>{
+                    response.status(200);
+                    response.locals.config = {
+                        pageName: "busqamigosueda"
+                    };
+                    response.render("main",response.locals);
+                });
+            }else{
                 response.locals.query=request.body.busqueda;
                 response.locals.busqueda=data;
                 response.status(200);
@@ -297,13 +317,6 @@ app.post("/busca",(request,response)=>{
             }
         });
 })
-app.get('/busca',(request,response)=>{
-    response.status(200);
-    response.locals.config = {
-        pageName: "busqueda"
-    };
-    response.render("main",response.locals);
-});
 
 //Editar perfil Azul
 app.get('/editPerfil', (request, response) => {
@@ -313,10 +326,8 @@ app.get('/editPerfil', (request, response) => {
     };
     response.render("main", response.locals);
 });
-
 app.post('/editPerfil',
-    [check('email').isEmail()],
-    (request, response) => {
+    (request, response,next) => {
         request.getValidationResult().then(function (result) {
             if (result.isEmpty()) {
                 let nombreFichero = null;
@@ -336,15 +347,17 @@ app.post('/editPerfil',
                     request.session.idUser,
                     (err, data) => {
                         if (err) {
-                            response.status(300);
-                            response.redirect("/editPerfil");
+                            response.status(500);
+                            response.locals.config = {
+                                pageName: "editPerfil"
+                            };
+                            next(err);
                         } else {
                             response.status(300);
                             response.redirect("/perfil");
                         }
                     });
             } else {
-                //response.setFlash(result.array());
                 response.status(300);
                 response.redirect("/editPerfil");
             }
@@ -398,6 +411,10 @@ app.get('/desconectar', (request, response) => {
 app.get('/', (request, response) => {
     response.status(300);
     response.redirect("/login");
+});
+app.use((err,request,response,next)=>{
+    response.locals.config.error=err;
+    response.render("main", response.locals);
 });
 app.use(error);
 // Arrancar el servidor
